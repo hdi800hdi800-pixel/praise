@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Claude로 뭐든 만들기 가이드</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f6fa;
+      color: #1a1a2e;
+      padding-bottom: 40px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #2F5BEA, #6a1b9a);
+      padding: 28px 20px 24px;
+      text-align: center;
+      color: #fff;
+    }
+    .header-emoji { font-size: 48px; margin-bottom: 8px; }
+    .header h1 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .header p { font-size: 14px; opacity: 0.85; line-height: 1.5; }
+
+    .section {
+      margin: 16px 16px 0;
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px 16px;
+      border: 1px solid #eee;
+    }
+    .section-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 스텝 */
+    .step {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .step:last-child { margin-bottom: 0; }
+    .step-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #2F5BEA;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-content { flex: 1; }
+    .step-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .step-desc { font-size: 13px; color: #666; line-height: 1.5; }
+    .step-code {
+      background: #f0f4ff;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #2F5BEA;
+      font-weight: 600;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* 링크 카드 */
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: #f8f9ff;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid #e8ecff;
+    }
+    .link-card:last-child { margin-bottom: 0; }
+    .link-icon { font-size: 28px; flex-shrink: 0; }
+    .link-info { flex: 1; }
+    .link-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+    .link-url { font-size: 11px; color: #2F5BEA; }
+    .link-arrow { color: #aaa; font-size: 16px; }
+
+    /* 예시 카드 */
+    .example-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .example-card {
+      background: #f8f9ff;
+      border-radius: 12px;
+      padding: 14px 12px;
+      text-align: center;
+      border: 1px solid #e8ecff;
+    }
+    .example-emoji { font-size: 28px; margin-bottom: 6px; }
+    .example-title { font-size: 12px; font-weight: 700; color: #1a1a2e; }
+    .example-desc { font-size: 11px; color: #888; margin-top: 2px; }
+
+    /* 팁 박스 */
+    .tip-box {
+      background: #fff8e1;
+      border-left: 4px solid #ffd700;
+      border-radius: 0 12px 12px 0;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .tip-box:last-child { margin-bottom: 0; }
+    .tip-title { font-size: 13px; font-weight: 700; color: #e65100; margin-bottom: 3px; }
+    .tip-desc { font-size: 12px; color: #555; line-height: 1.5; }
+
+    /* 프롬프트 예시 */
+    .prompt {
+      background: #1a1a2e;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .prompt:last-child { margin-bottom: 0; }
+    .prompt-label { font-size: 10px; color: #60a5fa; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px; }
+    .prompt-text { font-size: 13px; line-height: 1.6; color: #e0e0e0; }
+    .prompt-text strong { color: #ffd700; }
+
+    .divider { height: 1px; background: #f0f0f0; margin: 14px 0; }
+
+    .footer {
+      margin: 20px 16px 0;
+      text-align: center;
+      font-size: 12px;
+      color: #aaa;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-emoji">🤖</div>
+    <h1>Claude로 뭐든 만들기!</h1>
+    <p>남편이 한 달 동안 터득한<br>HTML 제작 + 카톡 공유 완전 가이드</p>
+  </div>
+
+  <!-- STEP 1: Claude 접속 -->
+  <div class="section">
+    <div class="section-title">✅ STEP 1 — Claude 접속</div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Claude 앱 또는 웹 접속</div>
+        <div class="step-desc">앱스토어에서 "Claude" 검색 후 설치하거나 아래 주소로 접속</div>
+        <div class="step-code">🌐 claude.ai</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">원하는 것을 말로 요청</div>
+        <div class="step-desc">번역, 요약, 앱 제작, 투표 만들기 등 뭐든지 가능!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: HTML 만들기 -->
+  <div class="section">
+    <div class="section-title">✅ STEP 2 — HTML 파일 만들기</div>
+
+    <div class="prompt">
+      <div class="prompt-label">💬 이렇게 말하면 돼요</div>
+      <div class="prompt-text">
+        <strong>"투표 만들어줘<br>1. 짜장<br>2. 짬뽕<br>3. 볶음밥"</strong>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-label">💬 또는 이렇게</div>
+      <div class="prompt-text">
+        <strong>"생일 축하 카드 HTML 만들어줘<br>이름: 홍길동"</strong>
+      </div>
+    </div>
+
+    <div class="prompt">
+      <div class="prompt-label">💬 사다리타기도 가능</div>
+      <div class="prompt-text">
+        <strong>"점심 내기 사다리타기 만들어줘"</strong>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="tip-box">
+      <div class="tip-title">💡 핵심 포인트</div>
+      <div class="tip-desc">Claude가 파일을 만들어주면 <strong>다운로드 버튼</strong>을 눌러 폰에 저장하세요!</div>
+    </div>
+  </div>
+
+  <!-- STEP 3: 카톡 공유 -->
+  <div class="section">
+    <div class="section-title">✅ STEP 3 — 카톡 링크로 공유</div>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Netlify Drop 접속</div>
+        <div class="step-code">🌐 app.netlify.com/drop</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">HTML 파일 업로드</div>
+        <div class="step-desc">"browse files to upload" 탭 → 저장한 HTML 파일 선택</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">"Rename and deploy" 탭</div>
+        <div class="step-desc">30초 후 링크 자동 생성!</div>
+        <div class="step-code">✅ https://랜덤이름.netlify.app</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title">링크 복사 → 카톡 붙여넣기 🎉</div>
+        <div class="step-desc">누구나 클릭하면 바로 실행돼요!</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 만들 수 있는 것들 -->
+  <div class="section">
+    <div class="section-title">🎨 만들 수 있는 것들</div>
+    <div class="example-grid">
+      <div class="example-card">
+        <div class="example-emoji">🗳️</div>
+        <div class="example-title">실시간 투표</div>
+        <div class="example-desc">메뉴·찬반·장소 선택</div>
+      </div>
+      <div class="example-card">
+        <div class="example-emoji">🎂</div>
+        <div class="example-title">생일 카드</div>
+        <div class="example-desc">폭죽+풍선 효과</div>
+      </div>
+      <div class="example-card">
+        <div class="example-emoji">🎲</div>
+        <div class="example-title">사다리타기</div>
+        <div class="example-desc">점심 내기용</div>
+      </div>
+      <div class="example-card">
+        <div class="example-emoji">📅</div>
+        <div class="example-title">일정 예약</div>
+        <div class="example-desc">신청·취소 기능</div>
+      </div>
+      <div class="example-card">
+        <div class="example-emoji">🎴</div>
+        <div class="example-title">이모티콘 카드</div>
+        <div class="example-desc">사진+말풍선</div>
+      </div>
+      <div class="example-card">
+        <div class="example-emoji">📖</div>
+        <div class="example-title">스토리 카드</div>
+        <div class="example-desc">슬라이드형 이야기</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 꿀팁 -->
+  <div class="section">
+    <div class="section-title">💡 꿀팁 모음</div>
+    <div class="tip-box">
+      <div class="tip-title">📸 막히면 스크린샷!</div>
+      <div class="tip-desc">모르는 화면이 나오면 캡처해서 Claude에게 보내면 바로 해결!</div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">🔄 실시간 공유하려면 Firebase</div>
+      <div class="tip-desc">여러 명이 동시에 투표하게 하려면 Firebase 연동이 필요해요. Claude한테 "실시간 투표 만들어줘"라고 하면 안내해줘요!</div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">🌐 Netlify는 무료!</div>
+      <div class="tip-desc">가입하면 영구 무료로 링크 유지 가능. 가입 없이도 72시간은 무료!</div>
+    </div>
+    <div class="tip-box">
+      <div class="tip-title">✏️ 수정도 쉬워요</div>
+      <div class="tip-desc">"제목 바꿔줘", "냉면 추가해줘" 처럼 말하면 Claude가 바로 수정해줘요!</div>
+    </div>
+  </div>
+
+  <!-- 자주 쓰는 링크 -->
+  <div class="section">
+    <div class="section-title">🔗 자주 쓰는 링크</div>
+    <a class="link-card" href="https://claude.ai" target="_blank">
+      <div class="link-icon">🤖</div>
+      <div class="link-info">
+        <div class="link-title">Claude AI</div>
+        <div class="link-url">claude.ai</div>
+      </div>
+      <div class="link-arrow">›</div>
+    </a>
+    <a class="link-card" href="https://app.netlify.com/drop" target="_blank">
+      <div class="link-icon">🚀</div>
+      <div class="link-info">
+        <div class="link-title">Netlify Drop (카톡 링크 생성)</div>
+        <div class="link-url">app.netlify.com/drop</div>
+      </div>
+      <div class="link-arrow">›</div>
+    </a>
+    <a class="link-card" href="https://console.firebase.google.com" target="_blank">
+      <div class="link-icon">🔥</div>
+      <div class="link-info">
+        <div class="link-title">Firebase (실시간 데이터)</div>
+        <div class="link-url">console.firebase.google.com</div>
+      </div>
+      <div class="link-arrow">›</div>
+    </a>
+  </div>
+
+  <div class="footer">
+    🤖 Claude와 함께라면 뭐든 만들 수 있어요!<br>
+    막히면 언제든 Claude에게 물어보세요 😊<br><br>
+    Made with ❤️ by 남편
+  </div>
+
+</body>
+</html>
