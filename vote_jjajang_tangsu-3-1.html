@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>점심 메뉴 투표 🍜</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f6fa;
+      color: #1a1a2e;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+    .header {
+      background: linear-gradient(135deg, #2F5BEA, #6a1b9a);
+      padding: 32px 20px 28px;
+      text-align: center;
+      color: #fff;
+    }
+    .header-emoji { font-size: 48px; margin-bottom: 8px; }
+    .header h1 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .header p { font-size: 13px; opacity: 0.85; }
+
+    .total {
+      text-align: center;
+      margin: 18px 16px 4px;
+      font-size: 13px;
+      color: #888;
+      font-weight: 600;
+    }
+    .total strong { color: #2F5BEA; font-size: 15px; }
+
+    .options { margin: 14px 16px 0; }
+    .option {
+      background: #fff;
+      border: 2px solid #eee;
+      border-radius: 18px;
+      padding: 18px 16px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      transition: transform 0.12s, border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .option:active { transform: scale(0.98); }
+    .option.voted-mine { border-color: #2F5BEA; }
+    .option-bar {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(47,91,234,0.12), rgba(106,27,154,0.12));
+      transition: width 0.6s cubic-bezier(.22,1,.36,1);
+      z-index: 0;
+    }
+    .option-row {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .option-emoji { font-size: 38px; flex-shrink: 0; }
+    .option-info { flex: 1; }
+    .option-name { font-size: 18px; font-weight: 800; }
+    .option-sub { font-size: 12px; color: #999; margin-top: 2px; }
+    .option-stat { text-align: right; flex-shrink: 0; }
+    .option-pct { font-size: 22px; font-weight: 800; color: #2F5BEA; }
+    .option-cnt { font-size: 11px; color: #aaa; margin-top: 1px; }
+
+    .badge {
+      display: inline-block;
+      background: #2F5BEA;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
+    .hint {
+      text-align: center;
+      font-size: 12px;
+      color: #aaa;
+      margin: 8px 16px 0;
+      line-height: 1.6;
+    }
+    .reset {
+      display: block;
+      margin: 20px auto 0;
+      background: none;
+      border: none;
+      color: #bbb;
+      font-size: 12px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .live {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      color: #2ecc71;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+    .live .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #2ecc71;
+      animation: pulse 1.4s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+    /* ===== 업로드 자동안내 팝업 ===== */
+    .gh-overlay {
+      position: fixed; inset: 0;
+      background: rgba(20,20,40,0.55);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px; z-index: 9999;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .gh-overlay.show { opacity: 1; pointer-events: auto; }
+    .gh-card {
+      background: #fff; border-radius: 20px; width: 100%; max-width: 360px;
+      padding: 24px 20px 20px; text-align: center;
+      transform: translateY(20px); transition: transform 0.3s;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+    .gh-overlay.show .gh-card { transform: translateY(0); }
+    .gh-emoji { font-size: 44px; margin-bottom: 8px; }
+    .gh-card h2 { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+    .gh-card .gh-desc { font-size: 13px; color: #777; line-height: 1.5; margin-bottom: 16px; }
+    .gh-linkbox { background: #f0f4ff; border-radius: 12px; padding: 10px 12px; margin-bottom: 14px; text-align: left; }
+    .gh-linkbox .gh-label { font-size: 10px; color: #2F5BEA; font-weight: 700; letter-spacing: 0.5px; }
+    .gh-linkbox .gh-val { font-size: 12px; color: #333; word-break: break-all; margin-top: 2px; }
+    .gh-btn {
+      display: block; width: 100%; text-decoration: none;
+      background: linear-gradient(135deg, #2F5BEA, #6a1b9a); color: #fff;
+      font-size: 15px; font-weight: 800; padding: 15px; border-radius: 14px;
+      margin-bottom: 10px; border: none; cursor: pointer;
+    }
+    .gh-btn:active { opacity: 0.85; }
+    .gh-btn.copy { background: #fff; color: #2F5BEA; border: 2px solid #2F5BEA; }
+    .gh-btn.netlify { background: linear-gradient(135deg, #00ad9f, #00c7b7); }
+    .gh-close { background: none; border: none; color: #aaa; font-size: 13px; cursor: pointer; margin-top: 4px; text-decoration: underline; }
+    .gh-toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+      background: #1a1a2e; color: #fff; font-size: 13px; padding: 10px 18px;
+      border-radius: 20px; z-index: 10000; opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    }
+    .gh-toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-emoji">🍜</div>
+    <h1>오늘 점심 뭐 먹지?</h1>
+    <p>탭해서 투표하세요!</p>
+    <div class="live"><span class="dot"></span> 실시간 집계 중</div>
+  </div>
+
+  <div class="total">총 <strong id="totalVotes">0</strong>명 참여</div>
+
+  <div class="options">
+    <div class="option" id="opt-jjajang" onclick="vote('jjajang')">
+      <div class="option-bar" id="bar-jjajang"></div>
+      <div class="option-row">
+        <div class="option-emoji">🍜</div>
+        <div class="option-info">
+          <div class="option-name">짜장면<span class="badge" id="badge-jjajang" style="display:none;">내 선택</span></div>
+          <div class="option-sub">달콤짭짤 국민 메뉴</div>
+        </div>
+        <div class="option-stat">
+          <div class="option-pct" id="pct-jjajang">0%</div>
+          <div class="option-cnt" id="cnt-jjajang">0표</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="option" id="opt-tangsu" onclick="vote('tangsu')">
+      <div class="option-bar" id="bar-tangsu"></div>
+      <div class="option-row">
+        <div class="option-emoji">🍤</div>
+        <div class="option-info">
+          <div class="option-name">탕수육<span class="badge" id="badge-tangsu" style="display:none;">내 선택</span></div>
+          <div class="option-sub">바삭바삭 단짠의 정석</div>
+        </div>
+        <div class="option-stat">
+          <div class="option-pct" id="pct-tangsu">0%</div>
+          <div class="option-cnt" id="cnt-tangsu">0표</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="option" id="opt-gunmandu" onclick="vote('gunmandu')">
+      <div class="option-bar" id="bar-gunmandu"></div>
+      <div class="option-row">
+        <div class="option-emoji">🥟</div>
+        <div class="option-info">
+          <div class="option-name">군만두<span class="badge" id="badge-gunmandu" style="display:none;">내 선택</span></div>
+          <div class="option-sub">겉바속촉 한입 행복</div>
+        </div>
+        <div class="option-stat">
+          <div class="option-pct" id="pct-gunmandu">0%</div>
+          <div class="option-cnt" id="cnt-gunmandu">0표</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="option" id="opt-udon" onclick="vote('udon')">
+      <div class="option-bar" id="bar-udon"></div>
+      <div class="option-row">
+        <div class="option-emoji">🍲</div>
+        <div class="option-info">
+          <div class="option-name">우동<span class="badge" id="badge-udon" style="display:none;">내 선택</span></div>
+          <div class="option-sub">뜨끈한 국물 한 그릇</div>
+        </div>
+        <div class="option-stat">
+          <div class="option-pct" id="pct-udon">0%</div>
+          <div class="option-cnt" id="cnt-udon">0표</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="option" id="opt-cola" onclick="vote('cola')">
+      <div class="option-bar" id="bar-cola"></div>
+      <div class="option-row">
+        <div class="option-emoji">🥤</div>
+        <div class="option-info">
+          <div class="option-name">콜라<span class="badge" id="badge-cola" style="display:none;">내 선택</span></div>
+          <div class="option-sub">톡 쏘는 청량함</div>
+        </div>
+        <div class="option-stat">
+          <div class="option-pct" id="pct-cola">0%</div>
+          <div class="option-cnt" id="cnt-cola">0표</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hint">한 사람당 한 번만 투표할 수 있어요.<br>다시 탭하면 선택을 바꿀 수 있어요.</div>
+  <button class="reset" onclick="resetMyVote()">내 투표 취소하기</button>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script>
+    // Firebase 프로젝트: stckvote
+    firebase.initializeApp({
+      databaseURL: "https://stckvote-default-rtdb.firebaseio.com"
+    });
+    const db = firebase.database();
+
+    // 이 투표만의 고유 경로
+    const POLL_ID = "lunch_jjajang_tangsu";
+    const pollRef = db.ref("polls/" + POLL_ID);
+    const STORAGE_KEY = "myvote_" + POLL_ID;
+
+    const OPTIONS = ["jjajang", "tangsu", "gunmandu", "udon", "cola"];
+
+    // 내가 이미 투표한 항목
+    function getMyVote() {
+      try { return localStorage.getItem(STORAGE_KEY); } catch(e) { return null; }
+    }
+    function setMyVote(v) {
+      try { v ? localStorage.setItem(STORAGE_KEY, v) : localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+    }
+
+    // 투표하기 (선택 변경 포함)
+    function vote(choice) {
+      const prev = getMyVote();
+      if (prev === choice) return; // 같은 거 또 누르면 무시
+
+      const updates = {};
+      // 이전 표 -1
+      pollRef.child(prev || "_none").transaction(function(c){ return (c||0) > 0 ? c-1 : 0; });
+      // 새 표 +1
+      pollRef.child(choice).transaction(function(c){ return (c||0) + 1; });
+
+      setMyVote(choice);
+      highlightMine();
+    }
+
+    // 내 투표 취소
+    function resetMyVote() {
+      const prev = getMyVote();
+      if (!prev) return;
+      pollRef.child(prev).transaction(function(c){ return (c||0) > 0 ? c-1 : 0; });
+      setMyVote(null);
+      highlightMine();
+    }
+
+    // 실시간 결과 반영
+    pollRef.on("value", function(snap) {
+      const data = snap.val() || {};
+      const counts = {};
+      let total = 0;
+      OPTIONS.forEach(function(o){
+        counts[o] = data[o] || 0;
+        total += counts[o];
+      });
+
+      document.getElementById("totalVotes").textContent = total;
+
+      OPTIONS.forEach(function(o){
+        const c = counts[o];
+        const pct = total > 0 ? Math.round((c/total)*100) : 0;
+        document.getElementById("pct-" + o).textContent = pct + "%";
+        document.getElementById("cnt-" + o).textContent = c + "표";
+        document.getElementById("bar-" + o).style.width = pct + "%";
+      });
+    });
+
+    function highlightMine() {
+      const mine = getMyVote();
+      OPTIONS.forEach(function(o){
+        const opt = document.getElementById("opt-" + o);
+        const badge = document.getElementById("badge-" + o);
+        if (o === mine) {
+          opt.classList.add("voted-mine");
+          badge.style.display = "inline-block";
+        } else {
+          opt.classList.remove("voted-mine");
+          badge.style.display = "none";
+        }
+      });
+    }
+
+    highlightMine();
+  </script>
+
+  <!-- ============================================= -->
+  <!-- 📤 업로드 자동안내 팝업 -->
+  <!-- ============================================= -->
+  <div class="gh-overlay" id="ghOverlay">
+    <div class="gh-card">
+      <div class="gh-emoji">📤</div>
+      <h2>GitHub에 올릴 차례!</h2>
+      <div class="gh-desc">이 파일을 올리면 카톡 공유 링크가 생겨요.<br>빠르게 하려면 <b>Netlify</b>, 영구 보관은 <b>GitHub</b>!</div>
+      <div class="gh-linkbox">
+        <div class="gh-label">📁 업로드할 파일</div>
+        <div class="gh-val" id="ghFile">파일명.html</div>
+      </div>
+      <div class="gh-linkbox">
+        <div class="gh-label">🌐 업로드 후 공유 링크</div>
+        <div class="gh-val" id="ghPages">링크</div>
+      </div>
+      <a class="gh-btn" href="https://github.com/hdi800hdi800-pixel/praise/upload/main" target="_blank">📤 GitHub 업로드 페이지 열기</a>
+      <a class="gh-btn netlify" href="https://app.netlify.com/drop" target="_blank">🚀 Netlify Drop 열기 (빠른 링크)</a>
+      <button class="gh-btn copy" onclick="ghCopyLink()">🔗 GitHub 공유 링크 복사</button>
+      <button class="gh-close" onclick="ghClose()">나중에 할게요</button>
+    </div>
+  </div>
+  <div class="gh-toast" id="ghToast">복사됐어요!</div>
+  <script>
+    (function(){
+      // 배포된 링크(github.io / netlify 등)로 열면 팝업 안 뜸 → 카톡 받은 사람은 투표만 봄
+      var host = location.hostname || '';
+      var isLive = /github\.io$/.test(host) || /netlify\.app$/.test(host) || /\.app$/.test(host);
+      if (isLive) return;
+
+      var fname = (location.pathname.split('/').pop() || 'index.html');
+      if (!fname || fname === '') fname = 'index.html';
+      var pagesUrl = 'https://hdi800hdi800-pixel.github.io/praise/' + fname;
+      document.getElementById('ghFile').textContent = fname;
+      document.getElementById('ghPages').textContent = pagesUrl;
+      window.__ghPagesUrl = pagesUrl;
+      setTimeout(function(){ document.getElementById('ghOverlay').classList.add('show'); }, 600);
+    })();
+    function ghClose(){ document.getElementById('ghOverlay').classList.remove('show'); }
+    function ghCopyLink(){
+      var url = window.__ghPagesUrl || '';
+      if (navigator.clipboard) { navigator.clipboard.writeText(url).then(showToast).catch(fallbackCopy); }
+      else { fallbackCopy(); }
+      function fallbackCopy(){
+        var t = document.createElement('textarea'); t.value = url;
+        document.body.appendChild(t); t.select();
+        try { document.execCommand('copy'); } catch(e){}
+        document.body.removeChild(t); showToast();
+      }
+      function showToast(){
+        var el = document.getElementById('ghToast');
+        el.classList.add('show');
+        setTimeout(function(){ el.classList.remove('show'); }, 1600);
+      }
+    }
+  </script>
+</body>
+</html>
