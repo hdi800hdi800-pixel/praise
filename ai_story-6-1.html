@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>오늘의 AI 활용기 🎵</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="청연교회 AI 동아리">
+<meta property="og:title" content="오늘의 AI 활용기 🎵">
+<meta property="og:description" content="멜로디만 기억나는 찬양, AI가 찾아줬어요. 넘겨보세요 👉">
+<meta property="og:image" content="https://hdi800hdi800-pixel.github.io/praise/ai_cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FBF6EF">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+@font-face{font-family:'GmarketSans';font-weight:700;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');font-display:swap;}
+@font-face{font-family:'GmarketSans';font-weight:500;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');font-display:swap;}
+
+:root{
+  --paper:#FBF6EF; --card:#FFFFFF;
+  --ink:#39323F; --ink-soft:#9b909a;
+  --coral:#F2674A; --amber:#F4A93C; --mint:#43B492; --blue:#5C6BC8;
+  --font-display:'GmarketSans','Pretendard',sans-serif;
+  --font-body:'Pretendard',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;}
+body{
+  font-family:var(--font-body);color:var(--ink);
+  background:radial-gradient(130% 70% at 50% -10%,#FDF2E4 0%,#F6E9D6 55%,#EFDDC8 100%);
+  -webkit-font-smoothing:antialiased;display:grid;place-items:center;overflow:hidden;
+}
+.deck{position:relative;width:100%;max-width:430px;height:100dvh;max-height:910px;
+  overflow:hidden;background:var(--paper);}
+@media(min-width:470px){.deck{height:min(100dvh,890px);border-radius:32px;
+  box-shadow:0 44px 100px -34px rgba(80,50,30,.5);}}
+
+.track{display:flex;height:100%;transition:transform .55s cubic-bezier(.5,.04,.18,1);will-change:transform;}
+.slide{position:relative;flex:0 0 100%;height:100%;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;padding:60px 30px 76px;gap:24px;}
+/* soft ambient blob per slide */
+.slide::before{content:"";position:absolute;top:-90px;right:-70px;width:240px;height:240px;
+  border-radius:50%;filter:blur(8px);opacity:.5;z-index:0;
+  background:radial-gradient(circle,var(--blob,#F8D7A8),transparent 68%);}
+.slide>*{position:relative;z-index:1;}
+
+.reveal{opacity:0;transform:translateY(20px);
+  transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.25,1);}
+.slide.active .reveal{opacity:1;transform:none;}
+.slide.active .reveal:nth-child(2){transition-delay:.07s;}
+.slide.active .reveal:nth-child(3){transition-delay:.14s;}
+.slide.active .reveal:nth-child(4){transition-delay:.21s;}
+
+/* hero */
+.eyebrow{font-family:var(--font-display);font-weight:500;letter-spacing:.4em;
+  font-size:12px;color:var(--coral);padding-left:.4em;}
+.hero-t{font-family:var(--font-display);font-weight:700;
+  font-size:clamp(40px,13.5vw,54px);line-height:1.05;letter-spacing:-.012em;}
+.hero-t .ai{color:var(--coral);}
+.bob{display:inline-block;color:var(--amber);font-size:.66em;transform:translateY(-.18em);
+  animation:bob 2.6s ease-in-out infinite;}
+.hero-sub{font-size:16px;color:var(--ink-soft);font-weight:500;line-height:1.6;}
+.cover-eq{display:flex;align-items:flex-end;gap:6px;height:30px;margin-top:2px;}
+.cover-eq i{width:7px;border-radius:4px;height:10px;transform-origin:bottom;
+  animation:eq 1.3s ease-in-out infinite;}
+.cover-eq i:nth-child(1){background:var(--amber);}
+.cover-eq i:nth-child(2){background:var(--mint);animation-delay:.18s;}
+.cover-eq i:nth-child(3){background:var(--coral);animation-delay:.36s;}
+.cover-eq i:nth-child(4){background:var(--blue);animation-delay:.54s;}
+.cover-eq i:nth-child(5){background:var(--amber);animation-delay:.72s;}
+
+/* step bits */
+.tag{display:inline-flex;align-items:center;gap:11px;background:var(--card);
+  border:1.5px solid #f0e6d8;border-radius:999px;padding:9px 22px 9px 9px;
+  box-shadow:0 10px 22px -14px rgba(80,50,30,.6);font-weight:700;font-size:16px;letter-spacing:-.01em;}
+.tag .n{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;color:#fff;
+  font-family:var(--font-display);font-weight:700;font-size:16px;}
+.panel{width:100%;max-width:316px;border-radius:30px;min-height:208px;display:flex;
+  align-items:center;justify-content:center;padding:26px;box-shadow:0 20px 42px -20px rgba(80,50,30,.4);overflow:hidden;}
+.cap span{display:block;font-size:17px;font-weight:500;letter-spacing:-.012em;line-height:1.5;}
+.cap strong{display:block;font-size:19px;color:var(--coral);font-weight:800;margin-top:5px;letter-spacing:-.018em;line-height:1.45;}
+
+.p1{background:linear-gradient(140deg,#FDEBCB,#FBDDA8);}
+.p2{background:linear-gradient(140deg,#E8F5EF,#D6EEE3);}
+.p3{background:linear-gradient(140deg,#ECEFFB,#DCE2F8);}
+.p4{background:linear-gradient(160deg,#34365E,#22233B);}
+
+.n-coral{background:var(--coral);} .n-mint{background:var(--mint);}
+.n-blue{background:var(--blue);} .n-amber{background:var(--amber);}
+
+svg{display:block;}
+.float{animation:bob 2.6s ease-in-out infinite;}
+
+/* step4 waveform */
+.g4{display:flex;flex-direction:column;align-items:center;gap:16px;}
+.eq4{display:flex;align-items:center;gap:6px;height:46px;}
+.eq4 i{width:8px;border-radius:4px;background:var(--amber);height:18px;
+  animation:eq 1s ease-in-out infinite;transform-origin:center;}
+.eq4 i:nth-child(odd){background:#F6B95B;}
+.eq4 i:nth-child(2){animation-delay:.12s;} .eq4 i:nth-child(3){animation-delay:.24s;}
+.eq4 i:nth-child(4){animation-delay:.36s;} .eq4 i:nth-child(5){animation-delay:.48s;}
+.eq4 i:nth-child(6){animation-delay:.60s;} .eq4 i:nth-child(7){animation-delay:.72s;}
+.listening{color:#bcbee4;font-size:14px;font-weight:600;}
+
+/* step5 */
+.found{font-family:var(--font-display);font-weight:700;color:var(--coral);font-size:38px;letter-spacing:.02em;}
+.result{background:var(--card);border-radius:22px;padding:18px;display:flex;align-items:center;gap:15px;
+  width:100%;max-width:316px;box-shadow:0 20px 42px -20px rgba(80,50,30,.4);border:1.5px solid #f1e7d8;
+  opacity:0;transform:scale(.86);transition:opacity .5s ease,transform .55s cubic-bezier(.2,1.4,.4,1);}
+.slide.active .result{opacity:1;transform:none;transition-delay:.35s;}
+.disc{flex:none;width:60px;height:60px;border-radius:50%;background:conic-gradient(from 200deg,#F2674A,#F4A93C,#F2674A);
+  display:grid;place-items:center;box-shadow:0 12px 22px -10px rgba(242,103,74,.75);position:relative;}
+.disc::after{content:"";position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;}
+.disc span{position:relative;z-index:1;color:#fff;font-size:22px;}
+.yt{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1.5px solid #f1e7d8;
+  border-radius:999px;padding:11px 20px;font-weight:700;font-size:14.5px;color:var(--ink);
+  text-decoration:none;box-shadow:0 12px 24px -14px rgba(80,50,30,.55);}
+.yt svg{flex:none;}
+.result .t{font-size:20px;font-weight:800;letter-spacing:-.01em;}
+.result .s{font-size:13px;color:var(--ink-soft);font-weight:500;margin-top:3px;}
+
+/* prayer */
+.prayslide{background:linear-gradient(162deg,#F4823F,#F2674A 52%,#EC5C8B);}
+.prayslide::before{display:none;}
+.prayslide .pray-e{font-family:var(--font-display);font-weight:700;font-size:21px;letter-spacing:.05em;color:#fff;}
+.pray-msg{font-size:18px;font-weight:600;line-height:1.8;color:#fff;letter-spacing:-.012em;}
+.pray-credit{font-size:12.5px;color:rgba(255,255,255,.85);font-weight:500;margin-top:8px;}
+
+/* progress + nav */
+.bar{position:absolute;top:0;left:0;right:0;display:flex;gap:5px;padding:15px 16px;z-index:20;}
+.bar .seg{flex:1;height:4px;border-radius:3px;background:rgba(120,90,60,.16);overflow:hidden;cursor:pointer;}
+.bar .seg b{display:block;height:100%;width:0;border-radius:3px;background:var(--coral);transition:width .45s ease;}
+.bar .seg.done b,.bar .seg.now b{width:100%;}
+.deck.dark .bar .seg{background:rgba(255,255,255,.32);}
+.deck.dark .bar .seg b{background:#fff;}
+
+.nav{position:absolute;top:50%;transform:translateY(-50%);z-index:20;width:42px;height:42px;
+  border-radius:50%;border:none;cursor:pointer;background:rgba(255,255,255,.82);color:var(--ink);
+  font-size:21px;box-shadow:0 8px 18px -10px rgba(0,0,0,.45);display:grid;place-items:center;
+  transition:opacity .25s;backdrop-filter:blur(4px);}
+.nav.prev{left:12px;} .nav.next{right:12px;}
+.nav.hide{opacity:0;pointer-events:none;}
+.hint{position:absolute;bottom:24px;left:50%;z-index:20;font-size:13px;color:var(--ink-soft);font-weight:600;
+  background:rgba(255,255,255,.72);padding:7px 17px;border-radius:999px;
+  box-shadow:0 8px 18px -12px rgba(0,0,0,.4);transform:translateX(-50%);animation:pulse 2s ease-in-out infinite;}
+.hint.gone{opacity:0;pointer-events:none;transition:opacity .4s;}
+
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes eq{0%,100%{height:12px}50%{height:42px}}
+@keyframes pulse{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-4px)}}
+@media(prefers-reduced-motion:reduce){
+  .bob,.float,.eq4 i,.cover-eq i,.hint{animation:none;}.eq4 i{height:30px;}.cover-eq i{height:20px;}
+  .reveal{opacity:1;transform:none;transition:none;}.result{opacity:1;transform:none;}.track{transition:none;}
+}
+
+/* upload popup */
+.ovl{position:fixed;inset:0;background:rgba(30,22,18,.55);backdrop-filter:blur(3px);
+  display:none;align-items:center;justify-content:center;z-index:9999;padding:22px;}
+.ovl.on{display:flex;}
+.guide{background:#fff;border-radius:22px;max-width:340px;width:100%;padding:22px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);}
+.guide h3{font-size:17px;font-weight:800;margin-bottom:4px;}
+.guide .lk{font-size:12px;color:var(--coral);word-break:break-all;background:#fdf1ec;border-radius:10px;padding:9px 11px;margin:12px 0 16px;font-weight:600;}
+.guide button{width:100%;border:none;border-radius:12px;padding:12px;font-family:var(--font-body);font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;}
+.bt-net{background:#33b9a3;color:#fff;}.bt-git{background:#24292f;color:#fff;}
+.bt-copy{background:#fbe7c7;color:#9a5a16;}.bt-x{background:transparent;color:var(--ink-soft);margin-top:4px;}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+  <div class="bar" id="bar"></div>
+  <div class="track" id="track">
+
+    <!-- 0 cover -->
+    <section class="slide active" style="--blob:#F8D7A8">
+      <div class="eyebrow reveal">CHURCH · AI · DIARY</div>
+      <h1 class="hero-t reveal">오늘의 <span class="ai">AI 활용기<span class="bob">♪</span></span></h1>
+      <p class="hero-sub reveal">멜로디만 기억나는 찬양,<br>AI가 찾아줬어요</p>
+      <div class="cover-eq reveal"><i></i><i></i><i></i><i></i><i></i></div>
+    </section>
+
+    <!-- 1 -->
+    <section class="slide" style="--blob:#FBDDA8">
+      <div class="tag reveal"><span class="n n-coral">1</span> 아침 출근길</div>
+      <div class="panel p1 reveal">
+        <svg width="280" height="150" viewBox="0 0 280 150" fill="none">
+          <ellipse cx="62" cy="138" rx="26" ry="5" fill="#C98A3A" opacity=".25"/>
+          <g class="float">
+            <circle cx="62" cy="34" r="15" fill="#5C5670"/>
+            <rect x="50" y="50" width="24" height="40" rx="12" fill="#5C5670"/>
+            <rect x="42" y="55" width="8" height="26" rx="4" fill="#4A4660" transform="rotate(20 46 57)"/>
+            <rect x="52" y="84" width="9" height="30" rx="4.5" fill="#4A4660" transform="rotate(14 56 86)"/>
+            <rect x="63" y="84" width="9" height="30" rx="4.5" fill="#5C5670" transform="rotate(-16 67 86)"/>
+          </g>
+          <g transform="translate(120,42)">
+            <ellipse cx="6" cy="40" rx="11" ry="8.5" fill="#F2674A" transform="rotate(-20 6 40)"/>
+            <rect x="14" y="2" width="5" height="40" fill="#F2674A"/>
+            <path d="M19 2 q15 5 9 22 q4-14 -9-15z" fill="#F2674A"/>
+          </g>
+          <text x="166" y="92" font-family="GmarketSans,Pretendard" font-size="44" font-weight="700" fill="#F2674A">?</text>
+          <g transform="translate(232,40)">
+            <circle r="22" fill="#F6A93C"/>
+            <g stroke="#F6A93C" stroke-width="5" stroke-linecap="round">
+              <line x1="0" y1="-32" x2="0" y2="-40"/><line x1="0" y1="32" x2="0" y2="40"/>
+              <line x1="-32" y1="0" x2="-40" y2="0"/><line x1="32" y1="0" x2="40" y2="0"/>
+              <line x1="-23" y1="-23" x2="-29" y2="-29"/><line x1="23" y1="23" x2="29" y2="29"/>
+              <line x1="-23" y1="23" x2="-29" y2="29"/><line x1="23" y1="-23" x2="29" y2="-29"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="cap reveal"><span>출근길에 듣고 싶은 찬양이<br>떠올랐는데…</span><strong>멜로디만 맴돌고<br>제목이 안 떠올라!</strong></div>
+    </section>
+
+    <!-- 2 -->
+    <section class="slide" style="--blob:#CFEBDE">
+      <div class="tag reveal"><span class="n n-mint">2</span> 흥얼흥얼</div>
+      <div class="panel p2 reveal">
+        <svg width="260" height="150" viewBox="0 0 260 150" fill="none">
+          <g transform="translate(40,38)" fill="#F2674A">
+            <ellipse cx="6" cy="44" rx="11" ry="8.5" transform="rotate(-20 6 44)"/>
+            <rect x="14" y="4" width="5" height="42"/><path d="M19 4 q15 5 9 22 q4-14 -9-15z"/>
+          </g>
+          <g transform="translate(86,64)" fill="#F2674A">
+            <ellipse cx="5" cy="32" rx="8.5" ry="6.5" transform="rotate(-20 5 32)"/>
+            <rect x="11" y="4" width="4" height="30"/><path d="M15 4 q11 4 6 16 q3-10 -6-11z"/>
+          </g>
+          <!-- mic -->
+          <g transform="translate(150,30)">
+            <rect x="14" y="0" width="26" height="50" rx="13" fill="#43B492"/>
+            <line x1="20" y1="14" x2="34" y2="14" stroke="#fff" stroke-width="2.5" opacity=".55" stroke-linecap="round"/>
+            <line x1="20" y1="22" x2="34" y2="22" stroke="#fff" stroke-width="2.5" opacity=".55" stroke-linecap="round"/>
+            <line x1="20" y1="30" x2="34" y2="30" stroke="#fff" stroke-width="2.5" opacity=".55" stroke-linecap="round"/>
+            <path d="M6 38 a21 21 0 0 0 42 0" stroke="#43B492" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <rect x="24.5" y="58" width="5" height="16" rx="2.5" fill="#43B492"/>
+            <rect x="14" y="74" width="26" height="6" rx="3" fill="#43B492"/>
+            <g stroke="#6FCAA8" stroke-width="4" fill="none" stroke-linecap="round">
+              <path d="M58 18 a12 12 0 0 1 0 24"/><path d="M66 10 a22 22 0 0 1 0 40"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+      <div class="cap reveal"><span>기억나는 멜로디를<br>흥얼흥얼 부르며</span><strong>휴대폰에 음성 녹음!</strong></div>
+    </section>
+
+    <!-- 3 -->
+    <section class="slide" style="--blob:#C9D1F4">
+      <div class="tag reveal"><span class="n n-blue">3</span> AI에게 질문</div>
+      <div class="panel p3 reveal">
+        <svg width="170" height="160" viewBox="0 0 170 160" fill="none">
+          <rect x="40" y="14" width="90" height="150" rx="20" fill="#4B53A8"/>
+          <rect x="50" y="44" width="70" height="92" rx="12" fill="#EEF0FF"/>
+          <rect x="58" y="24" width="54" height="15" rx="7.5" fill="#F2674A"/>
+          <circle cx="68" cy="31.5" r="3.5" fill="#fff"/>
+          <text x="85" y="35" text-anchor="middle" font-family="Pretendard" font-size="9.5" font-weight="800" fill="#fff">녹음</text>
+          <rect x="60" y="60" width="50" height="34" rx="9" fill="#fff"/>
+          <text x="85" y="76" text-anchor="middle" font-family="Pretendard" font-size="11" font-weight="800" fill="#3A3F7A">이 노래</text>
+          <text x="85" y="89" text-anchor="middle" font-family="Pretendard" font-size="11" font-weight="800" fill="#3A3F7A">제목은?</text>
+          <g stroke="#9AA3E0" stroke-width="3" stroke-linecap="round">
+            <line x1="64" y1="112" x2="64" y2="120"/><line x1="72" y1="108" x2="72" y2="124"/>
+            <line x1="80" y1="104" x2="80" y2="128"/><line x1="88" y1="108" x2="88" y2="124"/>
+            <line x1="96" y1="112" x2="96" y2="120"/><line x1="104" y1="110" x2="104" y2="122"/>
+          </g>
+        </svg>
+      </div>
+      <div class="cap reveal"><span>제미나이 AI에게<br>녹음을 보내며</span><strong>“이 노래 제목은?”</strong></div>
+    </section>
+
+    <!-- 4 -->
+    <section class="slide" style="--blob:#3a3c63">
+      <div class="tag reveal"><span class="n n-amber">4</span> AI가 귀 기울임</div>
+      <div class="panel p4 reveal">
+        <div class="g4">
+          <svg width="58" height="58" viewBox="0 0 48 48">
+            <defs><linearGradient id="gem" x1="0" y1="0" x2="48" y2="48">
+              <stop offset="0" stop-color="#7FA0FF"/><stop offset="1" stop-color="#5C6BC8"/></linearGradient></defs>
+            <path d="M24 2 C26 14 34 22 46 24 C34 26 26 34 24 46 C22 34 14 26 2 24 C14 22 22 14 24 2Z" fill="url(#gem)"/>
+          </svg>
+          <div class="eq4"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="listening">좀 더 듣는 중…</div>
+        </div>
+      </div>
+      <div class="cap reveal"><span>“허밍으로 노래하세요”</span><strong>멜로디를 분석하기 시작!</strong></div>
+    </section>
+
+    <!-- 5 -->
+    <section class="slide" style="--blob:#FBDDA8">
+      <div class="tag reveal"><span class="n n-coral">5</span> 제목 찾았다!</div>
+      <div class="found reveal">발견! ✨</div>
+      <div class="result">
+        <div class="disc"><span>♪</span></div>
+        <div style="text-align:left">
+          <div class="t">예수로 사는 인생</div>
+          <div class="s">마커스워십 · Living in Jesus</div>
+        </div>
+      </div>
+      <div class="cap reveal"><span>AI가 멜로디를 알아보고</span><strong>찬양 제목을 찾아줬어요!</strong></div>
+      <a class="yt reveal" href="https://www.youtube.com/results?search_query=마커스워십+예수로+사는+인생" target="_blank" rel="noopener">
+        <svg width="26" height="18" viewBox="0 0 28 20"><rect width="28" height="20" rx="6" fill="#FF0000"/><path d="M11 6 L20 10 L11 14 Z" fill="#fff"/></svg>
+        유튜브에서 듣기
+      </a>
+    </section>
+
+    <!-- 6 prayer -->
+    <section class="slide prayslide">
+      <div class="reveal" style="font-size:60px;line-height:1">🙏</div>
+      <div class="pray-e reveal">기도합니다</div>
+      <p class="pray-msg reveal">오늘도 AI와 함께<br>성화(聖化)의 길을 걸어가시는<br>복된 하루 되시길 기도합니다.</p>
+      <div class="pray-credit reveal">청연교회 AI 동아리 · 오늘의 AI 활용기</div>
+    </section>
+
+  </div>
+
+  <button class="nav prev hide" id="prev" aria-label="이전">‹</button>
+  <button class="nav next" id="next" aria-label="다음">›</button>
+  <div class="hint" id="hint">옆으로 넘겨보세요 ›</div>
+</div>
+
+<div class="ovl" id="ovl">
+  <div class="guide">
+    <h3>📤 업로드 안내</h3>
+    <div style="font-size:12.5px;color:#9a9099;font-weight:500;">아래 주소로 공유돼요</div>
+    <div class="lk" id="lk"></div>
+    <button class="bt-net" onclick="window.open('https://app.netlify.com/drop','_blank')">⚡ 넷리파이로 빠른 링크</button>
+    <button class="bt-git" onclick="window.open('https://github.com/hdi800hdi800-pixel/praise/upload/main','_blank')">🐙 깃허브에 업로드</button>
+    <button class="bt-copy" id="cp">🔗 공유 링크 복사</button>
+    <button class="bt-x" onclick="document.getElementById('ovl').classList.remove('on')">닫기</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var track=document.getElementById('track');
+  var slides=Array.prototype.slice.call(track.children);
+  var n=slides.length, idx=0;
+  var prev=document.getElementById('prev'),next=document.getElementById('next');
+  var hint=document.getElementById('hint'),bar=document.getElementById('bar'),deck=document.getElementById('deck');
+  for(var i=0;i<n;i++){var s=document.createElement('div');s.className='seg';s.innerHTML='<b></b>';
+    (function(k){s.addEventListener('click',function(){go(k);});})(i);bar.appendChild(s);}
+  var segs=bar.children;
+  function go(i){
+    idx=Math.max(0,Math.min(n-1,i));
+    track.style.transform='translateX(-'+(idx*100)+'%)';
+    slides.forEach(function(s,k){s.classList.toggle('active',k===idx);});
+    for(var k=0;k<n;k++){segs[k].classList.toggle('done',k<idx);segs[k].classList.toggle('now',k===idx);}
+    prev.classList.toggle('hide',idx===0);next.classList.toggle('hide',idx===n-1);
+    deck.classList.toggle('dark',slides[idx].classList.contains('prayslide'));
+    if(idx>0)hint.classList.add('gone');
+  }
+  prev.addEventListener('click',function(){go(idx-1);});
+  next.addEventListener('click',function(){go(idx+1);});
+  document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')go(idx+1);if(e.key==='ArrowLeft')go(idx-1);});
+  var sx=0,sy=0,drag=false;
+  deck.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;drag=true;},{passive:true});
+  deck.addEventListener('touchend',function(e){if(!drag)return;drag=false;
+    var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)){go(dx<0?idx+1:idx-1);}},{passive:true});
+  go(0);
+})();
+(function(){
+  var host=location.hostname||'';
+  if(host.endsWith('github.io')||host.endsWith('netlify.app'))return;
+  var p=location.pathname,f=p.substring(p.lastIndexOf('/')+1);
+  if(!f||f.indexOf('.')<0)f='ai_story-6.html';
+  var url='https://hdi800hdi800-pixel.github.io/praise/'+f;
+  document.getElementById('lk').textContent=url;
+  document.getElementById('cp').addEventListener('click',function(){
+    navigator.clipboard&&navigator.clipboard.writeText(url);this.textContent='✅ 복사됨!';});
+  setTimeout(function(){document.getElementById('ovl').classList.add('on');},600);
+})();
+</script>
+</body>
+</html>
