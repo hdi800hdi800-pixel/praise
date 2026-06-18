@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>오늘의 AI 활용기 🎧</title>
+<meta property="og:type" content="website" />
+<meta property="og:title" content="오늘의 AI 활용기 🎧" />
+<meta property="og:description" content="눈으로 읽던 문서, 이제 귀로 들어요. AI 음성 변환! 넘겨보세요 👉" />
+<meta property="og:image" content="https://hdi800hdi800-pixel.github.io/praise/ai_cover.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://hdi800hdi800-pixel.github.io/praise/ai_story-11.html" />
+<meta property="og:site_name" content="청연교회 AI 동아리" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="오늘의 AI 활용기 🎧" />
+<meta name="twitter:image" content="https://hdi800hdi800-pixel.github.io/praise/ai_cover.png" />
+<meta name="theme-color" content="#FBF6EF" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--coral:#ff6f51;--dark:#2f3142;--cream:#fbf6ef;--peach:#ffe9cf;--muted:#8a8f9e;--green:#35c98b}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;overflow:hidden}
+  body{font-family:'Noto Sans KR',sans-serif;color:var(--dark);
+    background:linear-gradient(135deg,#fbf6ef 60%,#ffe9cf);}
+  .app{position:fixed;inset:0;display:flex;flex-direction:column}
+
+  /* 진행바 */
+  .progress{display:flex;gap:6px;padding:16px 18px 6px}
+  .progress .seg{flex:1;height:5px;border-radius:4px;background:#f0e3d0;transition:.3s}
+  .progress .seg.on{background:var(--coral)}
+
+  /* 덱 */
+  .deck{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .deck::-webkit-scrollbar{display:none}
+  .slide{flex:0 0 100%;scroll-snap-align:center;height:100%;overflow-y:auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:30px 28px 96px}
+  .slide::-webkit-scrollbar{display:none}
+
+  .eyebrow{font-weight:900;letter-spacing:6px;color:var(--coral);font-size:15px;margin-bottom:16px}
+  .htitle{font-family:'Black Han Sans',sans-serif;font-size:48px;line-height:1.08;letter-spacing:1px}
+  .htitle .d{color:var(--dark)} .htitle .c{color:var(--coral)}
+  .sub{font-size:18px;color:var(--muted);line-height:1.6;margin-top:20px;font-weight:500}
+
+  .art{margin:26px 0 6px;display:flex;align-items:center;justify-content:center;gap:14px}
+  .emoji{font-size:62px;line-height:1}
+  .doc{width:72px;height:auto}
+
+  .label{font-family:'Black Han Sans',sans-serif;color:var(--coral);font-size:18px;margin-bottom:6px}
+  .cap{font-size:19px;font-weight:700;line-height:1.6;color:var(--dark);margin-top:14px}
+  .cap .c{color:var(--coral)} .cap .b{color:#4a7bff}
+  .cap .big{display:block;font-size:21px;margin-top:6px}
+
+  .pill{display:inline-flex;align-items:center;gap:12px;background:#fff;border:2px solid #ffe0bb;
+    border-radius:16px;padding:12px 16px;margin-top:6px;box-shadow:0 8px 20px rgba(255,140,90,.18)}
+  .pill .ic{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ff9e45,#ff6f91);
+    display:flex;align-items:center;justify-content:center;font-size:22px}
+  .pill .t{font-family:'Black Han Sans',sans-serif;font-size:16px;color:var(--dark);text-align:left}
+  .pill .s{font-size:12.5px;color:var(--muted);margin-top:2px;text-align:left}
+
+  /* 마무리 */
+  .closing{background:linear-gradient(165deg,#ff9e45,#ff6f91);color:#fff}
+  .closing .pray{font-size:52px}
+  .closing .h{font-family:'Black Han Sans',sans-serif;font-size:25px;margin:6px 0 12px}
+  .closing .pr{font-size:18px;font-weight:500;line-height:1.7;text-shadow:0 2px 8px rgba(170,60,40,.3)}
+
+  /* 넘김 버튼 */
+  .arrow{position:fixed;top:50%;transform:translateY(-50%);width:58px;height:58px;border-radius:50%;
+    border:none;background:#fff;color:var(--dark);font-size:26px;box-shadow:0 8px 22px rgba(120,90,40,.22);
+    cursor:pointer;z-index:20;display:flex;align-items:center;justify-content:center}
+  #next{right:14px} #prev{left:14px;display:none}
+  .arrow:active{transform:translateY(-50%) scale(.92)}
+
+  .swipe{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:15;
+    background:#fff;color:var(--muted);font-weight:700;font-size:16px;padding:10px 22px;border-radius:30px;
+    box-shadow:0 8px 20px rgba(120,90,40,.16)}
+
+  /* 업로드 팝업 */
+  .gh-overlay{position:fixed;inset:0;background:rgba(20,20,40,.55);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s}
+  .gh-overlay.show{opacity:1;pointer-events:auto}
+  .gh-card{background:#fff;color:#1a1a2e;border-radius:20px;width:100%;max-width:360px;padding:24px 20px 20px;text-align:center;transform:translateY(20px);transition:transform .3s;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+  .gh-overlay.show .gh-card{transform:translateY(0)}
+  .gh-emoji{font-size:44px;margin-bottom:8px}.gh-card h2{font-size:18px;font-weight:800;margin-bottom:6px}
+  .gh-card .gh-desc{font-size:13px;color:#777;line-height:1.5;margin-bottom:16px}
+  .gh-copied{display:none;font-size:12.5px;color:#1aa260;font-weight:700;margin-bottom:12px}
+  .gh-copied.on{display:block}
+  .gh-linkbox{background:#f0f4ff;border-radius:12px;padding:10px 12px;margin-bottom:14px;text-align:left}
+  .gh-linkbox .gh-label{font-size:10px;color:#2F5BEA;font-weight:700;letter-spacing:.5px}
+  .gh-linkbox .gh-val{font-size:12px;color:#333;word-break:break-all;margin-top:2px}
+  .gh-btn{display:block;width:100%;text-decoration:none;background:linear-gradient(135deg,#2F5BEA,#6a1b9a);color:#fff;font-size:15px;font-weight:800;padding:15px;border-radius:14px;margin-bottom:10px;border:none;cursor:pointer}
+  .gh-btn:active{opacity:.85}.gh-btn.netlify{background:linear-gradient(135deg,#00ad9f,#00c7b7)}
+  .gh-btn.copy{background:#fff;color:#2F5BEA;border:2px solid #2F5BEA}
+  .gh-close{background:none;border:none;color:#aaa;font-size:13px;cursor:pointer;margin-top:4px;text-decoration:underline}
+  .gh-toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;font-size:13px;padding:10px 18px;border-radius:20px;z-index:10000;opacity:0;transition:opacity .3s;pointer-events:none}
+  .gh-toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="progress" id="progress"></div>
+
+  <div class="deck" id="deck">
+
+    <!-- 0 표지 -->
+    <section class="slide">
+      <div class="eyebrow">CHURCH · AI · DIARY</div>
+      <div class="htitle"><span class="d">오늘의 </span><span class="c">AI</span><br><span class="c">활용기</span>🎧</div>
+      <div class="sub">눈으로 읽던 문서,<br>이제 귀로 들어요</div>
+      <div class="art">
+        <svg class="doc" viewBox="0 0 80 96"><path d="M10 4 h44 l18 18 v70 a4 4 0 0 1-4 4 H10 a4 4 0 0 1-4-4 V8 a4 4 0 0 1 4-4z" fill="#fff" stroke="#d9c4a0" stroke-width="3"/><path d="M54 4 v18 h18" fill="none" stroke="#d9c4a0" stroke-width="3"/><g stroke="#bcd0ff" stroke-width="5" stroke-linecap="round"><line x1="20" y1="44" x2="56" y2="44"/><line x1="20" y1="58" x2="56" y2="58"/><line x1="20" y1="72" x2="44" y2="72"/></g></svg>
+        <svg width="56" height="80" viewBox="0 0 56 80"><g fill="none" stroke="#ff6f51" stroke-width="6" stroke-linecap="round"><path d="M8 30 q12 10 0 20"/><path d="M24 20 q22 20 0 40"/><path d="M40 12 q32 28 0 56"/></g></svg>
+      </div>
+    </section>
+
+    <!-- 1 -->
+    <section class="slide">
+      <div class="label">① 눈이 침침</div>
+      <div class="art"><span class="emoji">📄</span><span class="emoji">😣</span></div>
+      <div class="cap">숙지해야 할 <span class="c">법령</span>을<br>문서로 받았는데…<span class="big">계속 보니 눈이 아프네 😣</span></div>
+    </section>
+
+    <!-- 2 -->
+    <section class="slide">
+      <div class="label">② 이런 생각</div>
+      <div class="art"><span class="emoji">🤔</span><span class="emoji">💭</span></div>
+      <div class="cap">문서를 음성으로 바꿔서<br>출퇴근 때 들으면 좋을 텐데<span class="big c">이거… 가능할까?</span></div>
+    </section>
+
+    <!-- 3 -->
+    <section class="slide">
+      <div class="label">③ AI에게 부탁</div>
+      <div class="art"><span class="emoji">📱</span><span class="emoji">💬</span></div>
+      <div class="cap">클로드 AI에게<span class="big b">“이 문서, 음성으로 바꿔줄래?”</span></div>
+    </section>
+
+    <!-- 4 -->
+    <section class="slide">
+      <div class="label">④ 변환 중</div>
+      <div class="art"><span class="emoji">📝</span><span class="emoji" style="font-size:46px">➡️</span><span class="emoji">🔊</span></div>
+      <div class="cap">텍스트 → 음성 변환 중…<span class="big c">음성 파일 변환 완료! ✓</span></div>
+    </section>
+
+    <!-- 5 -->
+    <section class="slide">
+      <div class="label">⑤ 이제 귀로!</div>
+      <div class="art"><span class="emoji">🎧</span></div>
+      <div class="pill"><div class="ic">🎧</div><div><div class="t">법령 (음성)</div><div class="s">오디오 변환 완료 · MP3</div></div></div>
+      <div class="cap">와, 이제 출퇴근하며<span class="big c">귀로 듣고 숙지해야겠다!</span></div>
+    </section>
+
+    <!-- 6 마무리 -->
+    <section class="slide closing">
+      <div class="pray">🙏</div>
+      <div class="h">기도합니다</div>
+      <div class="pr">오늘도 AI와 함께<br>성화(聖化)의 길을 걸어가시는<br>복된 하루 되시길 기도합니다.</div>
+    </section>
+
+  </div>
+
+  <button class="arrow" id="prev">‹</button>
+  <button class="arrow" id="next">›</button>
+  <div class="swipe" id="swipe">옆으로 넘겨보세요 ›</div>
+</div>
+
+<div class="gh-overlay" id="ghOverlay">
+  <div class="gh-card">
+    <div class="gh-emoji">🚀</div><h2>공유 링크 만들기</h2>
+    <div class="gh-desc">이 파일을 업로드하면 아래 주소로<br>모두가 열어볼 수 있어요.</div>
+    <div class="gh-copied" id="ghCopied">✓ 링크가 복사됐어요 — 카톡에 바로 붙여넣기 하세요!</div>
+    <div class="gh-linkbox"><div class="gh-label">GITHUB 공유 링크</div><div class="gh-val" id="ghLink"></div></div>
+    <button class="gh-btn netlify" id="ghNetlify">⚡ Netlify Drop으로 빠르게 (드래그)</button>
+    <button class="gh-btn" id="ghGithub">🐙 GitHub에 업로드하기</button>
+    <button class="gh-btn copy" id="ghCopy">🔗 공유 링크 복사</button>
+    <button class="gh-close" id="ghClose">닫기</button>
+  </div>
+</div>
+<div class="gh-toast" id="ghToast">복사됨!</div>
+
+<script>
+const deck=document.getElementById('deck');
+const slides=deck.querySelectorAll('.slide');
+const prog=document.getElementById('progress');
+slides.forEach((_,i)=>{const s=document.createElement('div');s.className='seg'+(i===0?' on':'');prog.appendChild(s);});
+const segs=prog.querySelectorAll('.seg');
+const prev=document.getElementById('prev'),next=document.getElementById('next'),swipe=document.getElementById('swipe');
+function update(){
+  const i=Math.round(deck.scrollLeft/deck.clientWidth);
+  segs.forEach((s,k)=>s.classList.toggle('on',k<=i));
+  prev.style.display=i===0?'none':'flex';
+  next.style.display=i===slides.length-1?'none':'flex';
+  swipe.style.display=i===0?'block':'none';
+}
+deck.addEventListener('scroll',update);
+prev.onclick=()=>deck.scrollBy({left:-deck.clientWidth,behavior:'smooth'});
+next.onclick=()=>deck.scrollBy({left:deck.clientWidth,behavior:'smooth'});
+function toast(){const t=document.getElementById('ghToast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1300);}
+
+/* 업로드 팝업 + 자동복사 [규칙6] */
+(function(){
+  const host=location.hostname||'';
+  if(host.endsWith('github.io')||host.endsWith('netlify.app')) return;
+  let file=(location.pathname.split('/').pop()||'index.html'); if(!file) file='index.html';
+  const share='https://hdi800hdi800-pixel.github.io/praise/'+file;
+  function armTap(){const once=()=>{navigator.clipboard&&navigator.clipboard.writeText(share).then(()=>document.getElementById('ghCopied').classList.add('on'));};document.addEventListener('click',once,{once:true});}
+  setTimeout(()=>{
+    document.getElementById('ghLink').textContent=share;
+    document.getElementById('ghOverlay').classList.add('show');
+    if(navigator.clipboard){navigator.clipboard.writeText(share).then(()=>document.getElementById('ghCopied').classList.add('on')).catch(armTap);}else armTap();
+  },600);
+  document.getElementById('ghNetlify').onclick=()=>window.open('https://app.netlify.com/drop','_blank');
+  document.getElementById('ghGithub').onclick=()=>window.open('https://github.com/hdi800hdi800-pixel/praise/upload/main','_blank');
+  document.getElementById('ghCopy').onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(share);toast();};
+  document.getElementById('ghClose').onclick=()=>document.getElementById('ghOverlay').classList.remove('show');
+})();
+</script>
+</body>
+</html>
