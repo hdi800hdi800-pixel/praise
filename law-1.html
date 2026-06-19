@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>HTML 작업 법령 ⚖️</title>
+<!-- OG / 카톡 포스터 -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="HTML 작업 법령 ⚖️" />
+<meta property="og:description" content="청연교회 AI 동아리 HTML 제작·배포에 관한 법률 — 제1조부터 부칙까지" />
+<meta property="og:image" content="https://hdi800hdi800-pixel.github.io/praise/law_cover.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://hdi800hdi800-pixel.github.io/praise/law.html" />
+<meta property="og:site_name" content="청연교회 AI 동아리" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="HTML 작업 법령 ⚖️" />
+<meta name="twitter:image" content="https://hdi800hdi800-pixel.github.io/praise/law_cover.png" />
+<meta name="theme-color" content="#1f2a4a" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1f2a4a;--gold:#b28a3e;--ink:#222433;--paper:#f8f4ea;--muted:#7a7466;--line:#e3dcc9;--red:#b23a34}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{background:#ece5d4;color:var(--ink);
+    font-family:'Noto Sans KR',sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased}
+  .sheet{max-width:600px;margin:0 auto;background:var(--paper);min-height:100vh;
+    padding:0;border-left:1px solid var(--line);border-right:1px solid var(--line);
+    box-shadow:0 0 40px rgba(80,60,20,.08)}
+  .inner{padding:30px 26px 60px}
+
+  /* 제호부 */
+  .titleblock{text-align:center;padding:34px 22px 26px;border-bottom:2px solid var(--navy);
+    background:linear-gradient(180deg,#fbf7ee,#f6f1e4)}
+  .org{font-family:'Noto Sans KR';font-weight:700;letter-spacing:6px;font-size:13px;color:var(--gold)}
+  .lawname{font-family:'Noto Serif KR',serif;font-weight:900;font-size:32px;color:var(--navy);margin:10px 0 6px;line-height:1.25}
+  .lawsub{font-size:14px;color:var(--muted)}
+  .enact{display:inline-block;margin-top:14px;font-size:12.5px;color:#8a6d3b;
+    border:1px solid var(--gold);border-radius:20px;padding:4px 14px}
+  .seal{position:absolute}
+
+  /* 조문 */
+  .art{margin-top:26px}
+  .art h2{font-family:'Noto Serif KR',serif;font-weight:700;font-size:18px;color:var(--navy);
+    padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:10px}
+  .art p{font-size:15.5px;margin:7px 0;color:#33343f}
+  .hang{padding-left:4px}
+  .ho{padding-left:22px;font-size:14.8px;color:#44454f;margin:4px 0}
+  .circ{color:var(--navy);font-weight:700;margin-right:3px}
+
+  /* 주소 박스 (탭 복사) */
+  .addr{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
+    border-left:4px solid var(--gold);border-radius:8px;padding:10px 12px;margin:8px 0;
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:var(--navy);
+    word-break:break-all;cursor:pointer}
+  .addr .ic{flex:0 0 auto;font-size:13px;color:var(--gold)}
+  .addr:active{background:#f3eeDF}
+
+  .supp{margin-top:30px;padding-top:18px;border-top:2px solid var(--navy)}
+  .supp h2{font-family:'Noto Serif KR',serif;font-weight:700;font-size:17px;color:var(--navy);margin-bottom:8px}
+  .foot{text-align:center;margin-top:34px;font-size:12.5px;color:var(--muted)}
+  .stamp{text-align:center;margin-top:22px}
+  .stamp span{display:inline-flex;align-items:center;justify-content:center;width:74px;height:74px;
+    border:3px solid var(--red);border-radius:50%;color:var(--red);
+    font-family:'Noto Serif KR',serif;font-weight:900;font-size:34px;transform:rotate(-8deg)}
+
+  /* 업로드 안내 팝업 */
+  .gh-overlay{position:fixed;inset:0;background:rgba(20,20,40,.55);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s}
+  .gh-overlay.show{opacity:1;pointer-events:auto}
+  .gh-card{background:#fff;color:#1a1a2e;border-radius:20px;width:100%;max-width:360px;padding:24px 20px 20px;text-align:center;transform:translateY(20px);transition:transform .3s;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+  .gh-overlay.show .gh-card{transform:translateY(0)}
+  .gh-emoji{font-size:44px;margin-bottom:8px}
+  .gh-card h2{font-size:18px;font-weight:800;margin-bottom:6px}
+  .gh-card .gh-desc{font-size:13px;color:#777;line-height:1.5;margin-bottom:16px}
+  .gh-linkbox{background:#f0f4ff;border-radius:12px;padding:10px 12px;margin-bottom:14px;text-align:left}
+  .gh-linkbox .gh-label{font-size:10px;color:#2F5BEA;font-weight:700;letter-spacing:.5px}
+  .gh-linkbox .gh-val{font-size:12px;color:#333;word-break:break-all;margin-top:2px}
+  .gh-btn{display:block;width:100%;text-decoration:none;background:linear-gradient(135deg,#2F5BEA,#6a1b9a);color:#fff;font-size:15px;font-weight:800;padding:15px;border-radius:14px;margin-bottom:10px;border:none;cursor:pointer}
+  .gh-btn:active{opacity:.85}
+  .gh-btn.netlify{background:linear-gradient(135deg,#00ad9f,#00c7b7)}
+  .gh-btn.copy{background:#fff;color:#2F5BEA;border:2px solid #2F5BEA}
+  .gh-close{background:none;border:none;color:#aaa;font-size:13px;cursor:pointer;margin-top:4px;text-decoration:underline}
+  .gh-toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#fff;font-size:13px;padding:10px 18px;border-radius:20px;z-index:10000;opacity:0;transition:opacity .3s;pointer-events:none}
+  .gh-toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="titleblock">
+    <div class="org">청연교회 AI 동아리</div>
+    <div class="lawname">HTML 제작·배포에<br>관한 법률</div>
+    <div class="lawsub">약칭: HTML작업법</div>
+    <div class="enact">제정 2026. 6. 19. · 법률 제1호</div>
+  </div>
+
+  <div class="inner">
+
+    <section class="art">
+      <h2>제1조 (목적)</h2>
+      <p>이 법은 청연교회 AI 동아리의 HTML 콘텐츠를 제작·배포·공유함에 있어 필요한 사항을 정하여, 비개발자인 작업자가 휴대폰만으로도 안정적으로 결과물을 게시하고 공유할 수 있도록 함을 목적으로 한다.</p>
+    </section>
+
+    <section class="art">
+      <h2>제2조 (정의)</h2>
+      <p>이 법에서 사용하는 용어의 뜻은 다음과 같다.</p>
+      <p class="ho">1. “저장소”란 소유자 hdi800hdi800-pixel의 <b>praise</b> 저장소를 말한다.</p>
+      <p class="ho">2. “공유 링크”란 게시된 파일을 누구나 열람할 수 있는 https 주소를 말한다.</p>
+      <p class="ho">3. “안내 팝업”이란 작업자의 업로드를 돕기 위해 페이지에 표시되는 창을 말한다.</p>
+      <p class="ho">4. “포스터”란 카카오톡 등에서 링크 미리보기로 표시되는 대표 이미지를 말한다.</p>
+    </section>
+
+    <section class="art">
+      <h2>제3조 (깃허브 업로드)</h2>
+      <p class="hang"><span class="circ">①</span> 모든 파일은 저장소에 업로드하며, 업로드 주소는 다음과 같다.</p>
+      <div class="addr" data-copy="https://github.com/hdi800hdi800-pixel/praise/upload/main"><span class="ic">⎘</span>github.com/hdi800hdi800-pixel/praise/upload/main</div>
+      <p class="hang"><span class="circ">②</span> 공유 링크는 다음 형식에 따르며, 경로에 <b>/praise/</b>가 포함됨을 원칙으로 한다.</p>
+      <div class="addr" data-copy="https://hdi800hdi800-pixel.github.io/praise/파일명.html"><span class="ic">⎘</span>https://hdi800hdi800-pixel.github.io/praise/파일명.html</div>
+    </section>
+
+    <section class="art">
+      <h2>제4조 (업로드 안내 팝업)</h2>
+      <p class="hang"><span class="circ">①</span> 제작하는 모든 HTML에는 안내 팝업을 의무적으로 포함한다.</p>
+      <p class="hang"><span class="circ">②</span> 팝업은 페이지를 연 뒤 약 0.6초 후에 표시되어야 한다.</p>
+      <p class="hang"><span class="circ">③</span> 팝업은 파일명을 자동으로 감지하여 공유 링크를 표시하고, 다음 각 호의 버튼과 닫기 버튼을 둔다.</p>
+      <p class="ho">1. 넷리파이 드롭 열기 (app.netlify.com/drop)</p>
+      <p class="ho">2. 깃허브 업로드 페이지 열기</p>
+      <p class="ho">3. 공유 링크 복사</p>
+      <p class="hang"><span class="circ">④</span> 팝업은 작업자가 자신의 기기에서 파일을 열 때에만 표시되며, github.io 또는 netlify.app 주소로 열람하는 경우에는 표시되지 아니한다. 이 경우 열람자에게는 콘텐츠만 보여야 한다.</p>
+    </section>
+
+    <section class="art">
+      <h2>제5조 (파이어베이스의 사용)</h2>
+      <p>실시간 투표 기능이 포함된 HTML에 한하여 파이어베이스 프로젝트 <b>stckvote</b>를 사용하며, 데이터베이스 주소는 다음과 같다.</p>
+      <div class="addr" data-copy="https://stckvote-default-rtdb.firebaseio.com"><span class="ic">⎘</span>https://stckvote-default-rtdb.firebaseio.com</div>
+    </section>
+
+    <section class="art">
+      <h2>제6조 (작업자의 지위 및 보호)</h2>
+      <p class="hang"><span class="circ">①</span> 작업자는 비개발자로서 휴대폰만으로 작업하고, 깃허브 웹 업로드로 배포한다.</p>
+      <p class="hang"><span class="circ">②</span> 동일 파일을 재내려받을 경우 이름 뒤에 -1, -2 등이 순차적으로 부가되므로, 새 버전을 제공하는 자는 항상 최신 파일의 공유 링크를 함께 안내하여야 한다.</p>
+      <p class="hang"><span class="circ">③</span> 카카오톡 미리보기가 표시되지 아니할 경우, 업로드 후 2~3분을 기다린 뒤 링크 끝에 ?2 등 숫자를 부가하여 공유한다.</p>
+    </section>
+
+    <section class="art">
+      <h2>제7조 (주소의 표시)</h2>
+      <p>공유 링크·업로드 주소 등 모든 주소는 탭하여 즉시 복사할 수 있도록 반드시 코드블록(복사 가능한 형태)으로 표시하여야 한다.</p>
+    </section>
+
+    <section class="art">
+      <h2>제8조 (카카오톡 포스터)</h2>
+      <p class="hang"><span class="circ">①</span> 제작하는 모든 HTML의 &lt;head&gt;에는 다음 각 호의 OG 태그를 포함하여야 한다.</p>
+      <p class="ho">1. og:title (제목)</p>
+      <p class="ho">2. og:description (설명)</p>
+      <p class="ho">3. og:image (포스터 이미지의 전체 https 주소)</p>
+      <p class="ho">4. og:url (공유 링크)</p>
+      <p class="ho">5. twitter:card = summary_large_image</p>
+      <p class="hang"><span class="circ">②</span> og:image 주소는 깃허브에 실제로 게시된 이미지의 전체 주소여야 하며, 상대주소를 사용할 수 없다.</p>
+      <p class="hang"><span class="circ">③</span> 별도의 포스터 이미지가 없는 경우, 페이지 내 대표 이미지를 그대로 og:image로 사용한다.</p>
+      <p class="hang"><span class="circ">④</span> 새 파일을 제공하는 자는 OG 태그의 포함 여부를 확인하고, 포스터 표시를 위해 2~3분 경과 후 ?2를 부가하여 공유할 것을 안내하여야 한다.</p>
+    </section>
+
+    <section class="supp">
+      <h2>부칙</h2>
+      <p class="hang"><span class="circ">①</span> (시행일) 이 법은 공포한 날부터 시행한다.</p>
+      <p class="hang"><span class="circ">②</span> (적용례) 이 법은 시행일 이후 제작하는 모든 HTML부터 적용한다.</p>
+    </section>
+
+    <div class="stamp"><span>法</span></div>
+    <div class="foot">청연교회 AI 동아리 · HTML 작업 법령</div>
+  </div>
+</div>
+
+<!-- 업로드 안내 팝업 -->
+<div class="gh-overlay" id="ghOverlay">
+  <div class="gh-card">
+    <div class="gh-emoji">🚀</div>
+    <h2>공유 링크 만들기</h2>
+    <div class="gh-desc">이 파일을 업로드하면 아래 주소로<br>모두가 열어볼 수 있어요.</div>
+    <div class="gh-linkbox"><div class="gh-label">GITHUB 공유 링크</div><div class="gh-val" id="ghLink"></div></div>
+    <button class="gh-btn netlify" id="ghNetlify">⚡ Netlify Drop으로 빠르게 (드래그)</button>
+    <button class="gh-btn" id="ghGithub">🐙 GitHub에 업로드하기</button>
+    <button class="gh-btn copy" id="ghCopy">🔗 공유 링크 복사</button>
+    <button class="gh-close" id="ghClose">닫기</button>
+  </div>
+</div>
+<div class="gh-toast" id="ghToast">복사됨!</div>
+
+<script>
+/* 주소 박스 탭하면 복사 */
+document.querySelectorAll('.addr').forEach(el=>{
+  el.addEventListener('click',()=>{
+    const t=el.getAttribute('data-copy');
+    navigator.clipboard && navigator.clipboard.writeText(t);
+    const toast=document.getElementById('ghToast'); toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'),1300);
+  });
+});
+
+/* 업로드 안내 팝업 */
+(function(){
+  const host=location.hostname||'';
+  if(host.endsWith('github.io')||host.endsWith('netlify.app')) return;
+  let file=(location.pathname.split('/').pop()||'index.html'); if(!file) file='index.html';
+  const share='https://hdi800hdi800-pixel.github.io/praise/'+file;
+  function armTap(){const once=()=>{navigator.clipboard&&navigator.clipboard.writeText(share);};document.addEventListener('click',once,{once:true});}
+  setTimeout(()=>{document.getElementById('ghLink').textContent=share;
+    document.getElementById('ghOverlay').classList.add('show');
+    if(navigator.clipboard){navigator.clipboard.writeText(share).catch(armTap);}else armTap();},600);
+  document.getElementById('ghNetlify').onclick=()=>window.open('https://app.netlify.com/drop','_blank');
+  document.getElementById('ghGithub').onclick=()=>window.open('https://github.com/hdi800hdi800-pixel/praise/upload/main','_blank');
+  document.getElementById('ghCopy').onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(share);
+    const t=document.getElementById('ghToast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1400);};
+  document.getElementById('ghClose').onclick=()=>document.getElementById('ghOverlay').classList.remove('show');
+})();
+</script>
+</body>
+</html>
