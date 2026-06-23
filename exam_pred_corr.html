@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>교정학 예상문제</title>
+<meta name="theme-color" content="#244A7D" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="교정학 예상문제" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+  :root{--paper:#EAEDF2;--surface:#fff;--ink:#1A2230;--muted:#697585;--line:#E1E6EC;--navy:#244A7D;--navy-d:#1A3860;--green:#1B9C53;--red:#D23B3B;--seal:#C8372D;--shadow:0 1px 2px rgba(20,35,55,.05),0 6px 22px rgba(20,35,55,.06);}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Pretendard","Pretendard Variable",-apple-system,system-ui,sans-serif;line-height:1.6;padding-bottom:96px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:640px;margin:0 auto;padding:0 14px}
+  header{background:linear-gradient(135deg,#1F3F6E,#2C5896);color:#fff;padding:16px;position:sticky;top:0;z-index:30;box-shadow:0 4px 16px rgba(26,56,96,.22)}
+  .htop{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .htop h1{font-size:16px;font-weight:800;margin:0;letter-spacing:-.3px;display:flex;align-items:center;gap:8px}
+  .seal{width:auto;height:26px;padding:0 7px;border:2px solid #F4C9C4;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#FBE3E0;transform:rotate(-6deg);flex:none;white-space:nowrap}
+  .score{font-size:13px;font-weight:800;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:6px 12px;border-radius:999px;white-space:nowrap}
+  .controls{max-width:640px;margin:12px auto 0;display:flex;gap:8px;align-items:center}
+  .ctrl{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff;font-family:inherit;font-weight:700;font-size:13px;padding:8px 12px;border-radius:9px;cursor:pointer}
+  .ctrl.on{background:#fff;color:var(--navy-d)}.spacer{flex:1}
+  .bar{height:6px;background:#DDE3EB;border-radius:999px;overflow:hidden;margin:14px 2px 4px}
+  .bar i{display:block;height:100%;background:var(--navy);width:0;transition:width .3s}
+  .hint{font-size:12px;color:var(--muted);margin:6px 2px 2px;text-align:center}
+  .qcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px 16px;margin:14px 0}
+  .qnum{display:inline-block;background:var(--navy);color:#fff;font-size:12.5px;font-weight:800;padding:3px 11px;border-radius:7px;margin-bottom:10px}
+  .qtext{font-size:15.5px;font-weight:600;letter-spacing:-.2px;margin:0 0 14px;white-space:pre-wrap;word-break:break-word}
+  .opt{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;background:#F7F9FC;border:1.5px solid var(--line);border-radius:12px;padding:12px 13px;margin-bottom:8px;cursor:pointer;font-family:inherit;font-size:14px;color:var(--ink);transition:.1s;position:relative;line-height:1.55}
+  .opt:active{transform:scale(.995)}
+  .opt .mk{flex:none;font-weight:800;color:var(--navy);font-size:15px;min-width:20px}
+  .opt .tx{flex:1;padding-right:24px}
+  .opt.correct{background:#EAF7EF;border-color:#9FD9B6}.opt.correct .mk{color:var(--green)}
+  .opt.wrong{background:#FCEDEC;border-color:#EFB7B2}.opt.wrong .mk{color:var(--red)}
+  .opt.disabled{cursor:default}
+  .stamp{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:23px;font-weight:900;line-height:1;color:var(--seal)}
+  .result{margin-top:10px;padding:13px 14px;border-radius:12px;font-size:14px;display:none}
+  .result.show{display:block}
+  .result.ok{background:#EAF7EF;color:#157A40;border:1px solid #BCE3CB}
+  .result.no{background:#FCEDEC;color:#B3322C;border:1px solid #EAC2BE}
+  .result b{font-weight:800}
+  .retry{margin-top:8px;background:none;border:1px solid var(--line);color:var(--muted);font-family:inherit;font-weight:700;font-size:13px;padding:7px 13px;border-radius:9px;cursor:pointer}
+  .nav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;max-width:640px;margin:0 auto;z-index:25}
+  .nav button{flex:1;border:none;font-family:inherit;font-weight:800;font-size:15px;padding:13px;border-radius:12px;cursor:pointer;background:var(--navy);color:#fff}
+  .nav button.ghost{background:#EEF1F5;color:var(--navy-d);border:1px solid var(--line)}
+  .nav button:disabled{opacity:.4}
+  .jump{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);font-weight:700}
+  .jump input{width:52px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;font-size:14px;text-align:center}
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(16px);background:#1A2230;color:#fff;padding:11px 18px;border-radius:999px;font-size:13.5px;font-weight:700;opacity:0;transition:.25s;z-index:60;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style></head>
+<body>
+<header><div class="htop"><h1><span class="seal">예상</span> 교정학 예상문제</h1><span class="score" id="score">0 / 0</span></div>
+<div class="controls">
+<button class="ctrl on" id="m1" onclick="setMode('one')">한 문제씩</button>
+<button class="ctrl" id="m2" onclick="setMode('all')">전체 보기</button>
+<span class="spacer"></span><button class="ctrl" onclick="resetAll()">↻ 초기화</button>
+</div></header>
+<div class="wrap"><div class="bar"><i id="barFill"></i></div><p class="hint" id="hint"></p><div id="area"></div></div>
+<div class="nav" id="nav">
+<button class="ghost" id="prev" onclick="go(-1)">← 이전</button>
+<span class="jump"><input id="jumpIn" type="number" inputmode="numeric"/><button class="ghost" style="flex:none;padding:8px 12px" onclick="jump()">이동</button></span>
+<button id="next" onclick="go(1)">다음 →</button></div>
+<div class="toast" id="toast"></div>
+<script>
+const QUIZDATA=[{"n": 1, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 독거수용에 대한 설명으로 옳지 않은 것은?", "opts": ["수용자는 독거수용한다. 다만 일정한 사유가 있으면 혼거수용할 수 있다.", "처우상 독거수용은 주간에는 일과에 따른 공동생활을 하게 하고 휴업일과 야간에만 독거수용하는 것을 말한다.", "계호상 독거수용은 사람의 생명·신체의 보호 또는 교정시설의 안전과 질서유지를 위하여 항상 독거수용하며 다른 수용자와의 접촉을 금지하는 것이다.", "교도관은 계호상 독거수용자를 6개월에 1회 시찰하여 건강상 또는 교화상 이상이 없는지 살펴야 한다."], "ans": 4}, {"n": 2, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 혼거수용에 대한 설명으로 옳은 것은?", "opts": ["혼거수용 인원은 2명 이상으로 하는 것이 원칙이다.", "혼거수용 인원은 3명 이상으로 한다. 다만 요양이나 그 밖의 부득이한 사정이 있는 경우에는 2명으로 할 수 있다.", "소장은 어떠한 경우에도 노역장 유치명령을 받은 사람과 징역형 수형자를 혼거수용할 수 없다.", "신입자는 예외 없이 혼거수용하여야 한다."], "ans": 2}, {"n": 3, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 신입자의 처우에 대한 설명으로 옳지 않은 것은?", "opts": ["신입자의 건강검진은 수용된 날부터 3일 이내에 하여야 한다. 다만 부득이한 사정이 있으면 예외로 한다.", "소장은 신입자가 환자이거나 부득이한 사정이 있는 경우가 아니면 수용된 날부터 3일 동안 신입자거실에 수용하여야 한다.", "소장은 19세 미만의 신입자 등에 대하여는 신입자거실 수용기간을 30일까지 연장할 수 있다.", "신입자거실에 수용된 사람에게는 사회복귀를 위하여 반드시 작업을 부과하여야 한다."], "ans": 4}, {"n": 4, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 건강검진에 대한 설명으로 옳지 않은 것은?", "opts": ["소장은 수용자에 대하여 1년에 1회 이상 건강검진을 하여야 한다.", "19세 미만의 수용자와 계호상 독거수용자에 대하여는 6개월에 1회 이상 건강검진을 하여야 한다.", "임산부인 수용자에 대하여는 6개월에 1회 이상 건강검진을 하여야 한다.", "건강검진은 「건강검진기본법」에 따라 지정된 건강검진기관에 의뢰하여 할 수 있다."], "ans": 2}, {"n": 5, "stem": "「형의 집행 및 수용자의 처우에 관한 법률」상 보호실 및 진정실 수용에 대한 설명으로 옳은 것은?", "opts": ["보호실 수용기간은 7일 이내로 하며, 1회당 15일의 범위에서 연장할 수 있다.", "수용자를 보호실에 수용할 수 있는 기간은 계속하여 6개월을 초과할 수 없다.", "진정실 수용기간은 24시간 이내로 하며, 1회당 12시간의 범위에서 연장할 수 있다.", "진정실에 수용할 수 있는 기간은 계속하여 7일을 초과할 수 없다."], "ans": 3}, {"n": 6, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 보호장비에 해당하지 않는 것은?", "opts": ["수갑·포승", "보호의자·보호침대", "머리보호장비·보호복", "가스총·전자충격기"], "ans": 4}, {"n": 7, "stem": "「형의 집행 및 수용자의 처우에 관한 법률」상 귀휴에 대한 설명으로 옳지 않은 것은?", "opts": ["소장은 6개월 이상 형을 집행받은 수형자로서 그 형기의 3분의 1(21년 이상의 유기형 또는 무기형의 경우에는 7년)이 지나고 교정성적이 우수한 사람에게 1년 중 20일 이내의 일반귀휴를 허가할 수 있다.", "소장은 가족 또는 배우자의 직계존속이 사망한 때에는 5일 이내의 특별귀휴를 허가할 수 있다.", "귀휴기간은 형 집행기간에 포함하지 아니한다.", "소장은 귀휴 중인 수형자가 거소의 제한이나 그 밖에 귀휴허가에 붙인 조건을 위반한 때에는 귀휴를 취소할 수 있다."], "ans": 3}, {"n": 8, "stem": "「형법」 및 형의 집행 관련 법령상 가석방에 대한 설명으로 옳지 않은 것은?", "opts": ["무기형은 20년, 유기형은 형기의 3분의 1이 지난 후 행정처분으로 가석방할 수 있다.", "가석방의 기간은 무기형에 있어서는 10년으로 하고, 유기형에 있어서는 남은 형기로 하되 그 기간은 10년을 초과할 수 없다.", "가석방기간 중 고의로 지은 죄로 금고 이상의 형을 선고받아 그 판결이 확정된 경우 가석방처분은 효력을 잃는다.", "가석방 적격심사는 분류처우위원회가 담당한다."], "ans": 4}, {"n": 9, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 징벌에 대한 설명으로 옳지 않은 것은?", "opts": ["징벌은 같은 행위에 관하여 거듭 부과할 수 없으며, 행위의 동기 및 경중, 행위 후의 정황, 그 밖의 사정을 고려하여 수용목적을 달성하는 데에 필요한 최소한도에 그쳐야 한다.", "징벌사유가 발생한 날부터 2년이 지나면 이를 이유로 징벌을 부과하지 못한다.", "30일 이내의 금치처분을 받은 사람에 대하여는 그 기간 중 텔레비전 시청 제한이 함께 부과된다.", "징벌위원회는 위원장을 포함한 3명 이상 5명 이하의 위원으로 구성한다."], "ans": 4}, {"n": 10, "stem": "「형의 집행 및 수용자의 처우에 관한 법률 시행규칙」상 경비처우급에 따른 처우로 옳지 않은 것은?", "opts": ["개방처우급은 개방시설에 수용되어 가장 높은 수준의 처우가 필요한 수형자에 대한 처우등급이다.", "경비처우급은 개방처우급, 완화경비처우급, 일반경비처우급, 중(重)경비처우급으로 구분한다.", "분류심사 결과 경비처우급 조정이 필요한 경우 원칙적으로 한 단계의 범위에서 조정한다.", "중경비처우급 수형자에게는 어떠한 경우에도 전화통화를 허용할 수 없다."], "ans": 4}, {"n": 11, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 작업과 직업훈련에 대한 설명으로 옳지 않은 것은?", "opts": ["소장은 수형자에게 작업을 부과하려면 나이·형기·건강상태·기술·성격·취미·경력·장래생계 등을 고려하여야 한다.", "소장은 수형자의 가족 또는 배우자의 직계존속이 사망하면 2일간 작업을 면제한다.", "법무부장관은 직업훈련을 위하여 필요한 경우 수형자를 다른 교정시설로 이송할 수 있다.", "소장은 수형자의 직업훈련을 위하여 필요하면 외부의 기관 또는 단체에서 훈련을 받게 할 수 있다."], "ans": 2}, {"n": 12, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 미결수용자의 처우에 대한 설명으로 옳지 않은 것은?", "opts": ["미결수용자는 무죄의 추정을 받으며 그에 합당한 처우를 받는다.", "미결수용자와 변호인 간의 접견에는 교도관이 참여하지 못하며 그 내용을 청취 또는 녹취하지 못한다. 다만 보이는 거리에서 관찰할 수 있다.", "소장은 미결수용자에 대하여는 신청 여부와 관계없이 작업을 부과하여야 한다.", "미결수용자가 수사·재판 등에 참석할 때에는 사복을 착용할 수 있다."], "ans": 3}, {"n": 13, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 접견·편지수수·전화통화에 대한 설명으로 옳지 않은 것은?", "opts": ["수용자가 미성년자인 자녀와 접견하는 경우에는 접촉차단시설이 설치되지 아니한 장소에서 접견하게 할 수 있다.", "수용자가 변호인(변호인이 되려는 사람 포함)과 접견하는 경우에는 접촉차단시설이 설치되지 아니한 장소에서 접견하게 한다.", "수용자는 다른 사람과 편지를 주고받을 수 있으나, 그 내용은 어떠한 경우에도 검열할 수 없다.", "전화통화의 통화시간은 특별한 사정이 없으면 3분 이내로 한다."], "ans": 3}, {"n": 14, "stem": "행형(교정)의 역사에서 펜실베니아제(Pennsylvania System)에 대한 설명으로 옳지 않은 것은?", "opts": ["주·야간 구분 없이 엄정하게 독거수용하는 제도이다.", "필라델피아제, 분방제라고도 불린다.", "주간에는 혼거작업을 하고 야간에는 독거수용하며 엄정한 침묵을 강제하는 것이 특징이다.", "수용자의 정신적·심리적 문제를 유발할 소지가 있다는 비판이 있다."], "ans": 3}, {"n": 15, "stem": "수형자 처우제도에 대한 설명으로 옳지 않은 것은?", "opts": ["오번제(Auburn System)는 주간에는 침묵 속에서 공동작업을 하고 야간에는 독거수용하는 완화독거제이다.", "엘마이라제(Elmira System)는 부정기형과 누진처우, 가석방을 결합한 수형자 자력개선 제도이다.", "아일랜드제는 독거구금·혼거작업·중간교도소·가석방의 단계로 운영되며 가석방자에게 경찰감시를 붙인 것이 특징이다.", "고사제(기간제)는 매월의 소득점수로 미리 정한 책임점수를 소각하는 방식의 점수제이다."], "ans": 4}, {"n": 16, "stem": "블럼스타인(A. Blumstein)이 제시한 교정시설의 과밀수용 해소방안에 대한 설명으로 옳지 않은 것은?", "opts": ["정문정책(front-door policy)은 구금 이전 단계에서 비구금 제재로 전환하여 수용인원을 줄이는 전략이다.", "후문정책(back-door policy)은 보호관찰부 가석방 등으로 형기종료 이전에 출소시켜 공간을 확보하는 전략이다.", "선별적 무능력화는 모든 범죄자를 동일하게 장기 구금하여 재범을 차단하는 전략이다.", "무익한 전략(null strategy)은 수용인원이 증가하더라도 교정시설은 그만큼을 수용할 수밖에 없다는 전략이다."], "ans": 3}, {"n": 17, "stem": "수용자 사회의 부문화와 역할유형에 대한 설명으로 옳지 않은 것은?", "opts": ["클레머(Clemmer)는 수형자가 교정시설의 문화·규범·가치에 동화되어 가는 과정을 교도소화(prisonization)라고 하였다.", "쉬락(Schrag)의 고지식자(Square Johns)는 교정시설 규율에 동조하는 친사회적 재소자 유형이다.", "쉬락의 정의한(Right Guys)은 반사회적 수형자로 동료 수형자의 이익을 위해 행동하는 유형이다.", "수용자 부문화의 형성을 교정시설 내부의 박탈에서 찾는 입장을 유입모형(importation model)이라 한다."], "ans": 4}, {"n": 18, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 권리구제에 대한 설명으로 옳지 않은 것은?", "opts": ["수용자는 그 처우에 관하여 불복하는 경우 법무부장관·순회점검공무원 또는 관할 지방교정청장에게 청원할 수 있다.", "수용자는 그 처우에 관하여 소장에게 면담을 신청할 수 있다.", "수용자는 「공공기관의 정보공개에 관한 법률」에 따라 정보의 공개를 청구할 수 있다.", "수용자가 청원·진정·면담 등 권리구제를 위한 행위를 한 경우 소장은 이를 이유로 불이익한 처우를 할 수 있다."], "ans": 4}];
+
+const $=s=>document.querySelector(s);
+const NUMC=["","①","②","③","④","⑤"];
+const KEY="expredcorr";
+let answered={}, idx=0, mode="one";
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),1500);}
+function esc(s){return String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+function optHtml(q,qi){
+  const picked=answered[qi];
+  let h='<span class="qnum">'+q.n+'번</span><p class="qtext">'+esc(q.stem)+'</p>';
+  q.opts.forEach((o,oi)=>{const n=oi+1;let cls="opt",stamp="";
+    if(picked!=null){cls+=" disabled";
+      if(n===q.ans){cls+=" correct";stamp='<span class="stamp">○</span>';}
+      if(picked===n&&picked!==q.ans){cls+=" wrong";stamp='<span class="stamp">✕</span>';}}
+    h+='<button class="'+cls+'" '+(picked!=null?'':'onclick="pick('+qi+','+n+')"')+'><span class="mk">'+NUMC[n]+'</span><span class="tx">'+esc(o)+'</span>'+stamp+'</button>';});
+  if(picked!=null){const ok=picked===q.ans;
+    h+='<div class="result '+(ok?'ok':'no')+' show">'+(ok?'<b>정답입니다 ○</b>':'<b>오답입니다 ✕</b>  정답: '+NUMC[q.ans]+'번')+
+       '<br><button class="retry" onclick="retry('+qi+')">다시 풀기</button></div>';}
+  return h;
+}
+function render(){const area=$("#area");
+  if(mode==="all"){$("#nav").style.display="none";area.innerHTML=QUIZDATA.map((q,qi)=>'<div class="qcard">'+optHtml(q,qi)+'</div>').join("");}
+  else{$("#nav").style.display="flex";const q=QUIZDATA[idx];area.innerHTML='<div class="qcard">'+optHtml(q,idx)+'</div>';
+    $("#prev").disabled=idx===0;$("#next").disabled=idx===QUIZDATA.length-1;$("#jumpIn").value=q.n;
+    $("#hint").textContent=(idx+1)+" / "+QUIZDATA.length+"문항";window.scrollTo(0,0);}
+  updateScore();}
+function pick(qi,n){answered[qi]=n;save();render();}
+function retry(qi){delete answered[qi];save();render();}
+function go(d){idx=Math.max(0,Math.min(QUIZDATA.length-1,idx+d));render();}
+function jump(){const v=parseInt($("#jumpIn").value,10);const i=QUIZDATA.findIndex(q=>q.n===v);if(i>=0){idx=i;render();}else toast("그 번호는 없어요");}
+function setMode(m){mode=m;$("#m1").classList.toggle("on",m==="one");$("#m2").classList.toggle("on",m==="all");render();}
+function resetAll(){if(!confirm("기록을 지우고 처음부터?"))return;answered={};save();idx=0;render();toast("초기화했어요");}
+function updateScore(){let done=Object.keys(answered).length,c=0;for(const k in answered)if(answered[k]===QUIZDATA[k].ans)c++;
+  $("#score").textContent=c+" / "+done;$("#barFill").style.width=(done/QUIZDATA.length*100)+"%";}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(answered));}catch(e){}}
+function load(){try{answered=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){answered={};}}
+load();render();
+</script>
+<!-- =========================================================
+     📱 카톡 공유하려면 👉 https://app.netlify.com/drop 에 업로드하세요!
+     📱 카톡 공유하려면 👉 https://github.com 에 접속하세요!
+     ========================================================= -->
+</body></html>

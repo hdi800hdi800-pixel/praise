@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>형소법 예상문제</title>
+<meta name="theme-color" content="#244A7D" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="형소법 예상문제" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+  :root{--paper:#EAEDF2;--surface:#fff;--ink:#1A2230;--muted:#697585;--line:#E1E6EC;--navy:#244A7D;--navy-d:#1A3860;--green:#1B9C53;--red:#D23B3B;--seal:#C8372D;--shadow:0 1px 2px rgba(20,35,55,.05),0 6px 22px rgba(20,35,55,.06);}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Pretendard","Pretendard Variable",-apple-system,system-ui,sans-serif;line-height:1.6;padding-bottom:96px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:640px;margin:0 auto;padding:0 14px}
+  header{background:linear-gradient(135deg,#1F3F6E,#2C5896);color:#fff;padding:16px;position:sticky;top:0;z-index:30;box-shadow:0 4px 16px rgba(26,56,96,.22)}
+  .htop{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .htop h1{font-size:16px;font-weight:800;margin:0;letter-spacing:-.3px;display:flex;align-items:center;gap:8px}
+  .seal{width:auto;height:26px;padding:0 7px;border:2px solid #F4C9C4;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#FBE3E0;transform:rotate(-6deg);flex:none;white-space:nowrap}
+  .score{font-size:13px;font-weight:800;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:6px 12px;border-radius:999px;white-space:nowrap}
+  .controls{max-width:640px;margin:12px auto 0;display:flex;gap:8px;align-items:center}
+  .ctrl{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff;font-family:inherit;font-weight:700;font-size:13px;padding:8px 12px;border-radius:9px;cursor:pointer}
+  .ctrl.on{background:#fff;color:var(--navy-d)}.spacer{flex:1}
+  .bar{height:6px;background:#DDE3EB;border-radius:999px;overflow:hidden;margin:14px 2px 4px}
+  .bar i{display:block;height:100%;background:var(--navy);width:0;transition:width .3s}
+  .hint{font-size:12px;color:var(--muted);margin:6px 2px 2px;text-align:center}
+  .qcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px 16px;margin:14px 0}
+  .qnum{display:inline-block;background:var(--navy);color:#fff;font-size:12.5px;font-weight:800;padding:3px 11px;border-radius:7px;margin-bottom:10px}
+  .qtext{font-size:15.5px;font-weight:600;letter-spacing:-.2px;margin:0 0 14px;white-space:pre-wrap;word-break:break-word}
+  .opt{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;background:#F7F9FC;border:1.5px solid var(--line);border-radius:12px;padding:12px 13px;margin-bottom:8px;cursor:pointer;font-family:inherit;font-size:14px;color:var(--ink);transition:.1s;position:relative;line-height:1.55}
+  .opt:active{transform:scale(.995)}
+  .opt .mk{flex:none;font-weight:800;color:var(--navy);font-size:15px;min-width:20px}
+  .opt .tx{flex:1;padding-right:24px}
+  .opt.correct{background:#EAF7EF;border-color:#9FD9B6}.opt.correct .mk{color:var(--green)}
+  .opt.wrong{background:#FCEDEC;border-color:#EFB7B2}.opt.wrong .mk{color:var(--red)}
+  .opt.disabled{cursor:default}
+  .stamp{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:23px;font-weight:900;line-height:1;color:var(--seal)}
+  .result{margin-top:10px;padding:13px 14px;border-radius:12px;font-size:14px;display:none}
+  .result.show{display:block}
+  .result.ok{background:#EAF7EF;color:#157A40;border:1px solid #BCE3CB}
+  .result.no{background:#FCEDEC;color:#B3322C;border:1px solid #EAC2BE}
+  .result b{font-weight:800}
+  .retry{margin-top:8px;background:none;border:1px solid var(--line);color:var(--muted);font-family:inherit;font-weight:700;font-size:13px;padding:7px 13px;border-radius:9px;cursor:pointer}
+  .nav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;max-width:640px;margin:0 auto;z-index:25}
+  .nav button{flex:1;border:none;font-family:inherit;font-weight:800;font-size:15px;padding:13px;border-radius:12px;cursor:pointer;background:var(--navy);color:#fff}
+  .nav button.ghost{background:#EEF1F5;color:var(--navy-d);border:1px solid var(--line)}
+  .nav button:disabled{opacity:.4}
+  .jump{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);font-weight:700}
+  .jump input{width:52px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;font-size:14px;text-align:center}
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(16px);background:#1A2230;color:#fff;padding:11px 18px;border-radius:999px;font-size:13.5px;font-weight:700;opacity:0;transition:.25s;z-index:60;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style></head>
+<body>
+<header><div class="htop"><h1><span class="seal">예상</span> 형소법 예상문제</h1><span class="score" id="score">0 / 0</span></div>
+<div class="controls">
+<button class="ctrl on" id="m1" onclick="setMode('one')">한 문제씩</button>
+<button class="ctrl" id="m2" onclick="setMode('all')">전체 보기</button>
+<span class="spacer"></span><button class="ctrl" onclick="resetAll()">↻ 초기화</button>
+</div></header>
+<div class="wrap"><div class="bar"><i id="barFill"></i></div><p class="hint" id="hint"></p><div id="area"></div></div>
+<div class="nav" id="nav">
+<button class="ghost" id="prev" onclick="go(-1)">← 이전</button>
+<span class="jump"><input id="jumpIn" type="number" inputmode="numeric"/><button class="ghost" style="flex:none;padding:8px 12px" onclick="jump()">이동</button></span>
+<button id="next" onclick="go(1)">다음 →</button></div>
+<div class="toast" id="toast"></div>
+<script>
+const QUIZDATA=[{"n": 1, "stem": "「형사소송법」상 제척사유에 해당하지 않는 것은?", "opts": ["법관이 피해자인 때", "법관이 피고인 또는 피해자의 친족이거나 친족이었던 때", "법관이 사건에 관하여 전심재판 또는 그 기초가 되는 조사·심리에 관여한 때", "법관이 피고인과 같은 학교를 졸업한 동문인 때"], "ans": 4}, {"n": 2, "stem": "친고죄의 고소에 대한 설명으로 옳지 않은 것은?", "opts": ["고소는 제1심 판결선고 전까지 취소할 수 있다.", "고소를 취소한 자는 다시 고소할 수 없다.", "친고죄의 공범 중 1인에 대한 고소 또는 그 취소는 다른 공범자에게도 효력이 있다.", "친고죄의 고소기간은 범인을 알게 된 날부터 1년이다."], "ans": 4}, {"n": 3, "stem": "반의사불벌죄에 대한 설명으로 옳지 않은 것은?", "opts": ["피해자가 처벌을 원하지 아니하는 의사를 명시한 때에는 공소를 제기할 수 없다.", "처벌을 희망하는 의사표시의 철회는 제1심 판결선고 전까지 할 수 있다.", "처벌을 희망하지 않는 의사표시를 철회한 자는 다시 처벌을 희망하는 의사표시를 할 수 있다.", "폭행죄·협박죄는 반의사불벌죄에 해당한다."], "ans": 3}, {"n": 4, "stem": "공소시효에 대한 설명으로 옳지 않은 것은?", "opts": ["공소시효는 공소가 제기되면 그 진행이 정지되고 공소기각 또는 관할위반의 재판이 확정된 때로부터 진행한다.", "피고인이 형사처분을 면할 목적으로 국외에 있는 경우 그 기간 동안 공소시효의 진행은 정지된다.", "사람을 살해한 범죄(종범 제외)로 사형에 해당하는 범죄에 대하여는 공소시효를 적용하지 아니한다.", "공소장변경이 있는 경우 공소시효 완성 여부는 공소장변경 시점을 기준으로 판단한다."], "ans": 4}, {"n": 5, "stem": "체포에 대한 설명으로 옳지 않은 것은?", "opts": ["현행범인은 누구든지 영장 없이 체포할 수 있다.", "긴급체포는 사형·무기 또는 장기 3년 이상의 징역이나 금고에 해당하는 죄를 범하였다고 의심할 만한 상당한 이유가 있는 경우에 할 수 있다.", "검사 또는 사법경찰관이 긴급체포한 피의자를 구속하고자 할 때에는 지체 없이 검사는 관할 지방법원판사에게 구속영장을 청구하여야 하고, 그 청구는 체포한 때부터 48시간 이내에 하여야 한다.", "다액 50만원 이하의 벌금, 구류 또는 과료에 해당하는 죄의 현행범인은 주거가 분명하더라도 영장 없이 체포할 수 있다."], "ans": 4}, {"n": 6, "stem": "구속에 대한 설명으로 옳지 않은 것은?", "opts": ["사법경찰관이 피의자를 구속한 때에는 10일 이내에 피의자를 검사에게 인치하지 아니하면 석방하여야 한다.", "검사가 피의자를 구속한 때 또는 인치받은 때에는 10일 이내에 공소를 제기하지 아니하면 석방하여야 하며, 지방법원판사의 허가를 받아 10일을 초과하지 아니하는 한도에서 1차 연장할 수 있다.", "구속영장을 발부받지 아니하고 피의자를 구속한 경우 그 구속은 적법하다.", "피의자에 대한 구속영장의 청구를 받은 지방법원판사는 신속히 피의자를 심문하여야 한다."], "ans": 3}, {"n": 7, "stem": "보석에 대한 설명으로 옳지 않은 것은?", "opts": ["보석의 청구를 받은 법원은 원칙적으로 보석을 허가하여야 하나, 일정한 제외사유가 있으면 허가하지 아니할 수 있다.", "피고인이 사형, 무기 또는 장기 10년이 넘는 징역이나 금고에 해당하는 죄를 범한 때는 필요적 보석의 제외사유에 해당한다.", "법원은 피고인 외의 자에게 보증금의 납입을 허가할 수 있다.", "보석은 피고인의 청구가 있어야만 허가할 수 있고, 법원이 직권으로 보석을 허가할 수는 없다."], "ans": 4}, {"n": 8, "stem": "위법수집증거배제법칙에 대한 설명으로 옳지 않은 것은?", "opts": ["적법한 절차에 따르지 아니하고 수집한 증거는 원칙적으로 증거로 할 수 없다.", "위법하게 수집된 증거를 기초로 획득한 2차적 증거(독수독과)도 원칙적으로 증거능력이 부정된다.", "절차 위반행위가 적법절차의 실질적 내용을 침해하는 경우에 해당하더라도, 증거능력을 배제하는 것이 오히려 형사사법 정의에 반하는 예외적 경우라면 유죄의 증거로 사용할 수 있다.", "진술거부권을 고지하지 않고 얻은 자백이라도 임의성만 인정되면 언제나 증거능력이 있다."], "ans": 4}, {"n": 9, "stem": "자백에 대한 설명으로 옳지 않은 것은?", "opts": ["피고인의 자백이 고문·폭행·협박·신체구속의 부당한 장기화 또는 기망 기타의 방법으로 임의로 진술한 것이 아니라고 의심할 만한 이유가 있는 때에는 이를 유죄의 증거로 하지 못한다.", "피고인의 자백이 그 피고인에게 불이익한 유일의 증거인 때에는 이를 유죄의 증거로 하지 못한다.", "자백의 보강증거는 범죄사실의 전부 또는 중요부분을 인정할 수 있을 정도가 되어야만 한다.", "공범인 공동피고인의 진술은 다른 공동피고인에 대한 보강증거가 될 수 있다."], "ans": 3}, {"n": 10, "stem": "전문법칙과 그 예외에 대한 설명으로 옳지 않은 것은?", "opts": ["검사 또는 사법경찰관이 작성한 피의자신문조서는 적법한 절차와 방식에 따라 작성되고 그 내용을 인정할 때에 한정하여 증거로 할 수 있다.", "법원 또는 법관의 면전에서의 진술을 기재한 조서는 당연히 증거능력이 있다.", "전문진술은 어떠한 경우에도 증거로 할 수 없다.", "감정의 경과와 결과를 기재한 서류는 일정한 요건을 갖추면 증거로 할 수 있다."], "ans": 3}, {"n": 11, "stem": "증인과 증언거부권에 대한 설명으로 옳지 않은 것은?", "opts": ["누구든지 자기나 친족 등이 형사소추 또는 공소제기를 당하거나 유죄판결을 받을 사실이 발로될 염려가 있는 증언을 거부할 수 있다.", "재판장은 증인이 증언거부권을 행사할 수 있는 자에 해당하는 경우 신문 전에 증언을 거부할 수 있음을 설명하여야 한다.", "16세 미만의 자 또는 선서의 취지를 이해하지 못하는 자는 선서하게 하지 아니하고 신문하여야 한다.", "선서무능력자가 선서하고 거짓 진술을 한 경우에는 위증죄가 성립한다."], "ans": 4}, {"n": 12, "stem": "공소장변경에 대한 설명으로 옳지 않은 것은?", "opts": ["검사는 법원의 허가를 받아 공소장에 기재한 공소사실 또는 적용법조의 추가·철회 또는 변경을 할 수 있다.", "법원은 공소사실의 동일성을 해하지 아니하는 한도에서 공소장변경을 허가하여야 한다.", "공소장변경은 공소사실의 동일성이 인정되지 않는 경우에도 허용된다.", "법원은 심리의 경과에 비추어 상당하다고 인정할 때에는 공소사실 또는 적용법조의 추가 또는 변경을 요구하여야 한다."], "ans": 3}, {"n": 13, "stem": "간이공판절차에 대한 설명으로 옳지 않은 것은?", "opts": ["피고인이 공판정에서 공소사실에 대하여 자백한 때에는 법원은 그 사건을 간이공판절차에 의하여 심판할 것을 결정할 수 있다.", "간이공판절차에서는 전문법칙(제310조의2 등)의 적용이 배제될 수 있다.", "간이공판절차에서는 증거조사를 법원이 상당하다고 인정하는 방법으로 할 수 있다.", "법정형이 사형·무기 또는 단기 1년 이상의 징역에 해당하는 사건도 자백만 하면 당연히 간이공판절차로 진행된다."], "ans": 4}, {"n": 14, "stem": "국민참여재판에 대한 설명으로 옳지 않은 것은?", "opts": ["국민참여재판은 피고인이 원하지 아니하거나 배제결정이 있는 경우에는 하지 아니한다.", "배심원의 평결과 의견은 법원을 기속하지 아니한다.", "배심원이 유·무죄에 관하여 전원의 의견이 일치하지 아니하는 때에는 평결을 위하여 판사의 의견을 들어야 한다.", "법원은 배심원의 만장일치 무죄평결이 있으면 어떠한 경우에도 유죄를 선고할 수 없다."], "ans": 4}, {"n": 15, "stem": "상소에 대한 설명으로 옳지 않은 것은?", "opts": ["항소의 제기기간은 7일이다.", "피고인은 자기에게 불이익한 재판에 대하여 상소할 수 있다.", "검사는 피고인의 이익을 위하여도 상소할 수 있다.", "즉시항고의 제기기간은 3일이다."], "ans": 4}, {"n": 16, "stem": "불이익변경금지의 원칙에 대한 설명으로 옳지 않은 것은?", "opts": ["피고인이 항소 또는 상고한 사건과 피고인을 위하여 항소 또는 상고한 사건에 대하여는 원심판결의 형보다 중한 형을 선고하지 못한다.", "검사만이 상소한 사건에 대하여도 불이익변경금지의 원칙이 적용된다.", "제1심에서 선고한 추징을 피고인만이 항소한 항소심에서 몰수로 변경하는 것은 불이익변경금지원칙에 반하지 않는다.", "형의 경중은 전체적·실질적으로 고찰하여 판단한다."], "ans": 2}, {"n": 17, "stem": "재심과 비상상고에 대한 설명으로 옳지 않은 것은?", "opts": ["재심은 유죄의 확정판결 등에 대하여 그 선고를 받은 자의 이익을 위하여 청구한다.", "비상상고는 판결이 확정된 후 그 사건의 심판이 법령에 위반한 것을 발견한 때 검찰총장이 대법원에 신청한다.", "재심은 원칙적으로 사실인정의 부당을 시정하기 위한 제도이고, 비상상고는 법령위반을 시정하기 위한 제도이다.", "피고인에게 불이익한 재심도 허용된다."], "ans": 4}, {"n": 18, "stem": "재정신청에 대한 설명으로 옳지 않은 것은?", "opts": ["고소권자로서 고소를 한 자는 검사의 불기소처분에 불복하여 그 검사 소속 지방검찰청 소재지를 관할하는 고등법원에 재정신청을 할 수 있다.", "재정신청을 하려는 자는 원칙적으로 검찰청법에 따른 항고를 거쳐야 한다.", "법원의 공소제기결정에 따라 공소가 제기된 때에는 검사는 공소를 취소할 수 없다.", "재정신청 기각결정에 대하여는 어떠한 불복도 허용되지 않는다."], "ans": 4}];
+
+const $=s=>document.querySelector(s);
+const NUMC=["","①","②","③","④","⑤"];
+const KEY="expredcrim";
+let answered={}, idx=0, mode="one";
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),1500);}
+function esc(s){return String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+function optHtml(q,qi){
+  const picked=answered[qi];
+  let h='<span class="qnum">'+q.n+'번</span><p class="qtext">'+esc(q.stem)+'</p>';
+  q.opts.forEach((o,oi)=>{const n=oi+1;let cls="opt",stamp="";
+    if(picked!=null){cls+=" disabled";
+      if(n===q.ans){cls+=" correct";stamp='<span class="stamp">○</span>';}
+      if(picked===n&&picked!==q.ans){cls+=" wrong";stamp='<span class="stamp">✕</span>';}}
+    h+='<button class="'+cls+'" '+(picked!=null?'':'onclick="pick('+qi+','+n+')"')+'><span class="mk">'+NUMC[n]+'</span><span class="tx">'+esc(o)+'</span>'+stamp+'</button>';});
+  if(picked!=null){const ok=picked===q.ans;
+    h+='<div class="result '+(ok?'ok':'no')+' show">'+(ok?'<b>정답입니다 ○</b>':'<b>오답입니다 ✕</b>  정답: '+NUMC[q.ans]+'번')+
+       '<br><button class="retry" onclick="retry('+qi+')">다시 풀기</button></div>';}
+  return h;
+}
+function render(){const area=$("#area");
+  if(mode==="all"){$("#nav").style.display="none";area.innerHTML=QUIZDATA.map((q,qi)=>'<div class="qcard">'+optHtml(q,qi)+'</div>').join("");}
+  else{$("#nav").style.display="flex";const q=QUIZDATA[idx];area.innerHTML='<div class="qcard">'+optHtml(q,idx)+'</div>';
+    $("#prev").disabled=idx===0;$("#next").disabled=idx===QUIZDATA.length-1;$("#jumpIn").value=q.n;
+    $("#hint").textContent=(idx+1)+" / "+QUIZDATA.length+"문항";window.scrollTo(0,0);}
+  updateScore();}
+function pick(qi,n){answered[qi]=n;save();render();}
+function retry(qi){delete answered[qi];save();render();}
+function go(d){idx=Math.max(0,Math.min(QUIZDATA.length-1,idx+d));render();}
+function jump(){const v=parseInt($("#jumpIn").value,10);const i=QUIZDATA.findIndex(q=>q.n===v);if(i>=0){idx=i;render();}else toast("그 번호는 없어요");}
+function setMode(m){mode=m;$("#m1").classList.toggle("on",m==="one");$("#m2").classList.toggle("on",m==="all");render();}
+function resetAll(){if(!confirm("기록을 지우고 처음부터?"))return;answered={};save();idx=0;render();toast("초기화했어요");}
+function updateScore(){let done=Object.keys(answered).length,c=0;for(const k in answered)if(answered[k]===QUIZDATA[k].ans)c++;
+  $("#score").textContent=c+" / "+done;$("#barFill").style.width=(done/QUIZDATA.length*100)+"%";}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(answered));}catch(e){}}
+function load(){try{answered=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){answered={};}}
+load();render();
+</script>
+<!-- =========================================================
+     📱 카톡 공유하려면 👉 https://app.netlify.com/drop 에 업로드하세요!
+     📱 카톡 공유하려면 👉 https://github.com 에 접속하세요!
+     ========================================================= -->
+</body></html>
