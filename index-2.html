@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>오늘의 지수</title>
+<meta name="theme-color" content="#0F1B2D" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="오늘의 지수" />
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+  :root{
+    --bg:#0F1B2D; --bg2:#13233A; --card:#1A2C46; --line:#27405F;
+    --ink:#EAF1FA; --muted:#8DA2BD;
+    --up:#FF5A5A; --down:#3B8EF0; --flat:#9AA6B2;
+    --accent:#4FA3FF;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:linear-gradient(180deg,#0F1B2D,#0C1626);color:var(--ink);
+    font-family:"Pretendard","Pretendard Variable",-apple-system,system-ui,"Apple SD Gothic Neo",sans-serif;
+    min-height:100vh;padding:20px 16px calc(28px + env(safe-area-inset-bottom));}
+  .wrap{max-width:520px;margin:0 auto}
+  header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:6px}
+  h1{font-size:22px;font-weight:800;margin:0;letter-spacing:-.4px}
+  .date{font-size:13px;color:var(--muted);font-weight:600;text-align:right;line-height:1.4}
+  .sub{font-size:12px;color:var(--muted);margin:2px 0 18px}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px 17px;margin-bottom:11px;display:flex;align-items:center;justify-content:space-between;
+    box-shadow:0 4px 16px rgba(0,0,0,.18);min-height:78px;
+  }
+  .left{min-width:0}
+  .nm{font-size:15.5px;font-weight:800;letter-spacing:-.3px}
+  .reg{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:3px}
+  .right{text-align:right;flex:none;margin-left:10px}
+  .val{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.3px}
+  .chg{font-size:13px;font-weight:800;margin-top:3px;font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:5px;justify-content:flex-end}
+  .up{color:var(--up)} .down{color:var(--down)} .flat{color:var(--flat)}
+  .arrow{font-size:11px}
+  .skeleton .val,.skeleton .chg{color:transparent;background:linear-gradient(90deg,#22354f,#2c425f,#22354f);
+    background-size:200% 100%;border-radius:6px;animation:sh 1.2s infinite}
+  @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+  .err{color:#F2A0A0;font-size:12px;font-weight:700}
+
+  .actions{display:flex;gap:10px;margin-top:18px}
+  .btn{flex:1;border:none;font-family:inherit;font-weight:800;font-size:15px;padding:15px;border-radius:13px;cursor:pointer}
+  .btn-refresh{background:var(--bg2);color:var(--ink);border:1px solid var(--line)}
+  .btn-copy{background:var(--accent);color:#06203f}
+  .btn:active{transform:scale(.98)}
+  .foot{text-align:center;color:var(--muted);font-size:11px;margin-top:16px;line-height:1.6}
+  .toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);
+    background:#EAF1FA;color:#0F1B2D;padding:12px 20px;border-radius:999px;font-size:14px;font-weight:800;
+    opacity:0;transition:.25s;z-index:50;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>📊 오늘의 지수</h1>
+    <div class="date" id="date">—</div>
+  </header>
+  <p class="sub">미국·한국 주요 지수 · 시세는 15~20분 지연될 수 있어요</p>
+
+  <div id="list"></div>
+
+  <div class="actions">
+    <button class="btn btn-refresh" id="refresh">↻ 새로고침</button>
+    <button class="btn btn-copy" id="copy">📋 카톡용 복사</button>
+  </div>
+
+  <p class="foot">데이터: Stooq · 참고용이며 투자 판단의 책임은 본인에게 있습니다</p>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ★ 무료 API 키를 여기에 붙여넣으세요 (https://twelvedata.com/apikey 에서 발급)
+const API_KEY = "d78a7677010c474389cc33d4b74c9eb6";
+
+const INDICES = [
+  {sym:"GSPC", name:"S&P 500",        reg:"미국"},
+  {sym:"IXIC", name:"나스닥 종합",     reg:"미국"},
+  {sym:"SOX",  name:"필라델피아 반도체", reg:"미국"},
+  {sym:"KS11", name:"코스피",          reg:"한국"},
+  {sym:"KQ11", name:"코스닥",          reg:"한국"},
+];
+
+const $=s=>document.querySelector(s);
+let lastData=[];
+
+function fmt(n,d=2){
+  return Number(n).toLocaleString("ko-KR",{minimumFractionDigits:d,maximumFractionDigits:d});
+}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),1800);}
+
+function skeleton(){
+  $("#list").innerHTML=INDICES.map(ix=>`
+    <div class="card skeleton">
+      <div class="left"><div class="nm">${ix.name}</div><div class="reg">${ix.reg}</div></div>
+      <div class="right"><div class="val">000</div><div class="chg">0</div></div>
+    </div>`).join("");
+}
+
+// Twelve Data /quote: 현재가 + 전일종가 한 번에 (CORS 허용, 프록시 불필요)
+async function fetchDaily(ix){
+  if(!API_KEY || API_KEY.indexOf("여기에")>-1) throw new Error("nokey");
+  const url="https://api.twelvedata.com/quote?symbol="+encodeURIComponent(ix.sym)
+    +"&apikey="+encodeURIComponent(API_KEY);
+  const res=await fetch(url,{cache:"no-store"});
+  const j=await res.json();
+  if(j.status==="error" || j.code) throw new Error(j.message||"err");
+  const close=parseFloat(j.close);
+  const prevClose=parseFloat(j.previous_close);
+  if(!isFinite(close)||!isFinite(prevClose)) throw new Error("nan");
+  return {close, prevClose, date:j.datetime||""};
+}
+
+async function load(){
+  if(!API_KEY || API_KEY.indexOf("여기에")>-1){
+    document.getElementById("list").innerHTML=
+      '<div style="background:#3a2a18;border:1px solid #6b4d12;border-radius:14px;padding:18px;color:#ffd9a0;font-size:13.5px;line-height:1.7">'+
+      '<b>⚙ API 키 설정이 필요합니다.</b><br><br>'+
+      '1) <b>twelvedata.com/apikey</b> 에서 무료 가입 후 키 복사<br>'+
+      '2) 이 파일(index.html)을 열어 위쪽 <b>API_KEY</b> 부분에 붙여넣기<br>'+
+      '3) 저장(Commit) 후 새로고침</div>';
+    document.getElementById("date").textContent="설정 필요";
+    return;
+  }
+  skeleton();
+  const now=new Date();
+  $("#date").innerHTML=now.toLocaleDateString("ko-KR",{month:"long",day:"numeric",weekday:"short"})
+    +"<br>"+now.toLocaleTimeString("ko-KR",{hour:"2-digit",minute:"2-digit"})+" 기준";
+
+  const results=await Promise.all(INDICES.map(async ix=>{
+    try{
+      const d=await fetchDaily(ix);
+      const diff=d.close-d.prevClose;
+      const pct=(diff/d.prevClose)*100;
+      return {...ix, ok:true, value:d.close, diff, pct, date:d.date};
+    }catch(e){
+      return {...ix, ok:false};
+    }
+  }));
+  lastData=results;
+  render(results);
+}
+
+function render(results){
+  $("#list").innerHTML=results.map(r=>{
+    if(!r.ok){
+      return `<div class="card"><div class="left"><div class="nm">${r.name}</div>
+        <div class="reg">${r.reg}</div></div>
+        <div class="right"><div class="err">불러오기 실패</div></div></div>`;
+    }
+    const cls=r.diff>0?"up":r.diff<0?"down":"flat";
+    const ar=r.diff>0?"▲":r.diff<0?"▼":"–";
+    const sign=r.diff>0?"+":"";
+    return `<div class="card">
+      <div class="left"><div class="nm">${r.name}</div><div class="reg">${r.reg}</div></div>
+      <div class="right">
+        <div class="val">${fmt(r.value)}</div>
+        <div class="chg ${cls}"><span class="arrow">${ar}</span>${sign}${fmt(r.diff)} (${sign}${fmt(r.pct)}%)</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function copyText(){
+  if(!lastData.length){toast("먼저 불러온 뒤 복사하세요");return;}
+  const now=new Date();
+  let t="📊 오늘의 지수 ("+now.toLocaleDateString("ko-KR",{month:"long",day:"numeric"})+" 기준)\n\n";
+  lastData.forEach(r=>{
+    if(!r.ok){t+=`${r.name}: 정보없음\n`;return;}
+    const ar=r.diff>0?"▲":r.diff<0?"▼":"–";
+    const sign=r.diff>0?"+":"";
+    t+=`${r.name} ${fmt(r.value)} ${ar}${sign}${fmt(r.pct)}%\n`;
+  });
+  t+="\n※ 시세 지연 가능 · 참고용";
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(()=>toast("복사됐어요! 카톡에 붙여넣기")).catch(()=>fallback(t));
+  }else fallback(t);
+}
+function fallback(t){
+  const ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);
+  ta.select();try{document.execCommand("copy");toast("복사됐어요!");}catch(e){toast("복사 실패");}
+  document.body.removeChild(ta);
+}
+
+$("#refresh").addEventListener("click",load);
+$("#copy").addEventListener("click",copyText);
+load();
+</script>
+
+<!-- =========================================================
+     📱 카톡 공유하려면 👉 https://app.netlify.com/drop 에 업로드하세요!
+     📱 카톡 공유하려면 👉 https://github.com 에 접속하세요!
+     배포 URL 예: hdi800hdi800-pixel.github.io/praise/index.html
+     ========================================================= -->
+</body>
+</html>
