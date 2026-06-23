@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>2025 8급 형소법</title>
+<meta name="theme-color" content="#244A7D" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="2025 8급 형소법" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+  :root{--paper:#EAEDF2;--surface:#fff;--ink:#1A2230;--muted:#697585;--line:#E1E6EC;--navy:#244A7D;--navy-d:#1A3860;--green:#1B9C53;--red:#D23B3B;--seal:#C8372D;--shadow:0 1px 2px rgba(20,35,55,.05),0 6px 22px rgba(20,35,55,.06);}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Pretendard","Pretendard Variable",-apple-system,system-ui,sans-serif;line-height:1.6;padding-bottom:96px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:640px;margin:0 auto;padding:0 14px}
+  header{background:linear-gradient(135deg,#1F3F6E,#2C5896);color:#fff;padding:16px;position:sticky;top:0;z-index:30;box-shadow:0 4px 16px rgba(26,56,96,.22)}
+  .htop{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .htop h1{font-size:16px;font-weight:800;margin:0;letter-spacing:-.3px;display:flex;align-items:center;gap:8px}
+  .seal{width:auto;height:26px;padding:0 7px;border:2px solid #F4C9C4;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#FBE3E0;transform:rotate(-6deg);flex:none;white-space:nowrap}
+  .score{font-size:13px;font-weight:800;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:6px 12px;border-radius:999px;white-space:nowrap}
+  .controls{max-width:640px;margin:12px auto 0;display:flex;gap:8px;align-items:center}
+  .ctrl{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff;font-family:inherit;font-weight:700;font-size:13px;padding:8px 12px;border-radius:9px;cursor:pointer}
+  .ctrl.on{background:#fff;color:var(--navy-d)}.spacer{flex:1}
+  .bar{height:6px;background:#DDE3EB;border-radius:999px;overflow:hidden;margin:14px 2px 4px}
+  .bar i{display:block;height:100%;background:var(--navy);width:0;transition:width .3s}
+  .hint{font-size:12px;color:var(--muted);margin:6px 2px 2px;text-align:center}
+  .qcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px 16px;margin:14px 0}
+  .qnum{display:inline-block;background:var(--navy);color:#fff;font-size:12.5px;font-weight:800;padding:3px 11px;border-radius:7px;margin-bottom:10px}
+  .qtext{font-size:15.5px;font-weight:600;letter-spacing:-.2px;margin:0 0 14px;white-space:pre-wrap;word-break:break-word}
+  .opt{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;background:#F7F9FC;border:1.5px solid var(--line);border-radius:12px;padding:12px 13px;margin-bottom:8px;cursor:pointer;font-family:inherit;font-size:14px;color:var(--ink);transition:.1s;position:relative;line-height:1.55}
+  .opt:active{transform:scale(.995)}
+  .opt .mk{flex:none;font-weight:800;color:var(--navy);font-size:15px;min-width:20px}
+  .opt .tx{flex:1;padding-right:24px}
+  .opt.correct{background:#EAF7EF;border-color:#9FD9B6}.opt.correct .mk{color:var(--green)}
+  .opt.wrong{background:#FCEDEC;border-color:#EFB7B2}.opt.wrong .mk{color:var(--red)}
+  .opt.disabled{cursor:default}
+  .stamp{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:23px;font-weight:900;line-height:1;color:var(--seal)}
+  .result{margin-top:10px;padding:13px 14px;border-radius:12px;font-size:14px;display:none}
+  .result.show{display:block}
+  .result.ok{background:#EAF7EF;color:#157A40;border:1px solid #BCE3CB}
+  .result.no{background:#FCEDEC;color:#B3322C;border:1px solid #EAC2BE}
+  .result b{font-weight:800}
+  .retry{margin-top:8px;background:none;border:1px solid var(--line);color:var(--muted);font-family:inherit;font-weight:700;font-size:13px;padding:7px 13px;border-radius:9px;cursor:pointer}
+  .nav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;max-width:640px;margin:0 auto;z-index:25}
+  .nav button{flex:1;border:none;font-family:inherit;font-weight:800;font-size:15px;padding:13px;border-radius:12px;cursor:pointer;background:var(--navy);color:#fff}
+  .nav button.ghost{background:#EEF1F5;color:var(--navy-d);border:1px solid var(--line)}
+  .nav button:disabled{opacity:.4}
+  .jump{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);font-weight:700}
+  .jump input{width:52px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;font-size:14px;text-align:center}
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(16px);background:#1A2230;color:#fff;padding:11px 18px;border-radius:999px;font-size:13.5px;font-weight:700;opacity:0;transition:.25s;z-index:60;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style></head>
+<body>
+<header><div class="htop"><h1><span class="seal">형소법</span> 2025 8급 형소법</h1><span class="score" id="score">0 / 0</span></div>
+<div class="controls">
+<button class="ctrl on" id="m1" onclick="setMode('one')">한 문제씩</button>
+<button class="ctrl" id="m2" onclick="setMode('all')">전체 보기</button>
+<span class="spacer"></span><button class="ctrl" onclick="resetAll()">↻ 초기화</button>
+</div></header>
+<div class="wrap"><div class="bar"><i id="barFill"></i></div><p class="hint" id="hint"></p><div id="area"></div></div>
+<div class="nav" id="nav">
+<button class="ghost" id="prev" onclick="go(-1)">← 이전</button>
+<span class="jump"><input id="jumpIn" type="number" inputmode="numeric"/><button class="ghost" style="flex:none;padding:8px 12px" onclick="jump()">이동</button></span>
+<button id="next" onclick="go(1)">다음 →</button></div>
+<div class="toast" id="toast"></div>
+<script>
+const QUIZDATA=[{"n": 1, "stem": "구속제도에 대한 설명으로 옳지 않은 것은?", "opts": ["피고인 구속의 경우 구속사유가 존재한다고 하여 바로 구속이 결정되는 것이 아니라 거기에 더하여 의무적 고려사항인 범죄의 중대성, 재범의 위험성, 중요 참고인 등에 대한 위해우려를 종합적으로 고려하여 구속 여부를 결정하여야 한다.", "현행범으로 체포된 피의자의 구금을 위한 구속영장이 발부된 경우 수사기관에 의한 구속영장의 제시와 집행이 그 발부 시로부터 정당한 사유 없이 시간이 지체되어 이루어졌다면, 구속영장이 그 유효기간 내에 집행되었다고 하더라도 위 기간 동안의 체포 내지 구금 상태는 위법하다.", "구속 전 피의자심문에서 피의자에게 변호인이 없는 때에는 지방법원판사는 직권으로 변호인을 선정하여야 하고, 이 경우 변호인의 선정은 피의자에 대한 구속영장 청구가 기각되어 효력이 소멸한 경우를 제외하고는 제1심까지 효력이 있다.", "전자장치 부착은 「전자장치 부착 등에 관한 법률」상 보석의 조건으로 허용되고 있으나, 구속집행정지의 조건으로 전자장치를 부착하는 것은 명문의 규정이 없으므로 허용되지 않는다."], "ans": 4}, {"n": 2, "stem": "수사기관의 압수·수색에 대한 설명으로 옳지 않은 것은?", "opts": ["공증인의 직에 있는 자가 그 업무상 위탁을 받아 소지 또는 보관하는 물건으로 타인의 비밀에 관한 것은 압수를 거부할 수 있다. 단, 그 타인의 승낙이 있거나 중대한 공익상 필요가 있는 때에는 예외로 한다.", "압수·수색영장에 정보저장매체 자체를 직접 또는 하드카피나 이미징 등 형태로 수사기관 사무실 등 외부로 반출하여 해당 파일을 압수·수색할 수 있도록 기재되어 있지 않더라도, 수사기관이 압수·수색영장 집행현장에서 전자정보의 복사 또는 출력이 불가능하거나 현저히 곤란한 부득이한 사정이 있을 때에는 정보저장매체 자체를 수사관서로 반출할 수 있다.", "수사기관은 임의제출물을 압수하는 경우에도 영장에 의한 압수와 마찬가지로 객관적·구체적인 압수목록을 신속하게 작성·교부할 의무를 부담한다.", "범죄수사를 위해 정보저장매체의 압수가 필요하고, 정보저장매체를 소지하던 사람이 그에 관한 권리를 포기하였거나 포기한 것으로 인식할 수 있는 경우에는, 압수할 때 참여권자의 참여가 필수적이라고 볼 수 없다."], "ans": 2}, {"n": 3, "stem": "보석에 대한 설명으로 옳은 것은?", "opts": ["보석청구가 있는 때에는 보석제외사유가 없는 한 보석을 허가하여야 하지만 집행유예기간중에 있어 집행유예의 결격자인 피고인에게는 보석을 허가할 수 없다.", "법원은 검사의 의견을 듣지 아니한 채 보석에 관한 결정을 하였다면 결정의 적정성 여부를 불문하고 절차상의 하자만을 이유로 그 결정을 취소할 수 있다.", "법원은 보석을 취소하는 때에는 직권 또는 검사의 청구에 따라 결정으로 보증금 또는 담보의 전부 또는 일부를 몰취할 수 있다.", "보석을 취소한 때에는 몰취하지 아니한 보증금 또는 담보를 청구한 날로부터 3일 이내에 환부하여야 한다."], "ans": 3}, {"n": 4, "stem": "재심에 대한 설명으로 옳지 않은 것은?", "opts": ["재심청구인은 재심청구를 취하할 수 있으나, 재심법원이 재심판결을 선고한 이후에는 재심청구의 취하가 허용되지 않는다.", "재심심판절차에서는 특별한 사정이 없는 한 검사가 재심대상사건과 별개의 공소사실을 추가하는 내용으로 공소장을 변경할 수 있고, 재심대상사건에 일반절차로 진행 중인 별개의 형사사건을 병합하여 심리하는 것도 허용된다.", "확정판결로써 범죄가 증명됨을 재심청구의 이유로 할 경우에 그 확정판결을 얻을 수 없는 때에는 그 사실을 증명하여 재심의 청구를 할 수 있다. 단, 증거가 없다는 이유로 확정판결을 얻을 수 없는 때에는 예외로 한다.", "경합범 관계에 있는 수개의 범죄사실을 유죄로 인정하여 하나의 형을 선고한 판결이 확정된 경우, 그중 일부 범죄사실에 대하여만 재심청구의 이유가 있는 경우에는 재심개시결정에 의해 경합범 전부가 재심심판의 대상에 포함되나 재심사유가 없는 범죄사실에 대하여는 이를 다시 심리하여 유죄인정을 파기할 수 없고, 양형을 위해 필요한 범위에 한해서만 심리할 수 있다."], "ans": 2}, {"n": 5, "stem": "「형사소송법」 제184조의 증거보전에 대한 설명으로 옳은 것은?", "opts": ["증거보전절차는 제1심 제1회 공판기일 전에 한하여 허용되므로 재심청구를 한 사건에서는 허용되지 않는다.", "증거보전청구는 피의자가 형사입건 되기 전에도 할 수 있으며, 피의자신문에 해당하는 사항을 증거보전의 방법으로 청구할 수 있다.", "공동피고인과 피고인이 뇌물을 주고받은 사이로 필요적 공범관계에 있다면, 검사는 수사단계에서 피고인에 대한 증거를 미리 보전하기 위하여 판사에게 공동피고인을 증인으로 신문할 것을 청구할 수 있다.", "증거보전청구를 기각하는 결정에 대하여는 7일 이내에 항고할 수 있다."], "ans": 1}, {"n": 6, "stem": "고소불가분의 원칙에 대한 설명으로 옳지 않은 것은?", "opts": ["친고죄의 공범 중 1인에 대한 고소취소는 고소인의 의사와 상관없이 다른 공범에 대하여도 효력이 있다.", "친고죄의 공범 중 그 일부에 대하여 제1심판결이 선고된 후에는 고소인은 제1심판결선고전의 다른 공범자에 대하여는 그 고소를 취소할 수 없다.", "반의사불벌죄에서 처벌을 희망하지 아니하는 의사표시나 처벌을 희망하는 의사표시의 철회에 관하여는 공범자간에 고소불가분의 원칙이 적용되지 않는다.", "친고죄에서 피해자의 고소가 없거나 고소가 취소되었음에도 친고죄로 기소되었다가 그 후에 당초에 기소된 공소사실과 동일성이 인정되는 비친고죄로 공소장변경이 허용되더라도 그 공소제기의 흠은 치유되지 아니한다."], "ans": 4}, {"n": 7, "stem": "공소기각의 판결에 대한 설명으로 옳지 않은 것은?", "opts": ["공소기각의 판결이 선고된 때에는 구속영장은 효력을 잃는다.", "고소가 있어야 공소를 제기할 수 있는 사건에서 공소제기 후 고소가 취소되었을 때 법원은 공소기각의 판결을 선고하여야 한다.", "피고인을 위한 상소는 피고인에게 불이익한 재판을 시정하여 이익된 재판을 청구함을 그 본질로 하는 것이므로 피고인은 일사부재리의 효력이 발생하지 않는 공소기각의 판결에 대하여는 무죄판결을 구할 상소권이 있다.", "피모용자가 약식명령에 대해 정식재판의 청구를 하여 피모용자를 상대로 심리를 하는 과정에서 성명모용 사실이 발각되어 검사가 공소장을 정정하는 등 사실상의 소송계속이 발생하고 형식상 또는 외관상 피고인의 지위를 갖게 된 경우, 법원은 피모용자에게 「형사소송법」 제327조제2호를 유추적용하여 공소기각의 판결을 선고하여야 한다."], "ans": 3}, {"n": 8, "stem": "체포·구속적부심사제도에 대한 설명으로 옳은 것은?", "opts": ["적부심사의 청구를 받은 법원은 「형사소송법」 제214조의2제3항에 의해 심문 없이 결정으로 청구를 기각할 수 있는 경우를 제외하고는 청구서가 접수된 때부터 24시간 내에 체포 또는 구속된 피의자를 심문하여야 한다.", "검사와 피의자는 보증금납입 조건부 석방결정에 대해서는 항고할 수 없다.", "체포·구속적부심사의 청구를 받은 법원은 그 청구가 이유 있다고 인정한 경우에는 결정으로 체포되거나 구속된 피의자의 석방을 명하여야 한다. 다만, 심사청구 후 피의자에 대하여 공소제기가 있는 경우에는 그러하지 아니하다.", "보증금납입을 조건으로 석방된 피의자가 주거의 제한이나 그 밖에 법원이 정한 조건을 위반한 때에는 동일한 범죄사실로 재차 체포하거나 구속할 수 있다."], "ans": 4}, {"n": 9, "stem": "전문법칙과 그 예외에 대한 설명으로 옳지 않은 것은?", "opts": ["「형사소송법」 제318조제1항의 증거동의는 전문증거금지의 원칙에 대한 예외로서 반대신문권을 포기하겠다는 피고인의 의사표시에 의하여 서류 또는 물건의 증거능력을 부여하는 것이다.", "수사기관에서 진술한 참고인이 법정에서 증언을 거부하여 피고인이 반대신문을 하지 못한 경우에는 정당하게 증언거부권을 행사한 것이 아니라고 하더라도, 피고인이 증인의 증언거부 상황을 초래하였다는 등의 특별한 사정이 없는 한 「형사소송법」 제314조의 '그 밖에 이에 준하는 사유로 인하여 진술할 수 없는 때'에 해당하지 않는다.", "「형사소송법」 제312조제1항에서 정한 '검사가 작성한 피의자신문조서'란 당해 피고인에 대한 피의자신문조서를 의미하며, 당해 피고인과 공범관계에 있는 다른 피고인이나 피의자에 대하여 검사가 작성한 피의자신문조서는 포함되지 않는다.", "다른 사람의 진술을 내용으로 하는 진술이 전문증거인지는 요증사실이 무엇인지에 따라 정해지는데, 원진술의 내용인 사실이 요증사실인 경우에는 전문증거이지만, 원진술의 존재 자체가 요증사실인 경우에는 본래증거이지 전문증거가 아니다."], "ans": 3}, {"n": 10, "stem": "「형사소송법」 제253조제3항의 공소시효 정지사유인 국외도피에 대한 설명 중 옳은 것은 모두 몇 개인가?\nㄱ. 범인이 당해 사건으로 처벌받을 가능성이 있음을 인지하였다고 보기 어려운 경우라면, 다른 고소사건과 관련하여 형사처분을 면할 목적이 있었더라도 당해 사건의 형사처분을 면할 목적으로 국외에 있었다고 볼 수 없다.\nㄴ. '형사처분을 면할 목적'은 국외체류의 유일한 목적으로 되는 것에 한정되는 것이 아니고 범인이 가지는 여러 국외체류 목적 중에 포함되어 있으면 족하다.\nㄷ. '형사처분을 면할 목적으로 국외에 있는 경우'는 범인이 국내에서 범죄를 저지르고 형사처분을 면할 목적으로 국외로 도피한 경우에 한정되지 아니하고, 범인이 국외에서 범죄를 저지르고 형사처분을 면할 목적으로 국외에서 체류를 계속하는 경우도 포함된다.\nㄹ. 범인이 국외에 있는 것이 형사처분을 면하기 위한 방편이라면, 형사처분을 면할 목적이 있었다고 볼 수 있고, 형사처분을 면할 목적과 양립할 수 없는 범인의 주관적 의사가 명백히 드러나는 객관적 사정이 존재하지 않는 한 국외체류기간 동안 형사처분을 면할 목적은 계속 유지된다.", "opts": ["1개", "2개", "3개", "4개"], "ans": 4}, {"n": 11, "stem": "피의자신문에 대한 설명으로 옳지 않은 것은?", "opts": ["수사기관이 피의자의 진술을 영상녹화하는 경우에는 피의자 또는 변호인의 동의를 받아야 한다.", "신문에 참여한 변호인은 신문 후 의견을 진술할 수 있다. 다만, 신문 중이라도 부당한 신문방법에 대하여 이의를 제기할 수 있고, 검사 또는 사법경찰관의 승인을 받아 의견을 진술할 수 있다.", "신문에 참여하고자 하는 변호인이 2인 이상인 때에는 피의자가 신문에 참여할 변호인 1인을 지정한다. 지정이 없는 경우에는 검사 또는 사법경찰관이 이를 지정할 수 있다.", "검사 또는 사법경찰관은 피의자가 조사장소에 도착한 시각, 조사를 시작하고 마친 시각, 그 밖에 조사과정의 진행경과를 확인하기 위하여 필요한 사항을 피의자신문조서에 기록하거나 별도의 서면에 기록한 후 수사기록에 편철하여야 한다."], "ans": 1}, {"n": 12, "stem": "재판에 대한 설명으로 옳지 않은 것은?", "opts": ["판결은 그 선고에 의하여 효력이 발생하고 판결원본의 기재에 의하여 효력이 발생하는 것이 아니므로, 선고된 형과 판결서에 기재된 형이 다른 경우에는 검사는 선고한 형을 집행하여야 한다.", "재판장이 주문을 낭독하고 이유의 요지를 설명하는 등 판결선고절차가 종료되기 전까지는 재판서에 기재된 주문과 이유를 잘못 낭독하거나 설명하는 등 실수가 있거나 판결 내용에 잘못이 있음이 발견된 경우와 같이 특별한 사정이 있는 경우에 변경 선고가 허용된다.", "헌법재판소가 형벌에 관한 법률조항에 대해 위헌결정을 선고하여 그 조항이 소급하여 효력을 상실한 경우, 당해 조항을 적용하여 공소가 제기된 피고사건은 범죄로 되지 아니한 때에 해당한다 할 것이고, 법원은 그 피고사건에 대하여 면소판결을 선고하여야 한다.", "면소판결 사유인 '확정판결이 있는 때'의 확정판결에는 정식재판에서 선고된 유죄판결과 무죄판결 및 면소판결뿐만 아니라 확정판결과 동일한 효력이 있는 약식명령이나 즉결심판도 포함된다."], "ans": 3}, {"n": 13, "stem": "법원의 관할에 대한 설명으로 옳지 않은 것은?", "opts": ["법원은 직권으로 관할을 조사하여야 하고, 소송행위는 관할위반인 경우에도 그 효력에 영향이 없다.", "토지관할을 달리하는 수개의 사건이 관련된 때에는 1개의 사건에 관하여 관할권 있는 법원은 다른 사건까지 관할할 수 있다.", "토지관할을 달리하는 수개의 관련사건이 동일법원에 계속된 경우에 병합심리의 필요가 없는 때에는 법원은 결정으로 이를 분리하여 관할권 있는 다른 법원에 이송할 수 있다.", "토지관할이 다른 여러 개의 관련사건이 각각 다른 법원에 계속된 때에는 공통되는 바로 위의 상급법원은 직권 또는 검사나 피고인의 신청에 의하여 결정으로 한 개 법원으로 하여금 병합심리하게 할 수 있다."], "ans": 4}, {"n": 14, "stem": "피고인에 대한 설명으로 옳지 않은 것은?", "opts": ["의사무능력자인 피고인에게 법정대리인이 없는 때에는, 법원은 직권 또는 이해관계인의 청구에 의하여 특별대리인을 선임하여야 한다.", "공소장에는 피고인의 성명 기타 피고인을 특정할 수 있는 사항, 죄명, 공소사실, 적용법조를 기재하여야 한다.", "피고인에게 특별대리인이 선임된 경우, 특별대리인은 피고인을 대리 또는 대표하여 소송행위를 할 자가 있을 때까지 그 임무를 행한다.", "법인의 경우 청산종결 등기 이전에 업무나 재산에 관한 위반행위가 있는 경우에는 청산종결 등기 후에 그 위반행위에 대한 공소가 제기되더라도 그에 따른 재판을 받는 일은 법인의 청산사무에 포함되므로 그 사건이 종결될 때까지 법인의 청산사무는 종료되지 않고, 법인의 형사소송법상 당사자능력도 그대로 존속한다."], "ans": 1}, {"n": 15, "stem": "엄격한 증명의 대상인 것만을 모두 고르면?\nㄱ. 몰수의 대상이 되는지 여부나 추징액의 인정\nㄴ. 횡령죄에 있어 불법영득의사를 실현하는 행위로서의 횡령행위가 있다는 점\nㄷ. 주취정도를 계산하기 위하여 위드마크 공식을 적용하는 경우, 그 전제가 되는 섭취한 알코올의 양, 음주 시각, 체중 등의 사실\nㄹ. 검사가 피고인의 자필진술서를 유죄의 증거로 제출하는 경우, 그 진술이 특히 신빙할 수 있는 상태하에서 행하여졌다는 사실", "opts": ["ㄱ, ㄴ", "ㄱ, ㄹ", "ㄴ, ㄷ", "ㄷ, ㄹ"], "ans": 3}, {"n": 16, "stem": "재정신청에 대한 설명으로 옳은 것은?", "opts": ["법원의 재정신청 기각결정에 대하여 재정신청인은 불복할 수 없다.", "고소인은 검사가 공소시효 만료일 30일 전까지 공소를 제기하지 아니하는 경우에는 「검찰청법」 제10조에 따른 항고를 거치지 않고 재정신청을 할 수 있다.", "고소인은 항고 신청 후 항고에 대한 처분이 행하여지지 아니하고 1개월이 경과한 경우에는 재정신청을 할 수 있다.", "재정신청서를 제출받은 지방검찰청검사장 또는 지청장은 재정신청서를 제출받은 날부터 10일 이내에 재정신청서·의견서·수사 관계 서류 및 증거물을 관할 고등검찰청을 경유하여 관할 고등법원에 송부하여야 한다."], "ans": 2}, {"n": 17, "stem": "공소제기에 대한 설명으로 옳지 않은 것은?", "opts": ["검사가 자의적으로 공소권을 행사하여 피고인에게 실질적인 불이익을 줌으로써 소추재량권을 현저히 일탈하였다고 보이는 경우에는 이를 공소권의 남용으로 보아 공소제기의 효력을 부인할 수 있다.", "검사에 의한 공소장의 제출은 공소제기라는 소송행위가 성립하기 위한 본질적 요소라고 보아야 할 것이므로, 이러한 공소장의 '제출'이 없는 경우에는 소송행위로서의 공소제기가 성립되었다고 할 수 없다.", "검사가 약식명령을 청구하면서 약식명령의 청구와 동시에 약식명령을 하는 데 필요한 증거서류 및 증거물을 법원에 제출하는 것은 공소장일본주의에 위반된다.", "검사는 공소를 제기함에 있어 수개의 범죄사실과 적용법조를 예비적 또는 택일적으로 기재하여 그중 어느 하나의 범죄사실만의 처벌을 구할 수 있으며, 이때 그들 수개의 범죄사실간에 범죄사실의 동일성이 인정될 것을 요하지 않는다."], "ans": 3}, {"n": 18, "stem": "'재판장 또는 수명법관의 재판에 대한 준항고'에 대한 설명으로 옳지 않은 것은?", "opts": ["재판장 또는 수명법관이 기피신청을 기각한 재판을 고지한 경우 불복이 있으면 그 법관소속의 법원에 재판의 취소 또는 변경을 청구할 수 있다.", "압수물환부에 관한 재판에 불복이 있어 그 재판의 취소 또는 변경을 청구하는 경우, 그 청구는 재판의 고지있는 날로부터 3일 이내에 하여야 한다.", "지방법원이 재판장 또는 수명법관의 구금에 관한 재판의 취소 청구를 받은 때에는 합의부에서 결정하여야 한다.", "증인, 감정인, 통역인 또는 번역인에 대하여 과태료 또는 비용의 배상을 명한 재판에 불복하여 재판의 취소 또는 변경을 청구한 때에는 그 재판의 집행은 정지된다."], "ans": 2}, {"n": 19, "stem": "법관의 기피제도에 대한 설명으로 옳지 않은 것은?", "opts": ["검사 또는 피고인은 법관이 '제척사유에 해당되는 경우' 또는 '불공평한 재판을 할 염려가 있는 경우'에 법관의 기피를 신청할 수 있다.", "변호인은 피고인의 명시한 의사에 반하지 아니하는 때에 한하여 법관에 대한 기피를 신청할 수 있다.", "기피신청에 대한 재판은 기피당한 법관의 소속법원합의부에서 결정으로 하여야 하고, 기피당한 판사의 소속법원이 합의부를 구성하지 못하는 때에는 직근 상급법원이 결정하여야 한다.", "기피신청이 소송의 지연을 목적으로 함이 명백하다는 이유로 이를 기각한 결정에 대하여는 즉시항고를 할 수 있으며, 그 즉시항고는 재판의 집행을 정지하는 효력이 있다."], "ans": 4}, {"n": 20, "stem": "증거조사에 대한 설명 중 옳은 것만을 모두 고르면?\nㄱ. 당사자의 증거신청에 대한 법원의 채택 여부의 결정에 대해서는 이의신청을 하는 외에는 달리 불복할 수 있는 방법이 없고, 다만 그로 말미암아 사실을 오인하여 판결에 영향을 미친 때에는 상소의 이유로 삼을 수 있다.\nㄴ. 다른 증거나 증인의 진술에 비추어 굳이 추가 증거조사를 할 필요가 없다는 등 특별한 사정이 없고, 소재탐지나 구인장 발부가 불가능한 것이 아님에도 불구하고, 법원이 불출석한 핵심 증인에 대하여 소재탐지나 구인장 발부 없이 증인채택 결정을 취소하는 것은 위법하다.\nㄷ. 법원이 적법하게 공판의 심리를 종결하였더라도 피고인이 증인신청을 하면 법원은 공판의 심리를 재개하여 증인신문을 하여야 한다.\nㄹ. 증인에게는 신문 전에 선서를 하게 하여야 하지만, 증인이 선서의 취지를 이해하지 못하는 자 또는 미성년자에 해당한 때에는 선서하게 하지 아니하고 신문하여야 한다.", "opts": ["ㄱ, ㄴ", "ㄱ, ㄹ", "ㄴ, ㄷ", "ㄷ, ㄹ"], "ans": 1}, {"n": 21, "stem": "항소심에 대한 설명으로 옳지 않은 것은?", "opts": ["항소법원이 관할인정이 법률에 위반됨을 이유로 원심판결을 파기하는 때에는 판결로써 사건을 원심법원에 환송하여야 하지만, 항소법원이 그 사건의 제1심관할권이 있는 때에는 제1심으로 심판하여야 한다.", "피고인이나 변호인이 항소이유서에 포함시키지 아니한 사항을 항소심 공판정에서 진술한다 하더라도 그 진술에 포함된 주장과 같은 항소이유가 있다고 볼 수 없다.", "항소법원이 항소이유에 포함되지 아니한 사유를 직권으로 심리하여 제1심판결을 파기하고 다시 판결하는 경우, 이미 항소이유의 당부는 판단되었다고 보아야 하므로 그 판결에서 피고인의 항소이유에 관한 판단을 따로 설시하지 않았다고 하여 위법이라고 할 수 없다.", "항소법원이 원심법원으로부터 소송기록의 송부를 받고 즉시 검사와 피고인에게 그 사유를 통지한 경우, 피고인이 교도소 또는 구치소에 있다면 원심법원에 대응한 검찰청검사는 그 통지를 받은 날부터 14일 이내에 피고인을 항소법원소재지의 교도소 또는 구치소에 이송하여야 한다."], "ans": 1}, {"n": 22, "stem": "일부상소에 대한 설명으로 옳지 않은 것은?", "opts": ["상소는 재판의 일부에 대하여 할 수 있으며, 일부에 대한 상소는 그 일부와 불가분의 관계에 있는 부분에 대하여도 효력이 미친다.", "동일한 사실관계에 대하여 서로 양립할 수 없는 법조를 적용하여 주위적·예비적으로 공소제기된 사건에서 예비적 공소사실만 유죄로 인정되고 그 부분에 대하여 피고인만 상소한 경우, 주위적 공소사실은 상소심의 심판대상에 포함되지 않는다.", "항소심에서 포괄일죄의 관계에 있는 공소사실 중 일부 유죄, 나머지 무죄를 선고한 판결에 대하여 검사만이 무죄부분에 대해 상고를 하고 피고인은 상고하지 않은 경우, 유죄부분도 상고심에 이전되어 심판대상이 된다.", "항소심이 두개의 죄를 경합범으로 보고 일부 유죄, 나머지 무죄를 각 선고하였고, 검사만이 무죄부분에 대하여 불복 상고하였다고 하더라도 두 죄가 상상적 경합관계에 있다면 공소불가분의 원칙이 적용되어 유죄부분도 상고심의 심판대상이 된다."], "ans": 2}, {"n": 23, "stem": "피고인의 공판정출석에 대한 설명 중 옳은 것만을 모두 고르면?\nㄱ. 「형사소송법」 제277조의2에 의하여 피고인의 출석 없이 공판절차를 진행하기 위해서는 단지 구속된 피고인이 정당한 사유 없이 출석을 거부하였다는 것만으로는 부족하고 더 나아가 교도관에 의한 인치가 불가능하거나 현저히 곤란하다고 인정되어야 한다.\nㄴ. 필요적 변호사건에서 피고인이 재판거부의 의사를 표시하고 재판장의 허가 없이 퇴정하고 변호인마저 이에 동조하여 퇴정하였다 하더라도 피고인측의 방어권의 남용 내지 변호권의 포기로 볼 수 없는 것이므로 수소법원은 국선변호인을 선정한 후 심리판결하여야 한다.\nㄷ. 피고인이 질병으로 인하여 출정할 수 없는 경우에도 피고사건에 관하여 무죄·면소·공소기각의 재판을 할 것이 명백한 경우에는 피고인의 출정없이 재판할 수 있다. 다만, 유죄판결의 일종인 형의 면제의 판결을 하는 경우에는 그러하지 아니하다.\nㄹ. 피고인이 불출석한 상태에서 그 진술 없이 판결하기 위해서는 피고인이 적법한 공판기일 통지를 받고도 2회 연속으로 정당한 이유 없이 출정하지 않은 경우에 해당하여야 한다. 이때 '적법한 공판기일 통지'란 소환장의 송달 및 소환장 송달의 의제의 경우에 한정되는 것이 아니라 적어도 피고인의 이름·죄명·출석 일시·출석 장소가 명시된 공판기일 변경명령을 송달받은 경우도 포함된다.", "opts": ["ㄱ, ㄴ", "ㄱ, ㄹ", "ㄴ, ㄷ", "ㄷ, ㄹ"], "ans": 2}, {"n": 24, "stem": "증거능력과 증명력에 대한 설명으로 옳은 것은?", "opts": ["다른 피고인에 대한 형사사건의 공판조서는 「형사소송법」 제311조에 의하여 당연히 증거능력이 있다.", "어떤 소송절차가 진행된 내용이 공판조서에 기재되지 않았다고 하더라도 당연히 그 소송절차가 당해 공판기일에 행하여지지 않은 것으로 추정되는 것은 아니고, 그 소송절차의 존재는 공판조서에 기재된 다른 내용이나 공판조서 이외의 자료로 증명할 수 있다.", "피고인이 공판조서의 열람 또는 등사를 청구하였지만 법원이 불응하여 피고인의 열람 또는 등사청구권이 침해된 경우, 그 공판조서는 유죄의 증거로 할 수 없지만, 그 공판조서에 기재된 증인의 진술은 다른 절차적 위법이 없는 이상 증거로 할 수 있다.", "증거보전절차에서 작성된 증인신문조서 중 피의자였던 피고인이 당사자로 참여하여 자신의 범행사실을 시인하는 전제하에 증인에게 반대신문을 하는 과정에서 피의자가 진술한 내용을 기재한 부분은 「형사소송법」 제311조에 의하여 증거능력을 인정할 수 있다."], "ans": 2}, {"n": 25, "stem": "검사의 통지의무에 대한 설명 중 옳은 것은 모두 몇 개인가?\nㄱ. 검사는 고소 또는 고발있는 사건에 관하여 공소의 취소 또는 타관송치를 한 때에는 그 처분을 한 날로부터 7일 이내에 서면으로 고소인 또는 고발인에게 그 취지를 통지하여야 한다.\nㄴ. 검사는 범죄로 인한 피해자 또는 그 법정대리인의 신청 여부와 상관없이 당해 사건의 공소제기 여부, 공판의 일시·장소, 재판 결과, 피의자·피고인의 구속·석방 등 구금에 관한 사실 등을 신속하게 통지하여야 한다.\nㄷ. 검사는 불기소 또는 타관송치의 처분을 한 때에는 피의자에게 즉시 그 취지를 통지하여야 한다.\nㄹ. 검사는 고소 또는 고발있는 사건에 관하여 공소를 제기하지 아니하는 처분을 한 경우에 고소인 또는 고발인의 청구가 있는 때에는 7일 이내에 고소인 또는 고발인에게 그 이유를 서면으로 설명하여야 한다.", "opts": ["1개", "2개", "3개", "4개"], "ans": 3}];
+
+const $=s=>document.querySelector(s);
+const NUMC=["","①","②","③","④","⑤"];
+const KEY="ex8crim";
+let answered={}, idx=0, mode="one";
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),1500);}
+function esc(s){return String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+function optHtml(q,qi){
+  const picked=answered[qi];
+  let h='<span class="qnum">'+q.n+'번</span><p class="qtext">'+esc(q.stem)+'</p>';
+  q.opts.forEach((o,oi)=>{const n=oi+1;let cls="opt",stamp="";
+    if(picked!=null){cls+=" disabled";
+      if(n===q.ans){cls+=" correct";stamp='<span class="stamp">○</span>';}
+      if(picked===n&&picked!==q.ans){cls+=" wrong";stamp='<span class="stamp">✕</span>';}}
+    h+='<button class="'+cls+'" '+(picked!=null?'':'onclick="pick('+qi+','+n+')"')+'><span class="mk">'+NUMC[n]+'</span><span class="tx">'+esc(o)+'</span>'+stamp+'</button>';});
+  if(picked!=null){const ok=picked===q.ans;
+    h+='<div class="result '+(ok?'ok':'no')+' show">'+(ok?'<b>정답입니다 ○</b>':'<b>오답입니다 ✕</b>  정답: '+NUMC[q.ans]+'번')+
+       '<br><button class="retry" onclick="retry('+qi+')">다시 풀기</button></div>';}
+  return h;
+}
+function render(){const area=$("#area");
+  if(mode==="all"){$("#nav").style.display="none";area.innerHTML=QUIZDATA.map((q,qi)=>'<div class="qcard">'+optHtml(q,qi)+'</div>').join("");}
+  else{$("#nav").style.display="flex";const q=QUIZDATA[idx];area.innerHTML='<div class="qcard">'+optHtml(q,idx)+'</div>';
+    $("#prev").disabled=idx===0;$("#next").disabled=idx===QUIZDATA.length-1;$("#jumpIn").value=q.n;
+    $("#hint").textContent=(idx+1)+" / "+QUIZDATA.length+"문항";window.scrollTo(0,0);}
+  updateScore();}
+function pick(qi,n){answered[qi]=n;save();render();}
+function retry(qi){delete answered[qi];save();render();}
+function go(d){idx=Math.max(0,Math.min(QUIZDATA.length-1,idx+d));render();}
+function jump(){const v=parseInt($("#jumpIn").value,10);const i=QUIZDATA.findIndex(q=>q.n===v);if(i>=0){idx=i;render();}else toast("그 번호는 없어요");}
+function setMode(m){mode=m;$("#m1").classList.toggle("on",m==="one");$("#m2").classList.toggle("on",m==="all");render();}
+function resetAll(){if(!confirm("기록을 지우고 처음부터?"))return;answered={};save();idx=0;render();toast("초기화했어요");}
+function updateScore(){let done=Object.keys(answered).length,c=0;for(const k in answered)if(answered[k]===QUIZDATA[k].ans)c++;
+  $("#score").textContent=c+" / "+done;$("#barFill").style.width=(done/QUIZDATA.length*100)+"%";}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(answered));}catch(e){}}
+function load(){try{answered=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){answered={};}}
+load();render();
+</script>
+<!-- =========================================================
+     📱 카톡 공유하려면 👉 https://app.netlify.com/drop 에 업로드하세요!
+     📱 카톡 공유하려면 👉 https://github.com 에 접속하세요!
+     ========================================================= -->
+</body></html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>2025 6급 교정학</title>
+<meta name="theme-color" content="#244A7D" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="2025 6급 교정학" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<style>
+  :root{--paper:#EAEDF2;--surface:#fff;--ink:#1A2230;--muted:#697585;--line:#E1E6EC;--navy:#244A7D;--navy-d:#1A3860;--green:#1B9C53;--red:#D23B3B;--seal:#C8372D;--shadow:0 1px 2px rgba(20,35,55,.05),0 6px 22px rgba(20,35,55,.06);}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Pretendard","Pretendard Variable",-apple-system,system-ui,sans-serif;line-height:1.6;padding-bottom:96px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:640px;margin:0 auto;padding:0 14px}
+  header{background:linear-gradient(135deg,#1F3F6E,#2C5896);color:#fff;padding:16px;position:sticky;top:0;z-index:30;box-shadow:0 4px 16px rgba(26,56,96,.22)}
+  .htop{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .htop h1{font-size:16px;font-weight:800;margin:0;letter-spacing:-.3px;display:flex;align-items:center;gap:8px}
+  .seal{width:auto;height:26px;padding:0 7px;border:2px solid #F4C9C4;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#FBE3E0;transform:rotate(-6deg);flex:none;white-space:nowrap}
+  .score{font-size:13px;font-weight:800;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:6px 12px;border-radius:999px;white-space:nowrap}
+  .controls{max-width:640px;margin:12px auto 0;display:flex;gap:8px;align-items:center}
+  .ctrl{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff;font-family:inherit;font-weight:700;font-size:13px;padding:8px 12px;border-radius:9px;cursor:pointer}
+  .ctrl.on{background:#fff;color:var(--navy-d)}.spacer{flex:1}
+  .bar{height:6px;background:#DDE3EB;border-radius:999px;overflow:hidden;margin:14px 2px 4px}
+  .bar i{display:block;height:100%;background:var(--navy);width:0;transition:width .3s}
+  .hint{font-size:12px;color:var(--muted);margin:6px 2px 2px;text-align:center}
+  .qcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:18px 16px;margin:14px 0}
+  .qnum{display:inline-block;background:var(--navy);color:#fff;font-size:12.5px;font-weight:800;padding:3px 11px;border-radius:7px;margin-bottom:10px}
+  .qtext{font-size:15.5px;font-weight:600;letter-spacing:-.2px;margin:0 0 14px;white-space:pre-wrap;word-break:break-word}
+  .opt{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;background:#F7F9FC;border:1.5px solid var(--line);border-radius:12px;padding:12px 13px;margin-bottom:8px;cursor:pointer;font-family:inherit;font-size:14px;color:var(--ink);transition:.1s;position:relative;line-height:1.55}
+  .opt:active{transform:scale(.995)}
+  .opt .mk{flex:none;font-weight:800;color:var(--navy);font-size:15px;min-width:20px}
+  .opt .tx{flex:1;padding-right:24px}
+  .opt.correct{background:#EAF7EF;border-color:#9FD9B6}.opt.correct .mk{color:var(--green)}
+  .opt.wrong{background:#FCEDEC;border-color:#EFB7B2}.opt.wrong .mk{color:var(--red)}
+  .opt.disabled{cursor:default}
+  .stamp{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:23px;font-weight:900;line-height:1;color:var(--seal)}
+  .result{margin-top:10px;padding:13px 14px;border-radius:12px;font-size:14px;display:none}
+  .result.show{display:block}
+  .result.ok{background:#EAF7EF;color:#157A40;border:1px solid #BCE3CB}
+  .result.no{background:#FCEDEC;color:#B3322C;border:1px solid #EAC2BE}
+  .result b{font-weight:800}
+  .retry{margin-top:8px;background:none;border:1px solid var(--line);color:var(--muted);font-family:inherit;font-weight:700;font-size:13px;padding:7px 13px;border-radius:9px;cursor:pointer}
+  .nav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.96);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;max-width:640px;margin:0 auto;z-index:25}
+  .nav button{flex:1;border:none;font-family:inherit;font-weight:800;font-size:15px;padding:13px;border-radius:12px;cursor:pointer;background:var(--navy);color:#fff}
+  .nav button.ghost{background:#EEF1F5;color:var(--navy-d);border:1px solid var(--line)}
+  .nav button:disabled{opacity:.4}
+  .jump{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);font-weight:700}
+  .jump input{width:52px;border:1px solid var(--line);border-radius:8px;padding:8px;font-family:inherit;font-size:14px;text-align:center}
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(16px);background:#1A2230;color:#fff;padding:11px 18px;border-radius:999px;font-size:13.5px;font-weight:700;opacity:0;transition:.25s;z-index:60;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style></head>
+<body>
+<header><div class="htop"><h1><span class="seal">6급 교정</span> 2025 6급 교정학</h1><span class="score" id="score">0 / 0</span></div>
+<div class="controls">
+<button class="ctrl on" id="m1" onclick="setMode('one')">한 문제씩</button>
+<button class="ctrl" id="m2" onclick="setMode('all')">전체 보기</button>
+<span class="spacer"></span><button class="ctrl" onclick="resetAll()">↻ 초기화</button>
+</div></header>
+<div class="wrap"><div class="bar"><i id="barFill"></i></div><p class="hint" id="hint"></p><div id="area"></div></div>
+<div class="nav" id="nav">
+<button class="ghost" id="prev" onclick="go(-1)">← 이전</button>
+<span class="jump"><input id="jumpIn" type="number" inputmode="numeric"/><button class="ghost" style="flex:none;padding:8px 12px" onclick="jump()">이동</button></span>
+<button id="next" onclick="go(1)">다음 →</button></div>
+<div class="toast" id="toast"></div>
+<script>
+const QUIZDATA=[{"n": 1, "stem": "「형의 집행 및 수용자의 처우에 관한 법률 시행규칙」상 교육에 대한 설명 중 옳지 않은 것은 모두 몇 개인가?\nㄱ. 소장은 교육대상자의 성적불량, 학업태만 등으로 인하여 교육의 목적을 달성하기 어려운 경우에는 그 선발을 취소할 수 있다.\nㄴ. 소장은 교육대상자 및 시험응시 희망자의 학습능력을 평가하기 위하여 자체 평가시험을 실시하여야 한다.\nㄷ. 작업·직업훈련 수형자 등도 독학으로 검정고시·학사고시 등에 응시하게 할 수 있다. 이 경우 자체 평가시험 성적 등을 고려해야 한다.\nㄹ. 소장은 「초·중등교육법」 제51조에 따른 방송통신고등학교 교육과정의 입학금, 수업료, 교과용 도서 구입비 등 교육에 필요한 비용을 예산의 범위에서 지원할 수 있다.\nㅁ. 소장은 개방처우급·완화경비처우급·일반경비처우급·중(重)경비처우급 수형자에게 다문화 시대에 대처할 수 있는 교육기회를 부여하기 위하여 외국어 교육과정을 설치·운영할 수 있다.", "opts": ["2개", "3개", "4개", "5개"], "ans": 1}, {"n": 2, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 독거수용에 대한 설명 중 옳은 것은 모두 몇 개인가? (다툼이 있는 경우 판례에 의함)\nㄱ. 처우상 독거수용은 주간에는 교육·작업 등의 처우를 위하여 일과에 따른 공동생활을 하게 하고 휴업일과 야간에만 독거수용하는 것을 말한다.\nㄴ. 교도관은 처우상 독거수용자를 수시로 시찰하여 건강상 또는 교화상 이상이 없는지 살펴야 한다.\nㄷ. 교도소장의 독거수용 거부 결정은 헌법소원의 대상이 되는 공권력의 행사에 해당하지 않는다.\nㄹ. 소장은 계호상 독거수용자를 계속하여 독거수용하는 것이 건강상 또는 교화상 해롭다고 인정하는 경우에는 이를 즉시 중단하여야 한다.", "opts": ["1개", "2개", "3개", "4개"], "ans": 3}, {"n": 3, "stem": "「형의 집행 및 수용자의 처우에 관한 법률」상 징벌에 대한 설명으로 옳지 않은 것은?", "opts": ["소장은 수용자가 정당한 사유 없이 작업·교육·교화프로그램 등을 거부하거나 태만히 하는 행위를 하면 징벌위원회의 의결에 따라 징벌을 부과할 수 있다.", "소장은 수용자에게 '3개월 이내의 작업장려금 삭감'과 '30일 이내의 신문열람 제한'의 징벌을 함께 부과할 수 있다.", "수용자가 징벌이 집행 중에 있거나 징벌의 집행이 끝난 후 또는 집행이 면제된 후 6개월 내에 다시 징벌사유에 해당하는 행위를 하면 징벌의 종류 중 '경고'를 제외한 나머지 징벌의 장기의 2분의 1까지 가중할 수 있다.", "징벌사유가 발생한 날부터 2년이 지나면 이를 이유로 징벌을 부과하지 못한다."], "ans": 2}, {"n": 4, "stem": "「형의 집행 및 수용자의 처우에 관한 법률 시행규칙」상 범죄횟수에 대한 규정으로 ㉠~㉣에 들어갈 내용을 바르게 연결한 것은?\n제3조(범죄횟수) ① 수용자의 범죄횟수는 징역 또는 금고 이상의 형을 선고받아 확정된 횟수로 한다. 다만, 집행유예의 선고를 받은 사람이 유예기간 중 (㉠)로 범한 죄로 금고 이상의 실형이 확정되지 아니하고 그 기간이 지난 경우에는 집행이 유예된 형은 범죄횟수에 포함하지 아니한다.\n② 형의 집행을 종료하거나 그 집행이 면제된 날부터 다음 각 호의 기간이 지난 경우에는 범죄횟수에 포함하지 아니한다. 다만, 그 기간 중 (㉡) 이상의 형을 선고받아 확정된 경우는 제외한다.\n1. 3년을 초과하는 징역 또는 금고: (㉢)년\n2. 3년 이하의 징역 또는 금고: (㉣)년", "opts": ["㉠고의 또는 과실 ㉡벌금 ㉢7 ㉣3", "㉠고의 ㉡벌금 ㉢10 ㉣5", "㉠고의 또는 과실 ㉡자격정지 ㉢7 ㉣3", "㉠고의 ㉡자격정지 ㉢10 ㉣5"], "ans": 4}, {"n": 5, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 귀휴에 대한 설명으로 옳지 않은 것은? (단, 귀휴 기간은 적법한 것으로 봄)", "opts": ["소장은 30년의 징역형이 확정되어 9년의 형을 집행받은 교정성적이 우수한 완화경비처우급 수형자 A에 대하여 가족이 위독하다는 사유로 일반귀휴를 허가할 수 없다.", "소장은 10년의 징역형이 확정되어 5개월의 형을 집행받은 중(重)경비처우급 수형자 B에 대하여 배우자 사망을 사유로 특별귀휴를 허가할 수 있다.", "소장은 3년의 징역형이 확정되어 9개월의 형을 집행받은 교정성적이 우수한 일반경비처우급 수형자 C에 대하여 본인의 입학식 참석을 사유로 일반귀휴를 허가할 수 없다.", "소장은 서로 다른 두 개의 범죄로 5년의 징역형과 7년의 형을 집행받아 4년의 형을 집행받은 교정성적이 우수한 완화경비처우급 수형자 D에 대하여 형제자매의 혼례가 있다는 사유로 일반귀휴를 허가할 수 있다."], "ans": 1}, {"n": 6, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 권리구제에 대한 설명 중 옳지 않은 것은 모두 몇 개인가?\nㄱ. 수용자는 그 처우에 관하여 소장에게 면담을 신청할 수 있고, 이 경우 소장은 특별한 사정이 있으면 소속 교도관 또는 교정참여인사로 하여금 그 면담을 대리하게 할 수 있다.\nㄴ. 수용자는 그 처우에 관하여 불복하는 경우 법무부장관·순회점검공무원 또는 관할 지방교정청장에게 청원할 수 있다.\nㄷ. 순회점검공무원은 청원을 스스로 결정하는 것이 부적당하다고 인정하는 경우에는 그 내용을 관할 지방교정청장에게 보고하여야 한다.\nㄹ. 수용자는 「공공기관의 정보공개에 관한 법률」에 따라 법무부장관, 지방교정청장 또는 소장에게 정보의 공개를 청구할 수 있다.\nㅁ. 수용자는 청원, 진정, 소장과의 면담, 그 밖의 권리구제를 위한 행위를 하였다는 이유로 불이익한 처우를 받지 아니한다.", "opts": ["0개", "1개", "2개", "3개"], "ans": 3}, {"n": 7, "stem": "「형의 집행 및 수용자의 처우에 관한 법률 시행규칙」상 소장이 지역사회에 설치된 개방시설에 수용하여 사회 적응에 필요한 교육, 취업지원 등 적정한 처우를 할 수 있는 수형자는?", "opts": ["형기가 1년이고 범죄 횟수가 1회인 개방처우급 수형자로서 중간처우를 받는 날부터 형기 종료 예정일까지 기간이 3개월인 사람", "형기가 2년이고 범죄 횟수가 1회인 개방처우급 수형자로서 중간처우를 받는 날부터 가석방 예정일까지 기간이 1년 6개월인 사람", "형기가 3년이고 범죄 횟수가 1회인 완화경비처우급 수형자로서 중간처우를 받는 날부터 형기 종료 예정일까지의 기간이 1년인 사람", "형기가 4년이고 범죄 횟수가 1회인 일반경비처우급 수형자로서 중간처우를 받는 날부터 가석방 예정일까지 기간이 6개월인 사람"], "ans": 3}, {"n": 8, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 신체검사 등에 대한 설명 중 옳지 않은 것은 모두 몇 개인가?\nㄱ. 교도관은 시설의 안전과 질서유지를 위하여 필요하면 수용자의 신체·의류·휴대품·거실 및 작업장 등을 검사할 수 있다.\nㄴ. 수용자의 신체를 검사하는 경우에는 불필요한 고통이나 수치심을 느끼지 아니하도록 유의하여야 하며, 특히 신체를 면밀하게 검사할 필요가 있으면 다른 수용자가 볼 수 없는 차단된 장소에서 하여야 한다.\nㄷ. 교도관은 시설의 안전과 질서유지를 위하여 필요하면 교정시설을 출입하는 수용자 외의 사람에 대하여 신체·의류와 휴대품을 검사할 수 있다.\nㄹ. 여성의 신체·의류 및 휴대품에 대한 검사는 여성교도관이 하여야 한다.\nㅁ. 소장은 교도관에게 작업장이나 실외에서 수용자거실로 돌아오는 수용자의 신체·의류 및 휴대품을 검사하게 하여야 한다. 다만, 교정성적 등을 고려하여 그 검사가 필요하지 아니하다고 인정되는 경우에는 예외로 할 수 있다.", "opts": ["1개", "2개", "3개", "4개"], "ans": 1}, {"n": 9, "stem": "「형의 집행 및 수용자의 처우에 관한 법률 시행규칙」상 분류심사에 대한 설명 중 옳은 것은 모두 몇 개인가?\nㄱ. 형기의 3분의 2에 도달한 때는 정기재심사 사유에 해당하나, 형집행지휘서가 접수된 날부터 6개월이 지나지 아니한 경우에는 그러하지 아니하다.\nㄴ. 무기형과 20년을 초과하는 징역형·금고형의 재심사 시기를 산정하는 경우에는 그 형기를 20년으로 본다.\nㄷ. 부정기형의 재심사 시기는 장기형을 기준으로 한다.\nㄹ. 소장은 재심사를 할 때에는 그 사유가 발생한 달의 다음 달까지 완료하여야 한다.", "opts": ["1개", "2개", "3개", "4개"], "ans": 3}, {"n": 10, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 소장이 수용자에 대해 교정시설 안에서 실시하는 종교행사 참석을 제한할 수 있는 사유에 해당하지 않는 것은 모두 몇 개인가?\nㄱ. 수용자가 계속 큰 소리를 내거나 시끄럽게 하여 종교행사를 방해할 때\nㄴ. 시설의 안전과 질서유지를 위하여 필요할 때\nㄷ. 수용자가 전도를 핑계삼아 다른 수용자의 평온한 신앙생활을 방해할 때\nㄹ. 수용자의 교화 또는 건전한 사회복귀를 위하여 필요할 때\nㅁ. 수용자가 종교행사 장소를 허가 없이 벗어나거나 다른 사람과 연락을 할 때", "opts": ["0개", "1개", "2개", "3개"], "ans": 1}, {"n": 11, "stem": "「형의 집행 및 수용자의 처우에 관한 법률 시행규칙」상 소장이 개별처우계획을 새로 수립하여야 하는 경우는 모두 몇 개인가?\nㄱ. 수형자 甲이 「국제수형자이송법」에 따라 외국으로부터 이송되어 온 경우\nㄴ. 수형자 乙이 가석방기간 중에 형사사건으로 재수용되어 형이 확정된 경우\nㄷ. 수형자 丙이 다른 교정시설로부터 이송되어 온 경우\nㄹ. 수형자 丁이 군사법원에서 징역형이 확정되어 이송되어 온 경우", "opts": ["1개", "2개", "3개", "4개"], "ans": 3}, {"n": 12, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 위원회 등의 구성과 관련하여 빈칸에 들어갈 숫자의 합은?\n○ 귀휴심사위원회는 위원장을 포함한 (㉠)명 이상 (㉡)명 이하의 위원으로 구성하고, 이 경우 외부위원은 (㉢)명 이상으로 한다.\n○ 징벌위원회는 위원장을 포함한 5명 이상 7명 이하의 위원으로 구성하고, 이 경우 외부위원은 (㉣)명 이상으로 한다.\n○ 수형자 취업지원협의회는 회장 1명을 포함하여 (㉤)명 이상 (㉥)명 이하의 내부위원과 (㉦)명 이상의 외부위원으로 구성한다.\n○ 교정자문위원회는 (㉧)명 이상 (㉨)명 이하의 위원으로 성별을 고려하여 구성하고, 위원 중 (㉩)명 이상은 여성으로 한다.", "opts": ["64", "66", "68", "70"], "ans": 2}, {"n": 13, "stem": "「형의 집행 및 수용자의 처우에 관한 법률 시행규칙」상 특별한 보호에 대한 설명 중 옳지 않은 것을 모두 고른 것은?\nㄱ. 외국인수용자 전담요원은 외국인 미결수용자에게 소송 진행에 필요한 법률지식을 제공하는 등의 조력을 하여야 한다.\nㄴ. 소장은 임산부인 수용자에 대하여 필요하다고 인정하는 경우에는 교정시설에 근무하는 의사의 의견을 들어 필요한 양의 죽 등의 주식과 별도로 마련된 부식을 지급할 수 있다.\nㄷ. 장애인수용자의 거실은 시설부족 또는 그 밖의 부득이한 사정이 없으면 건물의 1층에 설치하고, 특히 겨울철 난방을 위하여 필요한 시설을 갖추어야 한다.\nㄹ. 노인수형자 전담교정시설에는 별도의 공동학습공간을 마련하고 노인이 선호하는 오락용품 등을 갖춰두어야 한다.", "opts": ["ㄴ, ㄹ", "ㄷ, ㄹ", "ㄱ, ㄴ, ㄷ", "ㄱ, ㄷ, ㄹ"], "ans": 2}, {"n": 14, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 수용자 A ~ D에 대한 처우로 허용되지 않는 것은 모두 몇 개인가?\nㄱ. 소장은 신입자거실에 수용된 수용자 A에게 건전한 사회복귀를 위하여 작업을 부과하였다.\nㄴ. 소장은 수용자 B가 매일(공휴일 및 법무부장관이 정하는 날은 제외) 「국가공무원 복무규정」에 따른 근무시간 내에서 2시간의 실외운동을 할 수 있도록 하였다.\nㄷ. 소장은 자신이 출산한 유아를 교정시설에서 양육할 것을 신청한 여성수용자 C에게 유아양육에 부적당한 사유가 없다고 판단하여 생후 24개월에 이르기까지 허용하였다.\nㄹ. 소장은 수용자의 나이, 건강, 작업 여부 및 작업의 종류 등을 고려한 결과 필요하다고 판단하여 수용자 D에게 지급하는 주식의 기준량을 1일 420그램으로 변경하였다.", "opts": ["1개", "2개", "3개", "4개"], "ans": 3}, {"n": 15, "stem": "「형의 집행 및 수용자의 처우에 관한 법률 시행규칙」상 엄중관리대상자에 대한 설명으로 옳지 않은 것은?", "opts": ["소장은 엄중관리대상자 중 지속적인 상담이 필요하다고 인정되는 사람에 대하여는 상담책임자를 지정한다. 상담책임자는 감독교도관 또는 상담 관련 전문교육을 이수한 교도관을 우선하여 지정하여야 하며, 상담대상자는 상담책임자 1명당 10명 이내로 하여야 한다.", "소장은 조직폭력수용자로 지정된 사람에 대하여는 석방할 때까지 지정을 해제할 수 없다. 다만, 공소장 변경 또는 재판 확정에 따라 지정사유가 해소되었다고 인정되는 경우에는 교도관회의의 심의 또는 분류처우위원회의 의결을 거쳐 지정을 해제한다.", "소장은 미결수용자 등 분류처우위원회의 의결 대상자가 아닌 경우에도 관심대상수용자로 지정할 필요가 있다고 인정되는 수용자에 대하여는 교도관회의의 심의를 거쳐 관심대상수용자로 지정할 수 있다.", "소장은 교정시설에 마약류를 반입하는 것을 방지하기 위하여 필요하면 수용자의 소변을 채취하여 마약반응검사를 할 수 있고, 이 경우 교도관회의의 심의를 거쳐야 한다."], "ans": 4}, {"n": 16, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 무기에 대한 설명 중 옳지 않은 것은 모두 몇 개인가?\nㄱ. 교도관은 수용자가 다른 사람에게 위해를 끼치거나 끼치려고 하는 때 무기를 사용할 수 있다.\nㄴ. 소장은 소속 교도관에 대하여 연 1회 이상 총기의 조작·정비·사용에 관한 교육을 한다.\nㄷ. 무기의 사용은 필요한 최소한도에 그쳐야 하며, 최후의 수단이어야 한다.\nㄹ. 기관총은 대공초소 또는 집중사격이 가장 용이한 장소에 설치하고, 유사 시 즉시 사용할 수 있도록 충분한 인원의 사수·부사수·탄약수를 미리 지정하여야 한다.\nㅁ. 교도관이 총기를 사용하는 경우에는 공포탄 발사, 구두경고, 위협사격, 조준사격의 순서에 따라야 한다. 다만, 상황이 긴급하여 시간적 여유가 없을 때에는 예외로 한다.", "opts": ["0개", "1개", "2개", "3개"], "ans": 3}, {"n": 17, "stem": "미결수용자의 처우에 관한 헌법재판소 판례의 내용으로 옳지 않은 것은?", "opts": ["금치처분을 받은 미결수용자에 대하여 금치기간 중 서신수수, 접견, 전화통화를 제한하는 규정은 제도적으로 기본권 제한을 최소화하고 있는 동시에 과도하다고 보기 어려우므로 청구인의 통신의 자유를 침해하지 아니한다.", "유죄가 확정되지 아니한 미결수용자에게 수사 및 재판에 출석할 때 재소자용 의류를 입게 하는 것은 무죄추정의 원칙에 반하고 인간으로서의 존엄과 가치에서 유래하는 인격권과 행복추구권, 공정한 재판을 받을 권리를 침해하는 것이다.", "변호인의 조력을 받을 권리를 보장하는 목적은 피의자 또는 피고인의 방어권 행사를 보장하기 위한 것이므로, 미결수용자 또는 변호인이 원하는 특정한 시점에 접견이 이루어지지 못하였다면 그러한 사정만으로 곧바로 변호인의 조력을 받을 권리가 침해되었다고 보아야 한다.", "하루에 여러 종교행사를 동시에 하기 어려운 점 등 구치소의 인적·물적 여건을 고려하여 구치소장이 미결수용자 대상 종교행사를 4주에 1회 실시했더라도 그러한 종교행사 처우가 청구인의 종교의 자유를 침해하는 것은 아니다."], "ans": 3}, {"n": 18, "stem": "「형의 집행 및 수용자의 처우에 관한 법률 시행령」상 신입자 처우에 대한 설명으로 옳지 않은 것은?", "opts": ["신입자의 건강검진은 수용된 날부터 3일 이내에 하여야 한다. 다만, 휴무일이 연속되는 등 부득이한 사정이 있는 경우에는 예외로 한다.", "소장은 신입자에게 질병이나 그 밖의 부득이한 사정이 있는 경우가 아니면 지체 없이 목욕을 하게 하여야 한다.", "소장은 신입자가 환자이거나 부득이한 사정이 있는 경우가 아니면 수용된 날부터 3일 동안 신입자거실에 수용하여야 한다.", "소장은 19세 미만의 신입자 그 밖에 특히 필요하다고 인정하는 수용자에 대하여는 신입자거실 수용기간을 30일까지 연장할 수 있다."], "ans": 1}, {"n": 19, "stem": "「형의 집행 및 수용자의 처우에 관한 법률 시행규칙」상 중(重)경비처우급 수형자 甲에 대한 처우로 허용되지 않는 것은?", "opts": ["소장은 처우상 특히 필요하다고 판단하여 甲에게 월 2회의 전화통화를 허용하였다.", "소장은 재심사에서 수용 및 처우를 위하여 특히 필요하다고 판단하여 甲의 경비처우급을 완화경비처우급으로 조정하였다.", "소장은 처우상 특히 필요하다고 판단하여 甲에게 월간 허용범위 내에서 1일 2회의 접견을 허용하였다.", "소장은 처우상 특히 필요하다고 판단하여 甲에게 교정시설 밖에서 이루어지는 사회봉사를 허가하였다."], "ans": 4}, {"n": 20, "stem": "조선시대 형벌제도에 대한 설명으로 옳지 않은 것은?", "opts": ["태형은 가장 가벼운 형벌로, 10대에서 50대까지 5등급으로 구분되었다.", "장형은 태형보다 중한 형벌로, 60대에서 100대까지 5등급으로 구분되었다.", "도형은 최단기 1년에서 최장기 3년까지 5종으로 구분하였고, 다른 형(刑)과는 병과할 수 없었다.", "전옥서는 고려의 제도를 계승하여 개국 초부터 형조에 소속되어 죄인의 수감을 맡아 하던 관서이다."], "ans": 3}, {"n": 21, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 직업훈련에 대한 설명 중 옳은 것은 모두 몇 개인가?\nㄱ. 직업훈련 직종 선정 및 훈련과정별 인원은 관할 지방교정청장의 승인을 받아 소장이 정한다.\nㄴ. 직업훈련 대상자는 소속기관의 수형자 중에서 소장이 선정한다. 다만, 집체직업훈련 대상자는 집체직업훈련을 실시하는 교정시설의 관할 지방교정청장이 법무부장관의 승인을 받아 선정한다.\nㄷ. 법무부장관은 직업훈련을 위하여 필요한 경우에는 수형자를 다른 교정시설로 이송할 수 있다.\nㄹ. 소장은 직업훈련이 보류된 수형자가 그 사유가 소멸되면 본래의 과정에 복귀시켜 훈련하여야 한다. 다만, 본래 과정으로 복귀하는 것이 부적당하다고 인정하는 경우에는 해당 훈련을 취소할 수 있다.\nㅁ. 소장은 수형자의 직업훈련을 위하여 필요하면 외부의 기관 또는 단체에서 훈련을 받게 할 수 있다.", "opts": ["2개", "3개", "4개", "5개"], "ans": 2}, {"n": 22, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 위생과 의료에 대한 설명 중 옳은 것은 모두 몇 개인가?\nㄱ. 소장은 작업의 특성, 계절, 그 밖의 사정을 고려하여 수용자의 목욕횟수를 정하되 부득이한 사정이 없으면 매주 1회 이상이 되도록 한다.\nㄴ. 소장은 수용자가 감염병에 걸렸다고 의심되는 경우에는 1주 이상 격리수용하고 그 수용자의 휴대품을 소독하여야 한다.\nㄷ. 교정시설에 갖추어야 할 의료설비의 기준에 관하여 필요한 사항은 대통령령으로 정한다.\nㄹ. 소장은 정신질환이 있다고 의심되는 수용자가 있으면 정신건강의학과 의사의 진료를 받을 수 있도록 하여야 한다.\nㅁ. 소장은 수용자가 진료 또는 음식물의 섭취를 거부하면 의무관으로 하여금 관찰·조언 또는 설득을 하도록 하여야 한다.", "opts": ["1개", "2개", "3개", "4개"], "ans": 4}, {"n": 23, "stem": "다음 사례에 대한 대법원의 입장으로 옳은 것은?\n[사례] 수용자 甲은 X교도소 수용관리팀 사무실에서, 거실 벽면에 연예인 사진을 부착한 행위가 청결의무 위반이므로 이를 제거하라는 교도관의 직무상 지시에 수회 불응하였다. 직원 乙로부터 자술서 작성을 지시받았으나 甲은 부당하다며 오히려 가혹행위 등에 관한 자술서를 작성하였다. 이에 직원 丙으로부터 조사거실로 이동하라는 명령을 받았으나 거부하였고, 교도관들이 조사거실로 甲을 강제로 끌고 가려는 과정에서 甲은 丙의 멱살을 잡아 폭행하였다. 이후 신체검사를 위하여 옷을 벗으라는 지시를 거부하면서 머리를 丙의 가슴부위에 들이대어 폭행하였다.", "opts": ["甲을 조사거실에 강제로 수용하려고 한 丙의 행위가 위법한 직무집행이더라도 그에 저항하는 과정에서 이루어진 甲의 丙에 대한 폭행은 공무집행방해죄에 해당한다.", "수용자가 교정시설의 소장에 의하여 허용된 범위를 넘어 사진 또는 그림 등을 부착한 것이 X교도소의 다른 거실에서 일부 묵인되어 왔다면 甲에 대한 부착물 제거 지시는 수용자가 복종하여야 할 적법한 직무상 지시로 볼 수 없다.", "丙이 甲을 조사거실에 강제로 수용하려고 한 행위가 위법한 직무집행이더라도 그 수용을 위하여 신체검사를 요구한 丙의 행위는 별개의 행위이므로 당연히 위법한 직무집행이라고 할 수 없다.", "징벌사유에 해당하는 행위를 하였다고 의심할 만한 상당한 이유가 있는 甲에 대하여 조사가 필요한 경우라 하더라도, 특히 甲에 대한 조사거실에의 분리 수용은 甲이 증거를 인멸할 우려가 있는 때 또는 다른 사람에게 위해를 끼칠 우려가 있거나 다른 수용자의 위해로부터 보호할 필요가 있는 때에 한하여 인정된다."], "ans": 4}, {"n": 24, "stem": "쉬락(C. Schrag)이 제시한 수용자의 역할유형 중 다음에서 설명하는 것은?\n[설명] 이들은 교정시설의 규율에 동조하는 친사회적인 재소자로서 법을 준수하는 생활을 지향하고 재소자사회에 거의 가담하지 않으며 직원들과도 가까이 지낸다. 이들은 전과경력이 많지 않고 범죄적 시각이나 가치관도 가지지 않는다. 또한 이들은 재소자 부문화에 어떤 형태로든 소속되지 않기 때문에 이들에게는 교도소가 극단적으로 불편할 수 있다.", "opts": ["정치인(Politicians)", "고지식자(Square Johns)", "정의한(Right Guys)", "무법자(Outlaws)"], "ans": 2}, {"n": 25, "stem": "형의 집행 및 수용자의 처우에 관한 법령상 종교와 문화에 대한 설명으로 옳지 않은 것은?", "opts": ["소장은 수용자의 건강과 일과시간 등을 고려하여 1일 6시간 이내에서 방송편성시간을 정한다. 다만, 토요일·공휴일, 작업·교육실태 및 수용자의 특성을 고려하여 방송편성시간을 조정할 수 있다.", "소장은 수용자의 신앙생활에 필요하다고 인정하는 경우에는 외부에서 제작된 휴대용 종교도서 및 성물을 수용자가 지니게 할 수 있다.", "수용자는 휴업일 및 휴게시간 내에 시간의 제한 없이 집필할 수 있다. 다만, 부득이한 사정이 있는 경우에는 그러하지 아니하다.", "수용자가 자신의 비용으로 구독을 신청할 수 있는 신문·잡지 또는 도서는 교정시설의 보관범위 및 수용자가 지닐 수 있는 범위와 관계없이 신문은 월 3종 이내로, 도서(잡지 포함)는 월 10권 이내로 한다."], "ans": 4}];
+
+const $=s=>document.querySelector(s);
+const NUMC=["","①","②","③","④","⑤"];
+const KEY="ex6gcorr";
+let answered={}, idx=0, mode="one";
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),1500);}
+function esc(s){return String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+function optHtml(q,qi){
+  const picked=answered[qi];
+  let h='<span class="qnum">'+q.n+'번</span><p class="qtext">'+esc(q.stem)+'</p>';
+  q.opts.forEach((o,oi)=>{const n=oi+1;let cls="opt",stamp="";
+    if(picked!=null){cls+=" disabled";
+      if(n===q.ans){cls+=" correct";stamp='<span class="stamp">○</span>';}
+      if(picked===n&&picked!==q.ans){cls+=" wrong";stamp='<span class="stamp">✕</span>';}}
+    h+='<button class="'+cls+'" '+(picked!=null?'':'onclick="pick('+qi+','+n+')"')+'><span class="mk">'+NUMC[n]+'</span><span class="tx">'+esc(o)+'</span>'+stamp+'</button>';});
+  if(picked!=null){const ok=picked===q.ans;
+    h+='<div class="result '+(ok?'ok':'no')+' show">'+(ok?'<b>정답입니다 ○</b>':'<b>오답입니다 ✕</b>  정답: '+NUMC[q.ans]+'번')+
+       '<br><button class="retry" onclick="retry('+qi+')">다시 풀기</button></div>';}
+  return h;
+}
+function render(){const area=$("#area");
+  if(mode==="all"){$("#nav").style.display="none";area.innerHTML=QUIZDATA.map((q,qi)=>'<div class="qcard">'+optHtml(q,qi)+'</div>').join("");}
+  else{$("#nav").style.display="flex";const q=QUIZDATA[idx];area.innerHTML='<div class="qcard">'+optHtml(q,idx)+'</div>';
+    $("#prev").disabled=idx===0;$("#next").disabled=idx===QUIZDATA.length-1;$("#jumpIn").value=q.n;
+    $("#hint").textContent=(idx+1)+" / "+QUIZDATA.length+"문항";window.scrollTo(0,0);}
+  updateScore();}
+function pick(qi,n){answered[qi]=n;save();render();}
+function retry(qi){delete answered[qi];save();render();}
+function go(d){idx=Math.max(0,Math.min(QUIZDATA.length-1,idx+d));render();}
+function jump(){const v=parseInt($("#jumpIn").value,10);const i=QUIZDATA.findIndex(q=>q.n===v);if(i>=0){idx=i;render();}else toast("그 번호는 없어요");}
+function setMode(m){mode=m;$("#m1").classList.toggle("on",m==="one");$("#m2").classList.toggle("on",m==="all");render();}
+function resetAll(){if(!confirm("기록을 지우고 처음부터?"))return;answered={};save();idx=0;render();toast("초기화했어요");}
+function updateScore(){let done=Object.keys(answered).length,c=0;for(const k in answered)if(answered[k]===QUIZDATA[k].ans)c++;
+  $("#score").textContent=c+" / "+done;$("#barFill").style.width=(done/QUIZDATA.length*100)+"%";}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(answered));}catch(e){}}
+function load(){try{answered=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){answered={};}}
+load();render();
+</script>
+<!-- =========================================================
+     📱 카톡 공유하려면 👉 https://app.netlify.com/drop 에 업로드하세요!
+     📱 카톡 공유하려면 👉 https://github.com 에 접속하세요!
+     ========================================================= -->
+</body></html>
