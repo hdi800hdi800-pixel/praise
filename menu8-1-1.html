@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>청연8또래 메뉴 선택</title>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="청연8또래 10 · 오늘 뭐 먹지?">
+<meta property="og:description" content="예배 후 식사 메뉴, 각자 골라서 저장 → 전체 합계 실시간 확인 🍽️">
+<meta property="og:image" content="https://hdi800hdi800-pixel.github.io/praise/menu8_card-1-1.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://hdi800hdi800-pixel.github.io/praise/menu8-1.html">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+
+  :root{
+    --ink:#1B1B16;
+    --paper:#FFFCF5;
+    --pine:#16241B;
+    --pine-2:#1F2E23;
+    --mustard:#D9A441;
+    --tomato:#B23A2E;
+    --line:#DCD5C2;
+    --muted:#7A7364;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--pine);
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(217,164,65,0.08), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(178,58,46,0.10), transparent 45%);
+    font-family:'Noto Sans KR', sans-serif;
+    color:var(--ink);
+    min-height:100vh;
+    padding-bottom:40px;
+  }
+
+  header{
+    padding:28px 20px 20px;
+    text-align:center;
+    color:var(--paper);
+  }
+  header .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:3px;
+    color:var(--mustard);
+    text-transform:uppercase;
+  }
+  header h1{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:30px;
+    margin:6px 0 4px;
+  }
+  header p{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:#C9C2AE;
+    margin:0;
+  }
+
+  .tabs{
+    display:flex;
+    gap:8px;
+    max-width:520px;
+    margin:18px auto 0;
+    padding:0 16px;
+  }
+  .tab{
+    flex:1;
+    text-align:center;
+    padding:10px 6px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+    background:rgba(255,255,255,0.08);
+    color:#E7E2D2;
+    cursor:pointer;
+    border:1px solid rgba(255,255,255,0.15);
+    transition:all .15s ease;
+  }
+  .tab.active{
+    background:var(--mustard);
+    color:var(--pine);
+    border-color:var(--mustard);
+  }
+
+  .wrap{
+    max-width:520px;
+    margin:20px auto 0;
+    padding:0 16px;
+  }
+
+  /* --- person picker --- */
+  .people-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+  .person-btn{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 10px;
+    text-align:center;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    position:relative;
+  }
+  .person-btn .count{
+    display:block;
+    margin-top:6px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+  }
+  .person-btn.has-order{
+    border-color:var(--mustard);
+    box-shadow:0 0 0 1px var(--mustard) inset;
+  }
+  .person-btn.has-order::after{
+    content:"✓";
+    position:absolute;
+    top:8px;
+    right:10px;
+    color:var(--mustard);
+    font-weight:700;
+  }
+
+  /* --- order screen --- */
+  .order-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    color:var(--paper);
+    margin-bottom:14px;
+  }
+  .back-btn{
+    background:none;
+    border:none;
+    color:var(--mustard);
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    padding:6px 0;
+  }
+  .order-header h2{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:22px;
+    margin:0;
+  }
+
+  .menu-card{
+    background:var(--paper);
+    border-radius:16px;
+    padding:6px 4px;
+    margin-bottom:14px;
+    border:1px solid var(--line);
+  }
+  .menu-section-title{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--muted);
+    padding:14px 14px 6px;
+  }
+  .menu-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 14px;
+    border-top:1px dashed var(--line);
+  }
+  .menu-item:first-of-type{border-top:none;}
+  .item-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex:1;
+    padding-right:10px;
+  }
+  .item-icon{
+    width:40px;
+    height:40px;
+    border-radius:10px;
+    background:#F4EFE1;
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    flex-shrink:0;
+  }
+  .menu-item .info{flex:1;}
+  .menu-item .name{
+    font-weight:600;
+    font-size:14.5px;
+  }
+  .menu-item .price{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--tomato);
+    margin-top:2px;
+  }
+  .qty-control{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .qty-btn{
+    width:28px;
+    height:28px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:#F4EFE1;
+    font-size:16px;
+    line-height:1;
+    cursor:pointer;
+    color:var(--ink);
+  }
+  .qty-btn.plus{background:var(--pine); color:var(--paper); border-color:var(--pine);}
+  .qty-val{
+    min-width:16px;
+    text-align:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:14px;
+  }
+
+  /* --- receipt / ticket --- */
+  .ticket{
+    background:var(--paper);
+    border-radius:4px;
+    padding:20px 18px 24px;
+    font-family:'IBM Plex Mono', monospace;
+    position:relative;
+    margin-bottom:16px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.25);
+  }
+  .ticket::before, .ticket::after{
+    content:"";
+    position:absolute;
+    left:0; right:0;
+    height:10px;
+    background:
+      radial-gradient(circle, var(--pine) 5px, transparent 5.5px) 0 0/16px 16px;
+  }
+  .ticket::before{top:-5px;}
+  .ticket::after{bottom:-5px; transform:rotate(180deg);}
+  .ticket-title{
+    text-align:center;
+    font-weight:600;
+    font-size:12px;
+    letter-spacing:2px;
+    color:var(--tomato);
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .ticket-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    padding:5px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .ticket-empty{
+    text-align:center;
+    color:var(--muted);
+    font-size:12.5px;
+    padding:14px 0;
+  }
+  .ticket-total{
+    display:flex;
+    justify-content:space-between;
+    font-weight:700;
+    font-size:15px;
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px solid var(--ink);
+  }
+
+  .save-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:var(--mustard);
+    color:var(--pine);
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+    margin-bottom:8px;
+  }
+  .save-status{
+    text-align:center;
+    font-size:12px;
+    color:#C9C2AE;
+    min-height:16px;
+  }
+
+  /* --- summary tab --- */
+  .summary-card{
+    background:var(--paper);
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:12px;
+    border:1px solid var(--line);
+  }
+  .summary-person{
+    font-weight:700;
+    font-size:14.5px;
+    margin-bottom:6px;
+    display:flex;
+    justify-content:space-between;
+  }
+  .summary-person .subtotal{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--tomato);
+    font-weight:600;
+    font-size:13px;
+  }
+  .summary-line{
+    font-size:13px;
+    color:#4A4636;
+    padding:2px 0;
+    display:flex;
+    justify-content:space-between;
+  }
+  .summary-line .n{color:var(--muted); font-family:'IBM Plex Mono', monospace; font-size:11.5px;}
+  .summary-empty{
+    color:var(--muted);
+    font-size:13px;
+  }
+  .grand-total{
+    background:var(--pine-2);
+    color:var(--paper);
+    border-radius:16px;
+    padding:18px;
+    text-align:center;
+    margin-top:6px;
+  }
+  .grand-total .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:2px;
+    color:var(--mustard);
+    text-transform:uppercase;
+  }
+  .grand-total .amount{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:30px;
+    margin-top:4px;
+  }
+  .refresh-btn{
+    width:100%;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.2);
+    background:rgba(255,255,255,0.08);
+    color:var(--paper);
+    font-weight:600;
+    font-size:13px;
+    cursor:pointer;
+    margin-bottom:14px;
+  }
+
+  .hidden{display:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">청연8또래 10</div>
+  <h1>오늘 뭐 먹지?</h1>
+  <p>예배 후 식사 · 메뉴는 각자 골라서 저장해주세요</p>
+</header>
+
+<div class="tabs">
+  <div class="tab active" data-tab="order">메뉴 고르기</div>
+  <div class="tab" data-tab="summary">전체 주문</div>
+</div>
+
+<div class="wrap">
+
+  <!-- ORDER TAB -->
+  <div id="tab-order">
+
+    <div id="people-screen">
+      <div class="people-grid" id="peopleGrid"></div>
+    </div>
+
+    <div id="order-screen" class="hidden">
+      <div class="order-header">
+        <button class="back-btn" id="backBtn">← 이름 다시 선택</button>
+        <h2 id="orderPersonName"></h2>
+      </div>
+
+      <div class="ticket">
+        <div class="ticket-title">내 주문</div>
+        <div id="ticketBody"></div>
+        <div class="ticket-total">
+          <span>합계</span>
+          <span id="ticketTotal">0원</span>
+        </div>
+      </div>
+
+      <div class="save-status" id="saveStatus"></div>
+
+      <div class="menu-card" id="menuList"></div>
+    </div>
+  </div>
+
+  <!-- SUMMARY TAB -->
+  <div id="tab-summary" class="hidden">
+    <button class="refresh-btn" id="refreshBtn">↻ 새로고침 (다른 사람 주문 불러오기)</button>
+    <div id="summaryList"></div>
+    <div class="grand-total">
+      <div class="label">전체 합계</div>
+      <div class="amount" id="grandTotal">0원</div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAehacGSi5Jdz17F7PDcvBjlnkrkluyj7U",
+  authDomain: "stckvote.firebaseapp.com",
+  databaseURL: "https://stckvote-default-rtdb.firebaseio.com",
+  projectId: "stckvote",
+  storageBucket: "stckvote.firebasestorage.app",
+  messagingSenderId: "241483361695",
+  appId: "1:241483361695:web:f3d69cc39ae7548cd961aa"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const ordersRoot = db.ref('menu8ttorae/orders');
+
+const PEOPLE = ["김유석","박혜정","성은정","옥주(O.J)","유광하","이정아","정동진","정원","혜원","KY"];
+
+const MENU = [
+  {id:"steak_gal", name:"소갈비살 참스테이크", price:14800, section:"스테이크", icon:"🥩"},
+  {id:"steak_cube", name:"시그니처 큐브 스테이크", price:24800, section:"스테이크", icon:"🥩"},
+  {id:"bbq_ribs", name:"시크릿 바베큐 폭립세트", price:28800, section:"스테이크", icon:"🍖"},
+  {id:"gnocchi", name:"바질 크림 뇨끼", price:12800, section:"파스타", icon:"🥟"},
+  {id:"vongole", name:"봉골레 파스타", price:9800, section:"파스타", icon:"🍝"},
+  {id:"bacon_carb", name:"베이컨 까르보나라", price:10800, section:"파스타", icon:"🍝"},
+  {id:"truffle_carb", name:"트러플 헤이 까르보나라", price:11800, section:"파스타", icon:"🍝"},
+  {id:"spicy_carbonia", name:"스파이시 까르보니아", price:13800, section:"파스타", icon:"🌶️"},
+  {id:"gambas", name:"시그니처 감바스 파스타", price:11800, section:"파스타", icon:"🍤"},
+  {id:"rose_mitaeri", name:"미태리 로제 파스타", price:11800, section:"파스타", icon:"🍝"},
+  {id:"rose_emje", name:"로제 엠제 파스타", price:11800, section:"파스타", icon:"🍝"},
+  {id:"donkatsu_carb", name:"까르보 돈까스파스타", price:13800, section:"파스타", icon:"🍝"},
+  {id:"donkatsu_spicy", name:"스파이시 로제 돈까스파스타", price:13800, section:"파스타", icon:"🌶️"},
+  {id:"seafood_tomato", name:"해물 토마토 파스타", price:11800, section:"파스타", icon:"🍅"},
+  {id:"seafood_bulbul", name:"해물 뿜뿡 파스타", price:10800, section:"파스타", icon:"🦐"},
+  {id:"ragu", name:"라구 파스타", price:12800, section:"파스타", icon:"🍝"},
+  {id:"pizza_gorgon", name:"미태리 고르곤졸라 피자", price:11800, section:"피자", icon:"🍕"},
+  {id:"pizza_garlic", name:"갈릭포테이토피자", price:13800, section:"피자", icon:"🍕"},
+  {id:"pizza_cheese", name:"미태리 치즈 피자", price:11800, section:"피자", icon:"🍕"},
+  {id:"risotto_cream", name:"크림 치즈 리조또", price:11800, section:"리조또", icon:"🍚"},
+  {id:"risotto_tomato", name:"토마토 치즈 리조또", price:11800, section:"리조또", icon:"🍚"},
+  {id:"garlic_bread", name:"촉촉한 수제 마늘빵", price:5800, section:"사이드", icon:"🥖"},
+  {id:"kimchi_rice_set", name:"김치볶음밥세트", price:9800, section:"사이드", icon:"🍚"},
+  {id:"allday_set", name:"올데이세트 (파스타2+피자1+에이드1)", price:34800, section:"세트", icon:"🍽️"},
+  {id:"family_set", name:"패밀리세트 (파스타2+피자1+스테이크1+에이드2+미니생일)", price:61800, section:"세트", icon:"🎉"}
+];
+
+let currentPerson = null;
+let currentOrder = {}; // {itemId: qty}
+let allOrders = {};    // {personName: {itemId: qty}}
+let storageOk = true;
+
+function won(n){ return n.toLocaleString('ko-KR') + "원"; }
+
+// --- single consolidated key for all 10 people's orders ---
+// (storing one order per key was hitting rate limits / flaky responses;
+// one shared object is far more reliable per the storage guidance)
+async function loadAllOrders(){
+  try{
+    const snap = await ordersRoot.once('value');
+    const raw = snap.val() || {};
+    const o = {};
+    for(const i in raw){ const n = PEOPLE[i]; if(n) o[n] = raw[i]; }
+    storageOk = true;
+    return o;
+  }catch(e){
+    console.error('loadAllOrders failed', e);
+    storageOk = false;
+    return allOrders;
+  }
+}
+
+async function savePersonOrder(person){
+  const idx = PEOPLE.indexOf(person);
+  if(idx < 0) return false;
+  try{
+    const has = currentOrder && Object.keys(currentOrder).length > 0;
+    await ordersRoot.child(String(idx)).set(has ? currentOrder : null);
+    storageOk = true;
+    return true;
+  }catch(e){
+    console.error('savePersonOrder failed', e);
+    storageOk = false;
+    return false;
+  }
+}
+
+function orderTotal(order){
+  let total = 0, count = 0;
+  for(const id in order){
+    const item = MENU.find(m=>m.id===id);
+    if(item && order[id] > 0){
+      total += item.price * order[id];
+      count += order[id];
+    }
+  }
+  return {total, count};
+}
+
+function renderPeopleGrid(){
+  const grid = document.getElementById('peopleGrid');
+  grid.innerHTML = '';
+  for(const p of PEOPLE){
+    const order = allOrders[p] || {};
+    const {total, count} = orderTotal(order);
+    const btn = document.createElement('div');
+    btn.className = 'person-btn' + (count>0 ? ' has-order' : '');
+    btn.innerHTML = `${p}<span class="count">${count>0 ? count+'개 · '+won(total) : '미선택'}</span>`;
+    btn.onclick = ()=> openOrderScreen(p);
+    grid.appendChild(btn);
+  }
+}
+
+function openOrderScreen(person){
+  currentPerson = person;
+  currentOrder = JSON.parse(JSON.stringify(allOrders[person] || {}));
+  document.getElementById('people-screen').classList.add('hidden');
+  document.getElementById('order-screen').classList.remove('hidden');
+  document.getElementById('orderPersonName').textContent = person;
+  renderMenu();
+  renderTicket();
+}
+
+function renderMenu(){
+  const container = document.getElementById('menuList');
+  container.innerHTML = '';
+  const sections = [...new Set(MENU.map(m=>m.section))];
+  for(const sec of sections){
+    const label = document.createElement('div');
+    label.className = 'menu-section-title';
+    label.textContent = sec;
+    container.appendChild(label);
+    MENU.filter(m=>m.section===sec).forEach(item=>{
+      const qty = currentOrder[item.id] || 0;
+      const row = document.createElement('div');
+      row.className = 'menu-item';
+      row.innerHTML = `
+        <div class="item-left">
+          <div class="item-icon">${item.icon}</div>
+          <div class="info">
+            <div class="name">${item.name}</div>
+            <div class="price">${won(item.price)}</div>
+          </div>
+        </div>
+        <div class="qty-control">
+          <button class="qty-btn minus" data-id="${item.id}">−</button>
+          <span class="qty-val" id="qty-${item.id}">${qty}</span>
+          <button class="qty-btn plus" data-id="${item.id}">+</button>
+        </div>`;
+      container.appendChild(row);
+    });
+  }
+  container.querySelectorAll('.qty-btn.plus').forEach(b=>{
+    b.onclick = ()=>changeQty(b.dataset.id, 1);
+  });
+  container.querySelectorAll('.qty-btn.minus').forEach(b=>{
+    b.onclick = ()=>changeQty(b.dataset.id, -1);
+  });
+}
+
+let saveTimer = null;
+function autoSave(){
+  const status = document.getElementById('saveStatus');
+  if(status){
+    status.textContent = '저장 중...';
+    status.onclick = null;
+    status.style.cursor = 'default';
+    status.style.textDecoration = 'none';
+  }
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(doSave, 400);
+}
+
+async function doSave(){
+  const person = currentPerson;
+  allOrders[person] = JSON.parse(JSON.stringify(currentOrder));
+  const ok = await savePersonOrder(person);
+  const s = document.getElementById('saveStatus');
+  if(!s) return;
+  if(ok){
+    s.textContent = '저장됨 · 다른 사람에게도 바로 보여요';
+    s.onclick = null;
+    s.style.cursor = 'default';
+    s.style.textDecoration = 'none';
+    setTimeout(()=>{ if(s.textContent.startsWith('저장됨')) s.textContent=''; }, 2500);
+  }else{
+    s.textContent = '저장 실패 · 여기를 눌러 다시 저장';
+    s.style.cursor = 'pointer';
+    s.style.textDecoration = 'underline';
+    s.onclick = doSave;
+  }
+}
+
+function changeQty(id, delta){
+  const cur = currentOrder[id] || 0;
+  const next = Math.max(0, cur + delta);
+  if(next === 0){ delete currentOrder[id]; } else { currentOrder[id] = next; }
+  document.getElementById('qty-'+id).textContent = next;
+  renderTicket();
+  autoSave();
+}
+
+function renderTicket(){
+  const body = document.getElementById('ticketBody');
+  const ids = Object.keys(currentOrder).filter(id=>currentOrder[id]>0);
+  if(ids.length === 0){
+    body.innerHTML = '<div class="ticket-empty">아직 고른 메뉴가 없어요</div>';
+  }else{
+    body.innerHTML = ids.map(id=>{
+      const item = MENU.find(m=>m.id===id);
+      const qty = currentOrder[id];
+      return `<div class="ticket-row"><span>${item.icon} ${item.name} × ${qty}</span><span>${won(item.price*qty)}</span></div>`;
+    }).join('');
+  }
+  const {total} = orderTotal(currentOrder);
+  document.getElementById('ticketTotal').textContent = won(total);
+}
+
+document.getElementById('backBtn').onclick = async ()=>{
+  document.getElementById('order-screen').classList.add('hidden');
+  document.getElementById('people-screen').classList.remove('hidden');
+  allOrders = await loadAllOrders();
+  renderPeopleGrid();
+};
+
+// tabs
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick = async ()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    const tab = t.dataset.tab;
+    document.getElementById('tab-order').classList.toggle('hidden', tab!=='order');
+    document.getElementById('tab-summary').classList.toggle('hidden', tab!=='summary');
+    if(tab === 'summary') await renderSummary();
+    if(tab === 'order'){
+      document.getElementById('order-screen').classList.add('hidden');
+      document.getElementById('people-screen').classList.remove('hidden');
+      allOrders = await loadAllOrders();
+      renderPeopleGrid();
+    }
+  };
+});
+
+document.getElementById('refreshBtn').onclick = renderSummary;
+
+function renderSummaryView(){
+  const list = document.getElementById('summaryList');
+  let grand = 0;
+  let html = '';
+  for(const p of PEOPLE){
+    const order = allOrders[p] || {};
+    const ids = Object.keys(order).filter(id=>order[id]>0);
+    const {total} = orderTotal(order);
+    grand += total;
+    html += `<div class="summary-card">
+      <div class="summary-person"><span>${p}</span><span class="subtotal">${ids.length? won(total) : ''}</span></div>
+      ${ids.length===0
+        ? '<div class="summary-empty">아직 선택 안 함</div>'
+        : ids.map(id=>{
+            const item = MENU.find(m=>m.id===id);
+            return `<div class="summary-line"><span>${item.icon} ${item.name} <span class="n">×${order[id]}</span></span><span>${won(item.price*order[id])}</span></div>`;
+          }).join('')
+      }
+    </div>`;
+  }
+  list.innerHTML = html;
+  document.getElementById('grandTotal').textContent = won(grand);
+}
+
+async function renderSummary(){
+  const list = document.getElementById('summaryList');
+  list.innerHTML = '<div class="summary-empty">불러오는 중...</div>';
+  allOrders = await loadAllOrders();
+  renderSummaryView();
+}
+
+function rerenderVisible(){
+  const onOrderTab = !document.getElementById('tab-order').classList.contains('hidden');
+  const onSummaryTab = !document.getElementById('tab-summary').classList.contains('hidden');
+  const onPeopleScreen = onOrderTab && !document.getElementById('people-screen').classList.contains('hidden');
+  if(onPeopleScreen) renderPeopleGrid();
+  if(onSummaryTab) renderSummaryView();
+}
+
+renderPeopleGrid();
+ordersRoot.on('value', (snap)=>{
+  const raw = snap.val() || {};
+  allOrders = {};
+  for(const i in raw){ const n = PEOPLE[i]; if(n) allOrders[n] = raw[i]; }
+  rerenderVisible();
+});
+</script>
+</body>
+</html>
