@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>산 제물 · 청연 북클럽</title>
+
+<!-- Open Graph (카카오톡 미리보기용) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="산 제물">
+<meta property="og:description" content="여기를 눌러 링크를 확인하세요.">
+<meta property="og:image" content="https://hdi800hdi800-pixel.github.io/praise/praise/산제물_og.jpg">
+<meta property="og:url" content="https://hdi800hdi800-pixel.github.io/praise/praise/산제물_공유.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+  :root{
+    --bg-dark:#231a12; --cream:#f6ecd7; --gold:#c79a3f; --gold-deep:#a97f28; --ink:#3c2f1f;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg-dark);font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;}
+  .wrap{max-width:480px;margin:0 auto;padding:0 0 40px;}
+  .header{padding:34px 22px 20px;text-align:center;color:#e9dcc0;}
+  .header .eyebrow{font-size:12px;letter-spacing:.12em;color:#b89a5e;margin-bottom:8px;}
+  .header h1{font-size:26px;margin:0 0 6px;color:#f3e6c8;}
+  .header p{font-size:13px;color:#a4926e;margin:0;}
+  .video-card{
+    margin:0 16px; border-radius:18px; overflow:hidden;
+    box-shadow:0 18px 40px rgba(0,0,0,.4);
+    background:#000;
+  }
+  video{width:100%;display:block;background:#000;}
+  .info{
+    margin:16px 16px 0; background:linear-gradient(180deg,var(--cream),#f0e4c8);
+    border-radius:16px; padding:18px 20px;
+  }
+  .info .badge{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .info .badge img{width:36px;height:36px;border-radius:10px;}
+  .info .badge span{font-size:13px;font-weight:700;color:var(--gold-deep);}
+  .info h2{font-size:18px;margin:0 0 6px;color:var(--ink);}
+  .info p{font-size:12.5px;color:#7a6a4c;margin:0;line-height:1.6;}
+  .kakao-btn{
+    display:block; margin:18px 16px 0; text-align:center;
+    background:#FEE500; color:#3c1e1e; font-weight:700; font-size:15px;
+    padding:14px; border-radius:12px; text-decoration:none;
+  }
+  .kakao-btn:active{opacity:.85;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="eyebrow">청연교회 · 청연 북클럽</div>
+    <h1>산 제물</h1>
+    <p>빌립보서 2:17 · 그리스도인의 미덕 5장</p>
+  </div>
+
+  <div class="video-card">
+    <video controls playsinline autoplay muted preload="auto" poster="https://hdi800hdi800-pixel.github.io/praise/praise/산제물_og.jpg" onloadeddata="this.muted=false; this.play().catch(()=>{});">
+      <source src="https://hdi800hdi800-pixel.github.io/praise/praise/산_제물_엔딩크레딧-24.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div class="info">
+    <div class="badge">
+      <span>사슬: 어두운 마음 → 산 제물 → 새로워짐 → 하나님을 앎 → 타인의 마음 변화</span>
+    </div>
+    <h2>가사 노트</h2>
+    <p>롬 12:1-2의 "산 제물"과 빌립보서 2:17의 "관제로 드림"이라는 이미지를 엮어, 5장 사슬의 순환 구조(텔로스에서 시작해 텔로스로 돌아오는)를 따라간 곡입니다.</p>
+  </div>
+
+  <a class="kakao-btn" href="javascript:void(0)" onclick="copyLink()">🔗 링크 복사해서 카톡에 붙여넣기</a>
+</div>
+
+<script>
+function copyLink(){
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(()=>{
+    alert("링크가 복사됐어요. 카카오톡에 붙여넣으시면 카드로 보여요!");
+  }).catch(()=>{
+    prompt("아래 링크를 복사하세요:", url);
+  });
+}
+</script>
+</body>
+</html>
