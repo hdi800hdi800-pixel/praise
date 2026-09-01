@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>4장 ↔ 5장 사슬 연결</title>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="4장·5장 사슬 연결 도식">
+<meta property="og:description" content="그리스도인의 미덕(톰 라이트) 4-5장 — 왕 같은 제사장의 습관·표정과 손 → 마음을 새롭게 함으로 변화를 받아, 대응 관계 인터랙티브 도식">
+<meta property="og:image" content="https://hdi800hdi800-pixel.github.io/praise/praise/4jang5jang-saseul-og.png">
+<meta property="og:url" content="https://hdi800hdi800-pixel.github.io/praise/praise/4%EC%9E%A55%EC%9E%A5_%EC%82%AC%EC%8A%AC%EC%97%B0%EA%B2%B0_v2.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="4장·5장 사슬 연결 도식">
+<meta name="twitter:image" content="https://hdi800hdi800-pixel.github.io/praise/praise/4jang5jang-saseul-og.png">
+
+<style>
+  :root{
+    --bg-dark:#231a12;
+    --bg-dark2:#2c2117;
+    --cream:#f6ecd7;
+    --cream2:#f0e4c8;
+    --gold:#c79a3f;
+    --gold-deep:#a97f28;
+    --gold-line: rgba(180,140,50,0.45);
+    --gold-line-active:#b6822a;
+    --ink:#3c2f1f;
+    --ink-soft:#7a6a4c;
+    --heart:#c15a5e;
+    --heart-bg:#f7ded9;
+    --flame:#c15a3f;
+    --flame-bg:#f7e0d4;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg-dark);font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;}
+  .header{
+    padding:34px 22px 26px;
+    background:radial-gradient(circle at 30% 20%, var(--bg-dark2), var(--bg-dark) 70%);
+    color:#e9dcc0;
+    text-align:center;
+  }
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:.12em;
+    color:#b89a5e;
+    margin-bottom:10px;
+  }
+  .header h1{
+    font-size:22px;
+    line-height:1.4;
+    margin:0 0 10px;
+    color:#f3e6c8;
+    font-weight:700;
+  }
+  .header p{
+    font-size:12.5px;
+    color:#a4926e;
+    margin:0;
+    line-height:1.6;
+  }
+  .card{
+    background:linear-gradient(180deg,var(--cream),var(--cream2));
+    margin:-14px 12px 22px;
+    border-radius:20px;
+    box-shadow:0 18px 40px rgba(0,0,0,.35);
+    padding:26px 16px 20px;
+    position:relative;
+  }
+  .card h2{
+    text-align:center;
+    font-size:16px;
+    color:var(--ink);
+    margin:0 0 4px;
+  }
+  .card .sub{
+    text-align:center;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    margin:0 0 18px;
+  }
+  .col-labels{
+    display:flex;
+    justify-content:space-between;
+    padding:0 4px;
+    margin-bottom:10px;
+  }
+  .col-labels span{
+    font-size:12px;
+    font-weight:700;
+    color:var(--gold-deep);
+    background:rgba(199,154,63,0.15);
+    padding:3px 10px;
+    border-radius:999px;
+  }
+  .diagram-wrap{
+    position:relative;
+  }
+  svg.connectors{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:1;
+  }
+  .connectors path{
+    fill:none;
+    stroke:var(--gold-line);
+    stroke-width:1.6;
+    stroke-dasharray:4 5;
+    transition:stroke .25s, stroke-width .25s, opacity .25s;
+    opacity:.65;
+  }
+  .connectors path.active{
+    stroke:var(--gold-line-active);
+    stroke-width:2.6;
+    stroke-dasharray:none;
+    opacity:1;
+  }
+  .connectors path.dim{
+    opacity:.15;
+  }
+  .cols{
+    display:flex;
+    justify-content:space-between;
+    position:relative;
+    z-index:2;
+  }
+  .col{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    width:47%;
+  }
+  .col.right{align-items:flex-end;}
+  .node{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:100%;
+    cursor:pointer;
+    user-select:none;
+    -webkit-tap-highlight-color:transparent;
+    transition:transform .15s;
+  }
+  .node:active{transform:scale(.95);}
+  .badge{
+    width:54px;height:54px;border-radius:50%;
+    background:#fff;
+    border:2.5px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 3px 8px rgba(120,90,30,.18);
+    transition:box-shadow .2s, border-color .2s, transform .2s;
+  }
+  .badge svg{width:26px;height:26px;}
+  .node.active .badge{
+    border-color:var(--gold-deep);
+    box-shadow:0 0 0 5px rgba(199,154,63,0.25);
+    transform:scale(1.08);
+  }
+  .node .tag{
+    font-size:9.5px;
+    color:var(--ink-soft);
+    margin-top:6px;
+    font-weight:700;
+  }
+  .node .label{
+    font-size:11px;
+    color:var(--ink);
+    text-align:center;
+    line-height:1.3;
+    margin-top:1px;
+    font-weight:600;
+  }
+  .node.dim{opacity:.4;}
+  .badge.heart{border-color:var(--heart);background:var(--heart-bg);}
+  .badge.flame{border-color:var(--flame);background:var(--flame-bg);}
+
+  .caption{
+    margin-top:22px;
+    background:#fffaf0;
+    border:1.5px dashed var(--gold);
+    border-radius:14px;
+    padding:14px 16px;
+    font-size:12.5px;
+    line-height:1.65;
+    color:var(--ink);
+    min-height:64px;
+    transition:background .2s;
+  }
+  .caption b{color:var(--gold-deep);}
+  .caption.placeholder{color:var(--ink-soft);text-align:center;display:flex;align-items:center;justify-content:center;}
+
+  .summary{
+    margin-top:18px;
+    padding-top:14px;
+    border-top:1px dashed rgba(150,120,60,.4);
+    font-size:10.5px;
+    color:var(--ink-soft);
+    line-height:1.9;
+    text-align:center;
+  }
+  .summary .chain{display:block;margin-bottom:4px;}
+  .summary b{color:var(--ink);}
+  .footnote{
+    text-align:center;
+    font-size:10px;
+    color:#6b5c3e;
+    margin-top:14px;
+    opacity:.85;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">그리스도인의 미덕 · 톰 라이트</div>
+  <h1>4장 사슬 ↔ 5장 사슬<br>연결 도식</h1>
+  <p>왕 같은 제사장의 습관·표정과 손 &nbsp;→&nbsp; 마음을 새롭게 함으로 변화를 받아</p>
+</div>
+
+<div class="card">
+  <h2>대응 관계 인터랙티브 도식</h2>
+  <p class="sub">노드를 탭하면 대응하는 짝과 설명이 표시됩니다</p>
+
+  <div class="col-labels">
+    <span>4장</span>
+    <span>5장</span>
+  </div>
+
+  <div class="diagram-wrap">
+    <svg class="connectors" id="svgLines"></svg>
+    <div class="cols">
+      <div class="col left">
+        <div class="node" data-id="l0">
+          <div class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <path d="M3 17h18M4 17l1.5-8L9 12l3-7 3 7 3.5-3L20 17" stroke-linejoin="round" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="tag">⓪</div>
+          <div class="label">텔로스<br>(왕 같은 제사장)</div>
+        </div>
+        <div class="node" data-id="l1">
+          <div class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <circle cx="12" cy="12" r="8.5"/>
+              <path d="M8.3 13.5c.9 1.4 2.2 2.2 3.7 2.2s2.8-.8 3.7-2.2" stroke-linecap="round"/>
+              <circle cx="9" cy="10" r=".9" fill="#a97f28" stroke="none"/>
+              <circle cx="15" cy="10" r=".9" fill="#a97f28" stroke="none"/>
+            </svg>
+          </div>
+          <div class="tag">①</div>
+          <div class="label">습관·표정<br>(팔복)</div>
+        </div>
+        <div class="node" data-id="l2">
+          <div class="badge heart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c15a5e" stroke-width="1.8">
+              <path d="M12 20s-7.5-4.7-9.5-9.7C1.3 6.8 3.4 4 6.7 4c2 0 3.5 1.2 4.3 2.6 0 0 .3.5.5.9" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 20s7.5-4.7 9.5-9.7C22.7 6.8 20.6 4 17.3 4c-2 0-3.5 1.2-4.3 2.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M11 8l-1.6 3 2.4 1.6L10 16" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tag">②</div>
+          <div class="label">마음의 병</div>
+        </div>
+        <div class="node" data-id="l3">
+          <div class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <path d="M12 3v18M7 8h10" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="tag">③</div>
+          <div class="label">십자가·부활</div>
+        </div>
+        <div class="node" data-id="l4">
+          <div class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <path d="M9 3h6M11 3v5l-4.5 8c-.8 1.5.3 3 2 3h7c1.7 0 2.8-1.5 2-3L13 8V3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8 15h8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="tag">④</div>
+          <div class="label">세례와 성찬</div>
+        </div>
+        <div class="node" data-id="l5">
+          <div class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <path d="M7 12V6.5a1.5 1.5 0 0 1 3 0V11M10 11V5a1.5 1.5 0 0 1 3 0v6M13 11V6a1.5 1.5 0 0 1 3 0v7.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7 12l-1.3.9c-.9.7-.9 2 0 3.3l2 2.8c.8 1.1 2 1.7 3.4 1.7h2.4c2 0 3.5-1.6 3.5-3.5V11" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="14.5" r=".8" fill="#a97f28" stroke="none"/>
+            </svg>
+          </div>
+          <div class="tag">⑤</div>
+          <div class="label">손(용서)</div>
+        </div>
+        <div class="node dim" data-id="l6">
+          <div class="badge" style="opacity:.7;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <path d="M4 5.5c2-1 5-1 8 .5v13c-3-1.5-6-1.5-8-.5z" stroke-linejoin="round"/>
+              <path d="M20 5.5c-2-1-5-1-8 .5v13c3-1.5 6-1.5 8-.5z" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tag">↺⓪</div>
+          <div class="label">텔로스<br>(다시 처음으로)</div>
+        </div>
+      </div>
+
+      <div class="col right">
+        <div class="node" data-id="r3">
+          <div class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <path d="M4 5.5c2-1 5-1 8 .5v13c-3-1.5-6-1.5-8-.5z" stroke-linejoin="round"/>
+              <path d="M20 5.5c-2-1-5-1-8 .5v13c3-1.5 6-1.5 8-.5z" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tag">⓪</div>
+          <div class="label">텔로스<br>(목표 제시, 251쪽)</div>
+        </div>
+        <div class="node" data-id="r5">
+          <div class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <circle cx="8.5" cy="9" r="2.6"/>
+              <circle cx="16" cy="9.5" r="2.2"/>
+              <path d="M4 19c0-2.8 2-4.6 4.5-4.6S13 16.2 13 19" stroke-linecap="round"/>
+              <path d="M13.5 14.7c2.1.2 3.7 1.9 3.7 4.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="tag">⑤</div>
+          <div class="label">온전한 사람 = 텔로스<br>(목표 재확인, 287쪽)</div>
+        </div>
+        <div class="node" data-id="r0">
+          <div class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <circle cx="12" cy="12" r="8.5"/>
+              <path d="M15.5 15c-1.6 1.4-4 1.6-5.9.3-2.3-1.6-2.8-4.8-1.2-7.1.5-.7 1.1-1.2 1.8-1.6-2.6.3-4.7 2.4-4.9 5.1-.3 3.3 2.2 6.2 5.5 6.5 2.2.2 4.2-.8 5.4-2.4-.2 0-.5-.1-.7-.2z" fill="#a97f28" stroke="none"/>
+            </svg>
+          </div>
+          <div class="tag">①</div>
+          <div class="label">어두워진 마음<br>(문제, 롬 1:21-23,28, 258쪽)</div>
+        </div>
+        <div class="node" data-id="r1">
+          <div class="badge flame">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c15a3f" stroke-width="1.8">
+              <path d="M12 3c1 3-2 4-2 7a3 3 0 0 0 6 0c0-1-.5-2-1-2.6.7 2 .3 3.6-1 4.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 21h12l-1.5-5h-9z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tag">②</div>
+          <div class="label">산 제물<br>(응답, 롬 12:1, 252~253쪽)</div>
+        </div>
+        <div class="node" data-id="r2">
+          <div class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <path d="M4 12a8 8 0 0 1 13.9-5.4M20 12a8 8 0 0 1-13.9 5.4" stroke-linecap="round"/>
+              <path d="M17.5 3.5v3.6h-3.6M6.5 20.5v-3.6h3.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tag">③</div>
+          <div class="label">마음의 새로워짐<br>(치유, 258쪽 처방·265~266쪽 결과)</div>
+        </div>
+        <div class="node" data-id="r4">
+          <div class="badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <path d="M7 12V6.5a1.5 1.5 0 0 1 3 0V11M10 11V5a1.5 1.5 0 0 1 3 0v6M13 11V6a1.5 1.5 0 0 1 3 0v7.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7 12l-1.3.9c-.9.7-.9 2 0 3.3l2 2.8c.8 1.1 2 1.7 3.4 1.7h2.4c2 0 3.5-1.6 3.5-3.5V11" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tag">④</div>
+          <div class="label">습관화<br>(반복되는 실천, 289쪽)</div>
+        </div>
+        <div class="node dim" data-id="r6">
+          <div class="badge" style="opacity:.7;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3d6ea5" stroke-width="1.8">
+              <path d="M4 5.5c2-1 5-1 8 .5v13c-3-1.5-6-1.5-8-.5z" stroke-linejoin="round"/>
+              <path d="M20 5.5c-2-1-5-1-8 .5v13c3-1.5 6-1.5 8-.5z" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tag">↺⑤</div>
+          <div class="label">텔로스 = 온전한 사람<br>(다시 251·287쪽으로)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption placeholder" id="caption">노드를 탭해 4장과 5장의 대응 관계를 확인해 보세요</div>
+
+  <div class="summary">
+    <span class="chain"><b>4장</b>: 텔로스→습관·표정(팔복)→마음의병→십자가·부활→세례와 성찬→손(용서)→다시 텔로스로 순환</span>
+    <span class="chain"><b>5장</b>: 텔로스(251,목표)→어두워진 마음(258,문제)→산 제물(252~253,응답)→마음의 새로워짐(258/265~266,치유)→습관화(289)→온전한 사람=텔로스(287,도달)</span>
+  </div>
+  <div class="footnote">그리스도인의 미덕(톰 라이트) 4장·5장 사슬 연결 도식</div>
+</div>
+
+<script>
+const pairs = [
+  { left:['l0'], right:'r3', desc:"<b>⓪텔로스</b> → <b>5장⓪ 텔로스</b>(목표 제시, 251쪽)<br>\"당신의 눈을 완전한 성품이란 목표에 고정시켜라... 왕 같은 제사장으로 만들어주는 완전한 인간성을 목표로 한다.\" 4장·5장 모두 같은 목표언어로 시작합니다." },
+  { left:['l1'], right:'r5', desc:"<b>①습관·표정(팔복)</b> → <b>5장⑤ 온전한 사람 = 텔로스</b>(목표 재확인, 287쪽)<br>목표가 자연스럽게 드러난 얼굴(팔복)처럼, 5장도 끝에서 \"그리스도인의 목표는 온전한 인간이 되는 것\"이라며 251쪽의 목표를 다시 확인합니다 — 나선형 서술로 처음과 끝에서 같은 목표를 두 번 말한 것입니다." },
+  { left:['l2'], right:'r0', desc:"<b>②마음의 병</b> → <b>5장① 어두워진 마음</b>(문제, 롬 1:21-23,28, 258쪽)<br>하나님을 알고도 영화롭게도 감사하지도 않아 생각이 허망해지고 마음이 어두워진 상태 — 4장의 '마음의 병'과 같은 진단입니다." },
+  { left:['l3'], right:'r1', desc:"<b>③십자가·부활</b> → <b>5장② 산 제물</b>(응답, 롬 12:1, 252~253쪽)<br>사건→응답 구조: \"하나님이 당신을 구속하셨고 장차 그 몸을 예수 그리스도의 부활한 몸과 같이 변화시킬 것이기 때문\"에 몸을 산 제물로 드리는 것이 합당하다고 253쪽이 직접 근거를 댑니다." },
+  { left:['l4'], right:'r2', desc:"<b>④세례와 성찬</b> → <b>5장③ 마음의 새로워짐</b>(치유, 258쪽 처방·265~266쪽 결과)<br>258쪽에서 라이트는 \"마음을 새롭게 함이 현 시대에 대한 방어책\"이라고 직접 처방합니다. 265~266쪽에서는 그 결과로 '도키마제인'(분별력)이 회복된다고 설명합니다 — 어두워진 마음(l2)의 정반대 작용입니다." },
+  { left:['l5'], right:'r4', desc:"<b>⑤손(용서)</b> → <b>5장④ 습관화</b>(반복되는 실천, 289쪽)<br>\"마음이 새롭게 되어 변화를 받아야 하며, 그 변화로 삶의 습관이 형성되고 방향이 재정립되어야 한다... 제2의 천성이 될 때까지.\" 손의 반복된 용서처럼, 새로워짐도 습관으로 반복되어야 온전함에 이릅니다." },
+  { left:['l6'], right:'r6', desc:"<b>↺다시 텔로스</b> → <b>5장 ↺다시 텔로스=온전한 사람</b><br>손(용서)과 습관화가 반복되어 쌓이면 다시 텔로스(목표)로 돌아옵니다. 4장·5장 모두 나선형으로 같은 목표를 처음과 끝에서 두 번 확인하며 순환합니다." }
+];
+
+const svg = document.getElementById('svgLines');
+const wrap = document.querySelector('.diagram-wrap');
+const caption = document.getElementById('caption');
+let allNodes = [...document.querySelectorAll('.node')];
+let selected = null;
+
+function nodeCenter(id){
+  const el = document.querySelector(`.node[data-id="${id}"] .badge`);
+  const r = el.getBoundingClientRect();
+  const w = wrap.getBoundingClientRect();
+  return { x: r.left + r.width/2 - w.left, y: r.top + r.height/2 - w.top };
+}
+
+function drawLines(){
+  svg.innerHTML = '';
+  const w = wrap.getBoundingClientRect();
+  svg.setAttribute('viewBox', `0 0 ${w.width} ${w.height}`);
+  pairs.forEach((p, idx) => {
+    p.left.forEach(lid => {
+      const a = nodeCenter(lid);
+      const b = nodeCenter(p.right);
+      const mx = (a.x + b.x) / 2;
+      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('d', `M ${a.x} ${a.y} C ${mx} ${a.y}, ${mx} ${b.y}, ${b.x} ${b.y}`);
+      path.dataset.pair = idx;
+      svg.appendChild(path);
+    });
+  });
+}
+
+function clearSelection(){
+  selected = null;
+  allNodes.forEach(n => n.classList.remove('active','dim'));
+  svg.querySelectorAll('path').forEach(p => p.classList.remove('active','dim'));
+  caption.classList.add('placeholder');
+  caption.innerHTML = '노드를 탭해 4장과 5장의 대응 관계를 확인해 보세요';
+}
+
+function selectPair(idx){
+  selected = idx;
+  const p = pairs[idx];
+  const activeIds = new Set([...p.left, p.right]);
+  allNodes.forEach(n => {
+    const id = n.dataset.id;
+    n.classList.toggle('active', activeIds.has(id));
+    n.classList.toggle('dim', !activeIds.has(id));
+  });
+  svg.querySelectorAll('path').forEach(path => {
+    const isActive = Number(path.dataset.pair) === idx;
+    path.classList.toggle('active', isActive);
+    path.classList.toggle('dim', !isActive);
+  });
+  caption.classList.remove('placeholder');
+  caption.innerHTML = p.desc;
+}
+
+allNodes.forEach(n => {
+  n.addEventListener('click', () => {
+    const id = n.dataset.id;
+    const idx = pairs.findIndex(p => p.left.includes(id) || p.right === id);
+    if (idx === -1) return;
+    if (selected === idx) { clearSelection(); }
+    else { selectPair(idx); }
+  });
+});
+
+window.addEventListener('resize', drawLines);
+window.addEventListener('load', drawLines);
+setTimeout(drawLines, 60);
+</script>
+
+</body>
+</html>
