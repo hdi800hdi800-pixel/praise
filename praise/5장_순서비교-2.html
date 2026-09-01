@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>5장 · 페이지 순서 vs 논리 순서 비교</title>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="5장 · 페이지 순서 vs 논리 순서 비교">
+<meta property="og:description" content="그리스도인의 미덕(톰 라이트) 5장 — 산 제물·새로워짐·어두워진 마음·온전한 사람·텔로스, 같은 다섯 개념을 책 속 순서와 논증 논리 순서로 나란히 비교한 도식">
+<meta property="og:image" content="https://hdi800hdi800-pixel.github.io/praise/praise/5jang-og.png">
+<meta property="og:url" content="https://hdi800hdi800-pixel.github.io/praise/praise/5%EC%9E%A5_%EC%88%9C%EC%84%9C%EB%B9%84%EA%B5%90.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="5장 · 페이지 순서 vs 논리 순서 비교">
+<meta name="twitter:description" content="그리스도인의 미덕(톰 라이트) 5장 — 같은 다섯 개념을 두 가지 순서로 비교한 도식">
+<meta name="twitter:image" content="https://hdi800hdi800-pixel.github.io/praise/praise/5jang-og.png">
+
+<style>
+  :root{
+    --bg-dark:#231a12;
+    --bg-dark2:#2c2117;
+    --cream:#f6ecd7;
+    --cream2:#f0e4c8;
+    --gold:#c79a3f;
+    --gold-deep:#a97f28;
+    --ink:#3c2f1f;
+    --ink-soft:#7a6a4c;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg-dark);font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;}
+  .header{padding:32px 20px 22px;background:radial-gradient(circle at 30% 20%, var(--bg-dark2), var(--bg-dark) 70%);color:#e9dcc0;text-align:center;}
+  .eyebrow{font-size:12px;letter-spacing:.1em;color:#b89a5e;margin-bottom:8px;}
+  .header h1{font-size:20px;line-height:1.4;margin:0 0 8px;color:#f3e6c8;font-weight:700;}
+  .header p{font-size:11.5px;color:#a4926e;margin:0;}
+
+  .card{
+    background:linear-gradient(180deg,var(--cream),var(--cream2));
+    margin:-14px 10px 22px;
+    border-radius:20px;
+    box-shadow:0 18px 40px rgba(0,0,0,.35);
+    padding:22px 12px 18px;
+  }
+  .card h2{text-align:center;font-size:15px;color:var(--ink);margin:0 0 4px;}
+  .card .sub{text-align:center;font-size:10.5px;color:var(--ink-soft);margin:0 0 16px;}
+
+  .col-labels{display:flex;justify-content:space-between;padding:0 6px;margin-bottom:8px;}
+  .col-labels span{font-size:11px;font-weight:700;color:var(--gold-deep);background:rgba(199,154,63,0.15);padding:3px 10px;border-radius:999px;}
+
+  .diagram-wrap{position:relative;}
+  svg.connectors{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+  .connectors path{fill:none;stroke-width:1.6;stroke-dasharray:4 5;opacity:.85;}
+  .c-sac{stroke:#a97f28;}
+  .c-new{stroke:#5b8a72;}
+  .c-dark{stroke:#7a5c8a;}
+  .c-mature{stroke:#b0525c;}
+  .c-telos{stroke:#3d6ea5;}
+
+  .cols{display:flex;justify-content:space-between;position:relative;z-index:1;}
+  .col{display:flex;flex-direction:column;gap:22px;width:46%;}
+  .col.right{align-items:flex-end;}
+
+  .node{display:flex;flex-direction:column;align-items:center;width:100%;text-align:center;}
+  .badge{width:54px;height:54px;border-radius:50%;background:#fff;border:2.5px solid var(--gold);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px rgba(120,90,30,.18);}
+  .badge svg{width:26px;height:26px;}
+  .node .page{font-size:9.5px;color:var(--gold-deep);font-weight:700;margin-top:5px;}
+  .node .label{font-size:10.5px;color:var(--ink);font-weight:600;line-height:1.25;margin-top:1px;}
+
+  .badge.sac{border-color:#a97f28;}
+  .badge.new{border-color:#5b8a72;}
+  .badge.dark{border-color:#7a5c8a;}
+  .badge.mature{border-color:#b0525c;}
+  .badge.telos{border-color:#3d6ea5;}
+
+  .legend{margin-top:20px;padding-top:14px;border-top:1px dashed rgba(150,120,60,.4);font-size:10px;color:var(--ink-soft);line-height:2.1;}
+  .legend .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle;}
+
+  .note-box{margin-top:16px;background:#fffaf0;border:1.5px dashed var(--gold);border-radius:14px;padding:12px 14px;font-size:10.5px;line-height:1.7;color:var(--ink);}
+  .note-box b{color:var(--gold-deep);}
+  .footnote{text-align:center;font-size:10px;color:#6b5c3e;margin-top:14px;opacity:.85;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="eyebrow">그리스도인의 미덕 · 5장</div>
+  <h1>페이지 순서 vs 논리 순서<br>비교 사슬</h1>
+  <p>같은 다섯 개념, 두 가지로 배열한 순서 비교</p>
+</div>
+
+<div class="card">
+  <h2>같은 개념, 다른 순서</h2>
+  <p class="sub">왼쪽: 책에 실제로 등장하는 순서 · 오른쪽: 논증 논리 순서</p>
+
+  <div class="col-labels">
+    <span>페이지 순서</span>
+    <span>논리 순서</span>
+  </div>
+
+  <div class="diagram-wrap">
+    <svg class="connectors" viewBox="0 0 340 470" preserveAspectRatio="none">
+      <!-- left positions (approx center y per node, x=60) right (x=280) -->
+      <!-- L1 산제물(y40) - R3 산제물(y230) -->
+      <path class="c-sac" d="M75,40 C170,40 170,230 265,230"/>
+      <!-- L2 새로워짐(y135) - R4 새로워짐(y325) -->
+      <path class="c-new" d="M75,135 C170,135 170,325 265,325"/>
+      <!-- L3 어두운마음(y230) - R2 어두운마음(y135) -->
+      <path class="c-dark" d="M75,230 C170,230 170,135 265,135"/>
+      <!-- L4 텔로스(y325) - R1 텔로스(y40) -->
+      <path class="c-telos" d="M75,325 C170,325 170,40 265,40"/>
+      <!-- L5 온전한사람(y420) - R5 온전한사람(y420) -->
+      <path class="c-mature" d="M75,420 C170,420 170,420 265,420"/>
+    </svg>
+
+    <div class="cols">
+      <div class="col left">
+        <div class="node">
+          <div class="badge sac">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <path d="M12 3c1 3-2 4-2 7a3 3 0 0 0 6 0c0-1-.5-2-1-2.6.7 2 .3 3.6-1 4.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 21h12l-1.5-5h-9z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="page">① · 252쪽</div>
+          <div class="label">산 제물<br>(롬 12:1)</div>
+        </div>
+        <div class="node">
+          <div class="badge new">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#5b8a72" stroke-width="1.8">
+              <path d="M4 12a8 8 0 0 1 13.9-5.4M20 12a8 8 0 0 1-13.9 5.4" stroke-linecap="round"/>
+              <path d="M17.5 3.5v3.6h-3.6M6.5 20.5v-3.6h3.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="page">② · 252쪽</div>
+          <div class="label">마음의 새로워짐<br>(롬 12:2)</div>
+        </div>
+        <div class="node">
+          <div class="badge dark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#7a5c8a" stroke-width="1.8">
+              <circle cx="12" cy="12" r="8.5"/>
+              <path d="M15.5 15c-1.6 1.4-4 1.6-5.9.3-2.3-1.6-2.8-4.8-1.2-7.1.5-.7 1.1-1.2 1.8-1.6-2.6.3-4.7 2.4-4.9 5.1-.3 3.3 2.2 6.2 5.5 6.5 2.2.2 4.2-.8 5.4-2.4-.2 0-.5-.1-.7-.2z" fill="#7a5c8a" stroke="none"/>
+            </svg>
+          </div>
+          <div class="page">③ · 258쪽</div>
+          <div class="label">어두워진 마음<br>(롬 1:21-23,28)</div>
+        </div>
+        <div class="node">
+          <div class="badge telos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3d6ea5" stroke-width="1.8">
+              <path d="M3 17h18M4 17l1.5-8L9 12l3-7 3 7 3.5-3L20 17" stroke-linejoin="round" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="page">④ · 278쪽</div>
+          <div class="label">텔로스<br>(하나님을 앎)</div>
+        </div>
+        <div class="node">
+          <div class="badge mature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b0525c" stroke-width="1.8">
+              <circle cx="8.5" cy="9" r="2.6"/>
+              <circle cx="16" cy="9.5" r="2.2"/>
+              <path d="M4 19c0-2.8 2-4.6 4.5-4.6S13 16.2 13 19" stroke-linecap="round"/>
+              <path d="M13.5 14.7c2.1.2 3.7 1.9 3.7 4.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="page">⑤ · 287쪽</div>
+          <div class="label">온전한 사람<br>(엡 4:13)</div>
+        </div>
+      </div>
+
+      <div class="col right">
+        <div class="node">
+          <div class="badge telos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#3d6ea5" stroke-width="1.8">
+              <path d="M3 17h18M4 17l1.5-8L9 12l3-7 3 7 3.5-3L20 17" stroke-linejoin="round" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="page">⓪ · 278쪽</div>
+          <div class="label">텔로스<br>(하나님을 앎)</div>
+        </div>
+        <div class="node">
+          <div class="badge dark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#7a5c8a" stroke-width="1.8">
+              <circle cx="12" cy="12" r="8.5"/>
+              <path d="M15.5 15c-1.6 1.4-4 1.6-5.9.3-2.3-1.6-2.8-4.8-1.2-7.1.5-.7 1.1-1.2 1.8-1.6-2.6.3-4.7 2.4-4.9 5.1-.3 3.3 2.2 6.2 5.5 6.5 2.2.2 4.2-.8 5.4-2.4-.2 0-.5-.1-.7-.2z" fill="#7a5c8a" stroke="none"/>
+            </svg>
+          </div>
+          <div class="page">① · 258쪽</div>
+          <div class="label">어두워진 마음<br>(롬 1:21-23,28)</div>
+        </div>
+        <div class="node">
+          <div class="badge sac">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a97f28" stroke-width="1.8">
+              <path d="M12 3c1 3-2 4-2 7a3 3 0 0 0 6 0c0-1-.5-2-1-2.6.7 2 .3 3.6-1 4.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 21h12l-1.5-5h-9z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="page">② · 252쪽</div>
+          <div class="label">산 제물<br>(롬 12:1)</div>
+        </div>
+        <div class="node">
+          <div class="badge new">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#5b8a72" stroke-width="1.8">
+              <path d="M4 12a8 8 0 0 1 13.9-5.4M20 12a8 8 0 0 1-13.9 5.4" stroke-linecap="round"/>
+              <path d="M17.5 3.5v3.6h-3.6M6.5 20.5v-3.6h3.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="page">③ · 252쪽</div>
+          <div class="label">마음의 새로워짐<br>(롬 12:2)</div>
+        </div>
+        <div class="node">
+          <div class="badge mature">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b0525c" stroke-width="1.8">
+              <circle cx="8.5" cy="9" r="2.6"/>
+              <circle cx="16" cy="9.5" r="2.2"/>
+              <path d="M4 19c0-2.8 2-4.6 4.5-4.6S13 16.2 13 19" stroke-linecap="round"/>
+              <path d="M13.5 14.7c2.1.2 3.7 1.9 3.7 4.3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="page">④ · 287쪽</div>
+          <div class="label">온전한 사람<br>(엡 4:13)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span class="dot" style="background:#a97f28"></span>산 제물: 페이지순 ① (맨 앞) → 논리순 ②<br>
+    <span class="dot" style="background:#5b8a72"></span>새로워짐: 페이지순 ② → 논리순 ③<br>
+    <span class="dot" style="background:#7a5c8a"></span>어두운마음: 페이지순 ③ → 논리순 ①<br>
+    <span class="dot" style="background:#3d6ea5"></span>텔로스: 페이지순 ④ → 논리순 ⓪ (맨 앞)<br>
+    <span class="dot" style="background:#b0525c"></span>온전한 사람: 페이지순 ⑤ (맨 끝) → 논리순 ④
+  </div>
+
+  <div class="note-box">
+    <b>왜 텔로스의 자리가 맨 앞으로 오는가</b><br>
+    책은 "산 제물로 드리라"는 실천 명령(252쪽)을 먼저 던지고 목표(하나님을 앎, 278쪽)를 그 다음에야 풀어내지만, 논증 논리로는 "목표가 무엇인지" 먼저 알아야 "왜 산 제물로 드려야 하는지"가 이해되기 때문에 텔로스를 맨 앞으로 재배치한다.
+  </div>
+
+  <div class="footnote">그리스도인의 미덕(톰 라이트) 5장 · 페이지 순서 vs 논리 순서 비교</div>
+</div>
+
+</body>
+</html>
