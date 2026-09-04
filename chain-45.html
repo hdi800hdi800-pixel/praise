@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4장·5장 사슬 연결</title>
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="4장 · 5장 사슬 연결 도식">
+<meta property="og:description" content="왕 같은 제사장(4장)과 마음을 새롭게 함(5장)이 만나는 지점 — 마음의 병=어두워진 마음, 십자가·부활=산 제물, 세례·성찬=마음의 새로워짐, 손(용서)=온전한 사람, 그리고 5장만의 다리인 고난">
+<meta property="og:image" content="https://hdi800hdi800-pixel.github.io/praise/chain-45-card.jpg">
+<meta property="og:url" content="https://hdi800hdi800-pixel.github.io/praise/chain-45.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #efe3c8;
+    font-family: "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+    color: #2b2318;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 32px 20px 60px; }
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0 0 6px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #6b5f47;
+    margin-bottom: 8px;
+  }
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+  .legend span.dot4 { color:#b8860b; }
+  .legend span.dot5 { color:#2e6da4; }
+  .legend .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px; vertical-align:middle; }
+
+  .telos-cap {
+    text-align: center;
+    background: #201a10;
+    color: #fbf6e9;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    display: inline-block;
+    margin: 0 auto 22px;
+  }
+  .telos-cap-wrap { text-align:center; margin-bottom: 6px; }
+
+  .phase {
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 34px 1fr;
+    align-items: stretch;
+    gap: 0;
+  }
+  .card {
+    background: #fbf6e9;
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .card.c4 { border: 2px solid #b8860b; }
+  .card.c5 { border: 2px solid #2e6da4; }
+  .card .tag {
+    font-size: 11px;
+    font-weight: 800;
+    margin-bottom: 3px;
+  }
+  .c4 .tag { color:#b8860b; }
+  .c5 .tag { color:#2e6da4; }
+  .card .title {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    color:#201a10;
+  }
+  .card .ref {
+    font-size: 11px;
+    color: #8a7a55;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .card .desc {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: #3a3122;
+  }
+  .link-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .link-col::before {
+    content: "";
+    width: 100%;
+    border-top: 2.5px dashed #a8632f;
+    position: absolute;
+    left: 0; right: 0;
+  }
+  .link-badge {
+    background: #a8632f;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    border-radius: 999px;
+    padding: 3px 6px;
+    z-index: 2;
+    white-space: nowrap;
+  }
+
+  .down-line {
+    height: 26px;
+    display: grid;
+    grid-template-columns: 1fr 34px 1fr;
+  }
+  .down-line .stem {
+    border-left: 2.5px dashed #c9a24a;
+    margin: 0 auto;
+    height: 100%;
+  }
+  .down-line .stem.left { grid-column: 1; margin-left: 50%; }
+  .down-line .stem.right { grid-column: 3; margin-left: 50%; }
+
+  .bridge {
+    margin: 34px 0 8px;
+    background: linear-gradient(135deg,#fff7e6,#fdeee0);
+    border: 2px solid #b02e3e;
+    border-radius: 16px;
+    padding: 18px 20px;
+    text-align: center;
+  }
+  .bridge .tag {
+    color: #b02e3e;
+    font-weight: 800;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .bridge .title {
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .bridge .ref { font-size: 12px; color:#8a7a55; font-weight:600; margin-bottom:8px; }
+  .bridge .desc { font-size: 13.5px; line-height: 1.6; color:#3a3122; }
+
+  .cycle-back {
+    text-align: center;
+    margin-top: 26px;
+    font-size: 13px;
+    font-weight: 800;
+    color: #201a10;
+  }
+  .cycle-back .arrow-up { color:#c9a24a; }
+
+  .summary-line {
+    margin-top: 30px;
+    background: #fbf6e9;
+    border-radius: 14px;
+    padding: 16px 18px;
+    font-size: 13px;
+    line-height: 1.8;
+    color: #3a3122;
+    border: 1.5px solid #d9c9a0;
+  }
+  .summary-line b { color:#201a10; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>4장 · 5장 사슬 연결 도식</h1>
+  <div class="subtitle">「그리스도인의 미덕」 — 왕 같은 제사장(4장)과 마음의 새로워짐(5장)이 만나는 지점</div>
+  <div class="legend">
+    <span class="dot4"><span class="dot" style="background:#b8860b"></span>4장 · 습관·표정과 손</span>
+    <span class="dot5"><span class="dot" style="background:#2e6da4"></span>5장 · 마음을 새롭게 함</span>
+  </div>
+
+  <div class="telos-cap-wrap">
+    <div class="telos-cap">⓪ 텔로스 — 왕 같은 제사장 · 완전한 인간성 (공통 목표)</div>
+  </div>
+
+  <!-- Phase 1: 마음의 병 / 어두워진 마음 -->
+  <div class="phase">
+    <div class="row">
+      <div class="card c4">
+        <div class="tag">4장 ② 진단</div>
+        <div class="title">마음의 병</div>
+        <div class="ref">롬 8:5-8</div>
+        <div class="desc">습관·표정(팔복)을 스스로 지킬 수 없음. 육신(에우다이모니아)으로는 텔로스에 도달 시도해도 실패.</div>
+      </div>
+      <div class="link-col"><span class="link-badge">동일 진단</span></div>
+      <div class="card c5">
+        <div class="tag">5장 ① 진단</div>
+        <div class="title">어두워진 마음</div>
+        <div class="ref">롬 1:21-23,28 · 258쪽</div>
+        <div class="desc">하나님을 알고도 감사하지 않아 생각이 허망해지고 마음이 어두워짐 — 인류 전체의 질병.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="down-line"><div class="stem left"></div><div></div><div class="stem right"></div></div>
+
+  <!-- Phase 2: 십자가·부활 / 산 제물 -->
+  <div class="phase">
+    <div class="row">
+      <div class="card c4">
+        <div class="tag">4장 ③ 사건</div>
+        <div class="title">십자가·부활</div>
+        <div class="ref">하나님나라의 출범(사건)</div>
+        <div class="desc">습관·표정을 지을 길이 열림. 객관적 사건 자체 — 하나님나라가 시작된 지점.</div>
+      </div>
+      <div class="link-col"><span class="link-badge">사건 → 결단</span></div>
+      <div class="card c5">
+        <div class="tag">5장 ② 응답·결단</div>
+        <div class="title">산 제물</div>
+        <div class="ref">롬 12:1 · 252~253쪽</div>
+        <div class="desc">십자가·부활(하나님이 몸을 구속하시고 부활의 몸으로 변화시킬 것)에 근거해 몸을 산 제물로 드리는 주체적 결단.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="down-line"><div class="stem left"></div><div></div><div class="stem right"></div></div>
+
+  <!-- Phase 3: 세례·성찬 / 마음의 새로워짐 -->
+  <div class="phase">
+    <div class="row">
+      <div class="card c4">
+        <div class="tag">4장 ④ 처방</div>
+        <div class="title">세례와 성찬</div>
+        <div class="ref">습관·표정을 계속 익힘</div>
+        <div class="desc">세례=죽음·삶 됨(입문), 성찬=죽음·부활 기억·언약 갱신(지속) — 성령의 도우심으로 작동.</div>
+      </div>
+      <div class="link-col"><span class="link-badge">같은 처방</span></div>
+      <div class="card c5">
+        <div class="tag">5장 ③ 치유</div>
+        <div class="title">마음의 새로워짐</div>
+        <div class="ref">롬 12:2 · 258쪽 처방 · 265~266쪽 결과</div>
+        <div class="desc">'도키마제인(분별하다)'을 통해 나침반(마음) 자체가 바로잡힘 — 현 시대(감정주의)에 대한 방어책.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="down-line"><div class="stem left"></div><div></div><div class="stem right"></div></div>
+
+  <!-- Phase 4: 손(용서) / 온전한 사람 -->
+  <div class="phase">
+    <div class="row">
+      <div class="card c4">
+        <div class="tag">4장 ⑤ 실현</div>
+        <div class="title">손(용서)</div>
+        <div class="ref">"아버지 저들을 사하여 주옵소서"(눅 23:34)</div>
+        <div class="desc">용서를 실천할수록 텔로스·습관·표정이 더 깊어짐 — 왕 같은 제사장의 구체적 열매.</div>
+      </div>
+      <div class="link-col"><span class="link-badge">구체적 실현</span></div>
+      <div class="card c5">
+        <div class="tag">5장 ④ 성숙</div>
+        <div class="title">온전한 사람</div>
+        <div class="ref">골 1:15-20,3:10 · 280쪽 / 엡 4:13-16 · 286~287쪽</div>
+        <div class="desc">지혜이신 그리스도 안에서 몸(교회)이 사랑으로 연결되어 그리스도의 장성한 분량까지 자람 — 공동체적 실현.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bridge: 5장만의 추가 통찰 -->
+  <div class="bridge">
+    <div class="tag">⑤ 5장만의 역설적 통찰 — 4장에는 없는 다리</div>
+    <div class="title">고난</div>
+    <div class="ref">롬 5:1-5 · 295~297쪽</div>
+    <div class="desc">
+      고난 → 인내 → 성품(연단) → 소망. 4장의 "습관·표정·손"이 <b>왜</b> 저절로 되지 않고 훈련이 필요한지,
+      그 훈련의 첫 관문이 바로 <b>고난</b>임을 5장이 보충한다.
+      메시아의 고난과 바울 자신의 고난이 그 근거 — 세례·성찬(4장④)과 산 제물(5장②)의 결단이
+      실제 삶에서 통과해야 하는 관문이 바로 이 고난이다.
+    </div>
+  </div>
+
+  <div class="cycle-back">
+    <span class="arrow-up">↑</span> 소망은 다시 '하나님의 영광' — ⓪ 텔로스(왕 같은 제사장 · 부활 때의 완숙한 인간)로 순환 <span class="arrow-up">↑</span>
+  </div>
+
+  <div class="summary-line">
+    <b>통합 흐름</b>: 텔로스(왕 같은 제사장) → <span style="color:#b8860b">[4장]</span> 습관·표정이 필요하다는 자각 =
+    <span style="color:#2e6da4">[5장]</span> 마음이 어두워졌다는 진단 → <span style="color:#b8860b">[4장]</span> 십자가·부활이라는 객관적 사건 =
+    <span style="color:#2e6da4">[5장]</span> 그 사건에 근거해 몸을 드리는 주체적 결단 → <span style="color:#b8860b">[4장]</span> 세례·성찬으로 습관을 익힘 =
+    <span style="color:#2e6da4">[5장]</span> 마음이 새로워짐 → <span style="color:#b8860b">[4장]</span> 손(용서)이라는 구체적 열매 =
+    <span style="color:#2e6da4">[5장]</span> 온전한 사람으로의 공동체적 성숙 → <span style="color:#b02e3e">[5장만]</span> 이 모든 과정이 고난을 통과해야 함을 밝힘 →
+    다시 텔로스로 순환.
+  </div>
+</div>
+</body>
+</html>
