@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>NEXT SIGNAL — 한국교회 다음세대 트렌드 2026 워크북</title>
+
+<!-- 카카오톡/오픈그래프 링크 미리보기용 메타태그 -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="NEXT SIGNAL — 한국교회 다음세대 트렌드 2026">
+<meta property="og:description" content="우리 교회 적용을 위한 워크북 · KCMC × 꿈이있는미래">
+<meta property="og:image" content="https://hdi800hdi800-pixel.github.io/praise/00_표지.jpg">
+<meta property="og:url" content="https://hdi800hdi800-pixel.github.io/praise/next-signal.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+  :root{
+    --navy:#161a3d; --navy2:#1f254f;
+    --lime:#c9e265; --lime-deep:#9fb84a;
+    --ink:#eef0fa;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--navy);font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;}
+
+  .hero{padding:34px 20px 24px;background:radial-gradient(circle at 30% 15%, var(--navy2), var(--navy) 70%);text-align:center;}
+  .hero .kicker{font-size:11px;letter-spacing:.12em;color:#9aa3d6;margin-bottom:10px;}
+  .hero h1{font-size:26px;font-weight:900;color:var(--lime);margin:0 0 6px;letter-spacing:.02em;text-shadow:0 2px 0 rgba(0,0,0,.25);}
+  .hero h2{font-size:14px;font-weight:700;color:var(--ink);margin:0 0 14px;}
+  .hero p{font-size:11.5px;color:#b9c0e8;margin:0;line-height:1.6;}
+
+  .wrap{max-width:480px;margin:0 auto;padding:0 14px 30px;}
+
+  .slide{margin-top:14px;border-radius:14px;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.35);background:#0d1030;}
+  .slide img{display:block;width:100%;height:auto;cursor:zoom-in;}
+  .slide .cap{padding:8px 12px;font-size:10.5px;color:#c7cdec;background:rgba(255,255,255,.04);}
+
+  .lightbox{display:none;position:fixed;inset:0;background:rgba(5,6,20,.94);z-index:999;align-items:center;justify-content:center;padding:16px;}
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:100%;max-height:100%;border-radius:8px;cursor:zoom-out;}
+  .lightbox .close{position:absolute;top:16px;right:18px;color:#eef0fa;font-size:28px;background:none;border:none;cursor:pointer;line-height:1;}
+
+  .divider{text-align:center;color:var(--lime-deep);font-size:10px;padding:16px 0 4px;letter-spacing:.08em;}
+
+  .cta{margin-top:24px;display:flex;align-items:center;justify-content:center;gap:12px;padding:20px 14px 26px;border-top:1px solid rgba(255,255,255,.1);}
+  .cta img{width:52px;height:52px;border-radius:14px;flex-shrink:0;}
+  .cta p{font-size:14px;font-weight:700;color:var(--ink);margin:0;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="kicker">한국교회 다음세대 트렌드 2026 × KCMC</div>
+  <h1>NEXT SIGNAL</h1>
+  <h2>우리 교회 적용을 위한 워크북</h2>
+  <p>또래집단 · Invisible Exit · AI Native · Micro Worship<br>7개 집단 조사 · 3,308명 응답 · 113개 시각 자료</p>
+</div>
+
+<div class="wrap">
+
+  <div class="divider">00 · 표지</div>
+  <div class="slide"><img src="00_표지.jpg" alt="표지" onclick="openLB(this.src)"></div>
+
+  <div class="divider">01 · 신앙의 뿌리</div>
+  <div class="slide"><img src="01_신앙의뿌리.jpg" alt="신앙의 뿌리" onclick="openLB(this.src)"></div>
+
+  <div class="divider">02 · 만족도의 구조</div>
+  <div class="slide"><img src="02_만족도의구조.jpg" alt="만족도의 구조" onclick="openLB(this.src)"></div>
+
+  <div class="divider">03 · AI 네이티브 세대</div>
+  <div class="slide"><img src="03_AI네이티브세대.jpg" alt="AI 네이티브 세대" onclick="openLB(this.src)"></div>
+
+  <div class="divider">04 · 세계관의 충돌</div>
+  <div class="slide"><img src="04_세계관의충돌.jpg" alt="세계관의 충돌" onclick="openLB(this.src)"></div>
+
+  <div class="divider">05 · 인비저블 엑시트</div>
+  <div class="slide"><img src="05_인비저블엑시트.jpg" alt="인비저블 엑시트" onclick="openLB(this.src)"></div>
+
+  <div class="divider">06 · 관계와 접점</div>
+  <div class="slide"><img src="06_관계와접점.jpg" alt="관계와 접점" onclick="openLB(this.src)"></div>
+
+  <div class="divider">07 · 처치 브릿지</div>
+  <div class="slide"><img src="07_처치브릿지.jpg" alt="처치 브릿지" onclick="openLB(this.src)"></div>
+
+  <div class="divider">08 · 종합 과제</div>
+  <div class="slide"><img src="08_종합과제.jpg" alt="종합 과제" onclick="openLB(this.src)"></div>
+
+  <div class="divider">09 · 초등부 토의</div>
+  <div class="slide"><img src="09_초등부토의.jpg" alt="초등부 토의" onclick="openLB(this.src)"></div>
+
+  <div class="divider">10 · 중고등부 토의</div>
+  <div class="slide"><img src="10_중고등부토의.jpg" alt="중고등부 토의" onclick="openLB(this.src)"></div>
+
+  <div class="divider">11 · 클로징</div>
+  <div class="slide"><img src="11_클로징.jpg" alt="클로징" onclick="openLB(this.src)"></div>
+
+  <div class="cta">
+    <img src="cheongyeon_logo.png" alt="청연교회 로고">
+    <p>청연교회 교사 학부모모임</p>
+  </div>
+
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLB()">
+  <button class="close" onclick="closeLB(event)">✕</button>
+  <img id="lightbox-img" src="" alt="확대 이미지">
+</div>
+
+<script>
+function openLB(src){
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLB(e){
+  if(e) e.stopPropagation();
+  document.getElementById('lightbox').classList.remove('open');
+}
+</script>
+
+</body>
+</html>
