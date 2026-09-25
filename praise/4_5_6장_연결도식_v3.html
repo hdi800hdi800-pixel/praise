@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>4장 · 5장 · 6장 사슬 연결 도식</title>
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="4장 · 5장 · 6장 사슬 연결 도식">
+<meta property="og:description" content="그리스도인의 미덕(톰 라이트) — 왕 같은 제사장(4장), 마음의 새로워짐(5장), 사랑과 한 몸(6장)이 만나는 지점">
+<meta property="og:image" content="https://hdi800hdi800-pixel.github.io/praise/praise/456jang-og-1.png">
+<meta property="og:url" content="https://hdi800hdi800-pixel.github.io/praise/praise/4_5_6%EC%9E%A5_%EC%97%B0%EA%B2%B0%EB%8F%84%EC%8B%9D_v3.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="4장 · 5장 · 6장 사슬 연결 도식">
+<meta name="twitter:image" content="https://hdi800hdi800-pixel.github.io/praise/praise/456jang-og-1.png">
+
+<style>
+  :root{
+    --bg:#f0e4c8;
+    --ink:#241d12;
+    --ink-soft:#6f5f42;
+    --gold:#c79a3f;
+    --gold-deep:#a97f28;
+    --c4:#a97f28;
+    --c4-bg:#fbf3df;
+    --c5:#3d6ea5;
+    --c5-bg:#eef3fa;
+    --c6:#4f7d5a;
+    --c6-bg:#eef5ee;
+    --uniq:#a83f4a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;color:var(--ink);}
+  .wrap{max-width:480px;margin:0 auto;padding:36px 22px 60px;}
+
+  .title{font-size:26px;font-weight:800;text-align:center;letter-spacing:-.5px;margin:0 0 16px;line-height:1.35;}
+  .subtitle{font-size:14px;color:var(--ink-soft);text-align:center;line-height:1.65;margin:0 0 22px;}
+
+  .legend{display:flex;justify-content:center;flex-wrap:wrap;gap:16px;margin-bottom:30px;font-size:13px;font-weight:700;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex-shrink:0;}
+  .dot.c4{background:var(--c4);} .dot.c5{background:var(--c5);} .dot.c6{background:var(--c6);}
+
+  .telos{
+    background:#231a12;color:#f3e6c8;border-radius:24px;padding:22px 22px;
+    text-align:center;font-size:16.5px;font-weight:800;line-height:1.5;margin-bottom:8px;
+  }
+  .telos .sub{display:block;font-size:12px;font-weight:500;color:#c9b384;margin-top:6px;}
+
+  .connector{display:flex;justify-content:center;margin:2px 0;}
+  .connector .line{width:2px;height:26px;background-image:linear-gradient(var(--gold-deep) 55%, rgba(0,0,0,0) 0%);background-size:2px 10px;background-repeat:repeat-y;}
+
+  .stage-label{text-align:center;font-size:12px;font-weight:800;color:var(--gold-deep);letter-spacing:.04em;margin:26px 0 10px;}
+
+  .card{border:2.5px solid; border-radius:16px; padding:16px 18px; margin:0 0 0; background:#fffaf0;}
+  .card .chap{font-size:12px;font-weight:800;margin:0 0 5px;}
+  .card h3{font-size:18px;font-weight:800;margin:0 0 6px;line-height:1.3;}
+  .card .meta{font-size:11.5px;color:var(--ink-soft);margin:0 0 8px;}
+  .card p{font-size:13px;line-height:1.65;margin:0;color:#3a2f1e;}
+
+  .card.c4{border-color:var(--c4);background:var(--c4-bg);}
+  .card.c4 .chap{color:var(--c4);}
+  .card.c5{border-color:var(--c5);background:var(--c5-bg);}
+  .card.c5 .chap{color:var(--c5);}
+  .card.c6{border-color:var(--c6);background:var(--c6-bg);}
+  .card.c6 .chap{color:var(--c6);}
+  .card.uniq{border-color:var(--uniq);background:#fbeced;}
+  .card.uniq .chap{color:var(--uniq);}
+
+  .pill-row{display:flex;justify-content:center;margin:10px 0;}
+  .pill{background:#8a5a2c;color:#fff;font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;text-align:center;line-height:1.4;max-width:280px;}
+
+  .cycle-note{text-align:center;font-size:13.5px;font-weight:700;color:var(--gold-deep);line-height:1.7;margin:34px 0 26px;}
+
+  .summary-box{background:#fffaf0;border:1.5px solid rgba(150,120,60,.4);border-radius:16px;padding:16px 18px;font-size:13px;line-height:1.85;color:#3a2f1e;}
+  .summary-box b{font-weight:800;}
+  .summary-box .tag4{color:var(--c4);font-weight:800;}
+  .summary-box .tag5{color:var(--c5);font-weight:800;}
+  .summary-box .tag6{color:var(--c6);font-weight:800;}
+
+  .footnote{text-align:center;font-size:11px;color:#8a7a56;margin-top:36px;opacity:.85;}
+
+  /* 업로드 안내 팝업 */
+  #uploadGuide{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;}
+  #uploadGuide .card2{background:#fff;border-radius:16px;padding:22px;max-width:360px;width:100%;font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;}
+  #uploadGuide h3{margin:0 0 10px;font-size:17px;color:#222;}
+  #uploadGuide p{font-size:12.5px;color:#666;margin:0 0 12px;line-height:1.5;}
+  #uploadGuide code{display:block;background:#f4f4f4;padding:10px;border-radius:8px;font-size:11.5px;word-break:break-all;margin-bottom:14px;color:#333;}
+  #uploadGuide a, #uploadGuide button{display:block;width:100%;box-sizing:border-box;text-align:center;padding:13px;border-radius:10px;font-weight:700;font-size:14px;text-decoration:none;margin-bottom:8px;border:none;cursor:pointer;}
+  #netlifyBtn{background:#00ad9f;color:#fff;}
+  #githubBtn{background:#24292f;color:#fff;}
+  #copyLinkBtn2{background:#FEE500;color:#3c1e1e;}
+  #closeGuideBtn{background:none;color:#999;font-weight:500;font-size:13px;margin-bottom:0;}
+  .kakao-btn2{
+    display:block; max-width:480px; margin:24px auto 0; text-align:center;
+    background:#FEE500; color:#3c1e1e; font-weight:700; font-size:15px;
+    padding:14px; border-radius:12px; text-decoration:none;
+  }
+</style>
+</head>
+<body>
+
+<div id="uploadGuide">
+  <div class="card2">
+    <h3>📤 업로드 안내</h3>
+    <p>이 파일을 아래 중 한 곳에 올리면 공유링크가 활성화돼요.</p>
+    <code id="shareLinkText"></code>
+    <a id="netlifyBtn" href="https://app.netlify.com/drop" target="_blank">Netlify에 드롭해서 배포</a>
+    <a id="githubBtn" href="https://github.com/hdi800hdi800-pixel/praise/upload/main/praise" target="_blank">GitHub praise 폴더에 업로드</a>
+    <button id="copyLinkBtn2" type="button">🔗 링크 복사</button>
+    <button id="closeGuideBtn" type="button">닫기</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="title">4장 · 5장 · 6장<br>사슬 연결 도식</div>
+  <div class="subtitle">「그리스도인의 미덕」 — 왕 같은 제사장(4장), 마음의 새로워짐(5장),<br>사랑과 한 몸(6장)이 하나의 흐름으로 만나는 지점</div>
+
+  <div class="legend">
+    <span><span class="dot c4"></span>4장 · 습관·표정과 손</span>
+    <span><span class="dot c5"></span>5장 · 마음을 새롭게 함</span>
+    <span><span class="dot c6"></span>6장 · 열매와 한 몸</span>
+  </div>
+
+  <div class="telos">
+    ⓪ 텔로스 — 왕 같은 제사장 · 완전한 인간성
+    <span class="sub">4·5장의 공통 목표이자, 6장에서는 "사랑"으로 완성되는 지점 (고전 13장)</span>
+  </div>
+
+  <div class="stage-label">① 진단 — 무엇이 잘못되었는가</div>
+
+  <div class="card c4">
+    <div class="chap">4장 ② 진단</div>
+    <h3>마음의 병</h3>
+    <div class="meta">롬 8:5-8</div>
+    <p>습관·표정(팔복)을 스스로 지킬 수 없음. 육신(에우다이모니아)으로는 텔로스에 도달 시도해도 실패.</p>
+  </div>
+  <div class="pill-row"><div class="pill">동일 진단</div></div>
+  <div class="card c5">
+    <div class="chap">5장 ① 진단</div>
+    <h3>어두워진 마음</h3>
+    <div class="meta">롬 1:21-23,28 · 258쪽</div>
+    <p>하나님을 알고도 감사하지 않아 생각이 허망해지고 마음이 어두워짐 — 인류 전체의 질병.</p>
+  </div>
+  <div class="pill-row"><div class="pill">같은 병의 구체적 증상</div></div>
+  <div class="card c6">
+    <div class="chap">6장 ① 진단</div>
+    <h3>육체의 일</h3>
+    <div class="meta">갈 5:19-21 · 322-323쪽</div>
+    <p>음행·우상숭배·분쟁·시기 등 — 어두워진 마음⑤장이 삶에서 구체적으로 드러나는 목록.</p>
+  </div>
+
+  <div class="connector"><div class="line"></div></div>
+  <div class="stage-label">② 사건 · 응답 · 결단</div>
+
+  <div class="card c4">
+    <div class="chap">4장 ③ 사건</div>
+    <h3>십자가 · 부활</h3>
+    <div class="meta">하나님나라의 출범 (객관적 사건)</div>
+    <p>습관·표정을 지을 기반이 되는 사건. 사람이 만드는 게 아니라 하나님이 이미 이루신 것.</p>
+  </div>
+  <div class="pill-row"><div class="pill">사건 → 결단</div></div>
+  <div class="card c5">
+    <div class="chap">5장 ② 응답·결단</div>
+    <h3>산 제물</h3>
+    <div class="meta">롬 12:1 · 252-253쪽</div>
+    <p>십자가·부활(하나님이 몸을 구속하시고 장차 부활의 몸으로 변화시키실 것)에 근거해 몸을 산 제물로 드리기로 결단한다.</p>
+  </div>
+  <div class="pill-row"><div class="pill">결단이 구체적 행동으로</div></div>
+  <div class="card c6">
+    <div class="chap">6장 ③ 응답·결단</div>
+    <h3>육체를 십자가에 못박음</h3>
+    <div class="meta">갈 5:24 · 325쪽</div>
+    <p>산 제물⑤장의 결단이 여기서는 "육체와 함께 그 정욕과 탐심을 십자가에 못 박았느니라"는 구체적 선언으로 이어진다.</p>
+  </div>
+
+  <div class="connector"><div class="line"></div></div>
+  <div class="stage-label">③ 처방 · 훈련 — 어떻게 반복되는가</div>
+
+  <div class="card c4">
+    <div class="chap">4장 ④ 처방</div>
+    <h3>세례와 성찬</h3>
+    <div class="meta">습관·표정을 계속 익힘</div>
+    <p>세례=죽음·삶 됨(입문), 성찬=죽음·부활 기억·언약 갱신(지속) — 성령의 도우심으로 작동.</p>
+  </div>
+  <div class="pill-row"><div class="pill">다른 통로 · 같은 목적</div></div>
+  <div class="card c5">
+    <div class="chap">5장 ③ 치유</div>
+    <h3>마음의 새로워짐</h3>
+    <div class="meta">롬 12:2 · 258쪽 처방 · 265-266쪽 결과</div>
+    <p>"도키마제인(분별하다)"을 통해 나침반(마음) 자체가 바로잡힘 — 감정주의에 대한 방어책.</p>
+  </div>
+  <div class="pill-row"><div class="pill">분별 → 몸에 익히는 반복</div></div>
+  <div class="card c6">
+    <div class="chap">6장 ④ 습관화</div>
+    <h3>정원사처럼 가꿈</h3>
+    <div class="meta">325-326쪽</div>
+    <p>못박는 결단은 한 번으로 끝나지 않는다. 정원사가 매일 가지를 치듯, 마음의 새로워짐⑤장과 세례·성찬④장이 여기서 하나의 반복적 훈련으로 합류한다.</p>
+  </div>
+
+  <div class="connector"><div class="line"></div></div>
+  <div class="stage-label">④ 실현 · 성숙 — 무엇으로 열매맺는가</div>
+
+  <div class="card c4">
+    <div class="chap">4장 ⑤ 실현</div>
+    <h3>손(용서)</h3>
+    <div class="meta">"아버지 저들을 사하여 주옵소서"(눅 23:34)</div>
+    <p>용서를 실천할수록 텔로스·습관·표정이 더 깊어짐 — 왕 같은 제사장의 구체적 열매.</p>
+  </div>
+  <div class="pill-row"><div class="pill">개인 실현 → 공동체 성숙</div></div>
+  <div class="card c5">
+    <div class="chap">5장 ④ 성숙</div>
+    <h3>온전한 사람</h3>
+    <div class="meta">골 1:15-20,3:10·280쪽 / 엡 4:13-16·286-287쪽</div>
+    <p>지혜이신 그리스도 안에서 몸(교회)이 사랑으로 연결되어 그리스도의 장성한 분량까지 자람 — 공동체적 실현.</p>
+  </div>
+  <div class="pill-row"><div class="pill">공동체 성숙의 완성태</div></div>
+  <div class="card c6">
+    <div class="chap">6장 ⑤ 완성</div>
+    <h3>한 몸, 그리스도의 장성한 분량</h3>
+    <div class="meta">고전 12장 · 엡 4장 · 338-359쪽</div>
+    <p>손의 용서④장, 온전한 사람⑤장이 여기서 "가꿔진 열매(성품)를 바탕으로 서로 다른 은사가 사랑 안에서 상호의존하는 한 몸"으로 완성된다 — 은사(고전 12장, 기능)와 열매(갈 5장, 성품)는 다른 범주다.</p>
+  </div>
+
+  <div class="connector"><div class="line"></div></div>
+  <div class="stage-label">⑤ 각 장만의 고유 통찰</div>
+
+  <div class="card uniq">
+    <div class="chap">5장만의 역설적 통찰 — 4장에는 없는 다리</div>
+    <h3>고난</h3>
+    <div class="meta">롬 5:1-5 · 295-297쪽</div>
+    <p>고난 → 인내 → 성품(연단) → 소망. 4장의 "습관·표정·손"이 왜 저절로 되지 않고 훈련이 필요한지, 그 훈련의 첫 관문이 바로 고난임을 5장이 보충한다.</p>
+  </div>
+
+  <div class="card uniq" style="margin-top:16px;">
+    <div class="chap">6장만의 통찰 — 4·5장에는 없는 대조</div>
+    <h3>성령의 아홉 가지 열매</h3>
+    <div class="meta">갈 5:22-23 · 323-324쪽</div>
+    <p>육체의 일①장과 정면으로 대조되는 목록. "열매"가 단수로 쓰인 것은, 아홉 가지가 따로가 아니라 한 다발로 함께 자라는 하나의 인격임을 보여준다 — 4·5장의 개별 실천이 왜 결국 하나로 통합되는지 6장이 밝힌다.</p>
+  </div>
+
+  <div class="card uniq" style="margin-top:16px;">
+    <div class="chap">6장이 답하는 질문 — 왜 결국 사랑인가</div>
+    <h3>사랑으로의 통합</h3>
+    <div class="meta">고전 13장 · 304쪽, 337-338쪽</div>
+    <p><b>① 열매는 하나다</b> — 아홉 열매가 단수로 쓰인 것은 사랑이라는 뿌리에서 갈라진 가지들이기 때문. 인내는 시간 앞의 사랑, 자비는 약함 앞의 사랑이다.<br><br>
+    <b>② 사랑이 은사의 잣대다</b> — 고전 13장은 고전 12장 은사(몸 비유)를 무효화할 수 있는 유일한 기준. "사랑이 없으면 내가 아무것도 아니요"(고전 13:1-3) — 은사가 몸을 세우는지 소음에 그치는지를 가른다.<br><br>
+    <b>③ 사랑만 끝까지 남는다</b> — 예언·방언·지식은 "폐하리라"(13:8-13)지만 사랑은 남는다. 4·5·6장의 모든 훈련은 지나가는 과정이고, 그 훈련이 완성되면 남는 최종 형태가 사랑이다 — 그래서 ⓪으로의 순환은 화살표가 아니라 원이다.</p>
+  </div>
+
+  <div class="cycle-note">
+    ↑ 소망은 다시 '하나님의 영광' · '사랑' —<br>⓪ 텔로스(왕 같은 제사장 · 한 몸)로 순환 ↑
+  </div>
+
+  <div class="summary-box">
+    <b>통합 흐름</b>: 텔로스(왕 같은 제사장) → <span class="tag4">[4장]</span> 습관·표정이 필요하다는 자각 = <span class="tag5">[5장]</span> 마음이 어두워졌다는 진단 = <span class="tag6">[6장]</span> 육체의 일로 드러난 증상 → <span class="tag4">[4장]</span> 십자가·부활이라는 객관적 사건 = <span class="tag5">[5장]</span> 그 사건에 근거해 몸을 드리는 결단 = <span class="tag6">[6장]</span> 육체를 못박는 결단 → <span class="tag4">[4장]</span> 세례·성찬으로 습관을 익힘 = <span class="tag5">[5장]</span> 마음이 새로워짐 = <span class="tag6">[6장]</span> 정원사처럼 가꾸는 훈련 → <span class="tag4">[4장]</span> 손(용서)이라는 구체적 열매 = <span class="tag5">[5장]</span> 온전한 사람으로의 공동체적 성숙 = <span class="tag6">[6장]</span> 한 몸을 이루는 완성 → <span class="tag5">[5장만]</span> 이 모든 과정이 고난을 통과해야 함을 밝히고, <span class="tag6">[6장만]</span> 그 열매들이 왜 하나의 인격(사랑)으로 통합되는지 밝히며 → 다시 텔로스 · 사랑으로 순환.
+  </div>
+
+  <div class="footnote">그리스도인의 미덕(톰 라이트) 4장 · 5장 · 6장 연결 도식</div>
+</div>
+
+
+<a class="kakao-btn2" href="javascript:void(0)" onclick="copyLink2()">🔗 링크 복사해서 카톡에 붙여넣기</a>
+<script>
+function copyLink2(){
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(()=>{
+    alert("링크가 복사됐어요. 카카오톡에 붙여넣으시면 카드로 보여요!");
+  }).catch(()=>{
+    prompt("아래 링크를 복사하세요:", url);
+  });
+}
+
+(function(){
+  var host = window.location.hostname;
+  if (host.indexOf('github.io') !== -1 || host.indexOf('netlify.app') !== -1) return;
+
+  var rawName = decodeURIComponent(window.location.pathname.split('/').pop() || '') || '4_5_6장_연결도식_v3.html';
+  var cleanName = rawName.replace(/\s*\(\d+\)(?=\.[^.]+$)/, '');
+  var shareUrl = 'https://hdi800hdi800-pixel.github.io/praise/praise/' + cleanName;
+
+  setTimeout(function(){
+    var linkEl = document.getElementById('shareLinkText');
+    if (linkEl) linkEl.textContent = shareUrl;
+    var guide = document.getElementById('uploadGuide');
+    if (guide) guide.style.display = 'flex';
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareUrl).catch(function(){});
+    }
+  }, 600);
+
+  var copyBtn = document.getElementById('copyLinkBtn2');
+  if (copyBtn) copyBtn.addEventListener('click', function(){
+    navigator.clipboard.writeText(shareUrl).then(function(){
+      alert('링크가 복사됐어요!');
+    }).catch(function(){
+      prompt('아래 링크를 복사하세요:', shareUrl);
+    });
+  });
+
+  var closeBtn = document.getElementById('closeGuideBtn');
+  if (closeBtn) closeBtn.addEventListener('click', function(){
+    document.getElementById('uploadGuide').style.display = 'none';
+  });
+})();
+</script>
+</body>
+</html>
